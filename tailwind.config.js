@@ -19,6 +19,9 @@ module.exports = {
       colors: {
         main: "#ee3131",
       },
+      textColor: {
+        title: "#505050",
+      },
     },
   },
   plugins: [],
