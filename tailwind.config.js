@@ -22,6 +22,23 @@ module.exports = {
       textColor: {
         title: "#505050",
       },
+      animation: {
+        "slide-top": "slide-top 1s ease",
+      },
+      keyframes: {
+        "slide-top": {
+          "0%": {
+            "-webkit-transform": "translateY(80px)",
+            transform: " translateY(80px) ",
+            opacity: "0",
+          },
+          "100%": {
+            " -webkit-transform": "translateY(0)",
+            transform: "translateY(0)",
+            opacity: "1",
+          },
+        },
+      },
     },
   },
   plugins: [],

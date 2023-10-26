@@ -1,6 +1,4 @@
 /** @format */
-import { useEffect, useState } from "react";
-import { apiCategories } from "../apis/app";
 import { Link } from "react-router-dom";
 import icons from "../ultils/icons";
 import { useSelector } from "react-redux";
@@ -9,7 +7,6 @@ const { AiOutlineMenuFold } = icons;
 
 const SideBar = () => {
   const { categories } = useSelector((state) => state.app);
-  console.log(categories);
 
   return (
     <div className="border border-solid border-[#ebebeb]">

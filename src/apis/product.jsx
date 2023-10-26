@@ -2,8 +2,9 @@
 
 import axios from "../axios";
 
-export const getCategories = () =>
+export const getProducts = (params) =>
   axios({
-    url: "/prodcategory/",
+    url: "/product/",
     method: "get",
+    params,
   });
