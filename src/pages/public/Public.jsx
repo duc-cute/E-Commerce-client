@@ -6,7 +6,7 @@ const Public = () => {
     <div className="w-full flex flex-col items-center  ">
       <Header />
       <Navigation />
-      <div className="w-main h-[2000px]">
+      <div className="w-main h-[3000px]">
         <Outlet />
       </div>
     </div>

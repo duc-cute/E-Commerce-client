@@ -16,7 +16,7 @@ const Daily = () => {
   const fetchProductDaily = async () => {
     const response = await getProducts({
       limit: 1,
-      page: Math.round(Math.random() * 8),
+      page: Math.round(Math.random() * 5),
       totalRating: 5,
     });
     if (response?.success) {
