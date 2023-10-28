@@ -8,6 +8,7 @@ module.exports = {
   theme: {
     fontFamily: {
       main: ["Poppins", "sans-serif"],
+      lato: ["Lato", "sans-serif"],
     },
     extend: {
       width: {

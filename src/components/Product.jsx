@@ -9,13 +9,13 @@ const { HiMenu, AiFillHeart, FaEye } = icons;
 const Product = ({ productData, isActive }) => {
   return (
     <div className="group  bg-white z-10 relative w-full p-[15px] flex flex-col gap-5 border-solid border-[1px] border-[#ebebeb] text-[16px] text-[#2b3743]">
-      <div>
+      <div className="h-[243px]">
         <img
           src={
             productData?.thumb ||
             "https://img.freepik.com/free-vector/hand-drawn-no-data-illustration_23-2150544961.jpg?w=740&t=st=1698167331~exp=1698167931~hmac=0c23ae6263688c5c733f7ebf4bdd37883952dcc3ef7cea365dcb57aa9396ff74"
           }
-          className="w-full h-[243px] object-contain"
+          className="w-full h-full object-contain"
         />
         <img
           className="absolute top-[15px] right-[15px] w-[75px] h-[25px] "
@@ -28,7 +28,7 @@ const Product = ({ productData, isActive }) => {
           <SlideOption icon={<FaEye size={16} />} />
         </div>
       </div>
-      <div className="flex flex-col gap-[10px] bg-white z-10">
+      <div className="flex flex-col gap-[10px] bg-white z-10 mb-[10px]">
         <span className="line-clamp-1 leading-4">{productData?.title}</span>
         <div className="flex">
           {renderStars(productData?.totalRating).map((star, index) => (
