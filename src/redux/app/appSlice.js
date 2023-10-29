@@ -1,7 +1,7 @@
 /** @format */
 
 import { createSlice } from "@reduxjs/toolkit";
-import * as actions from "./asyncAction";
+import * as actions from "./appAction";
 export const appSlice = createSlice({
   name: "app",
   initialState: {
@@ -22,6 +22,7 @@ export const appSlice = createSlice({
       // Tắt trạng thái loading, lưu thông tin user vào store
       state.isLoading = false;
       state.categories = action.payload;
+      console.log("action.payload", action.payload);
     });
 
     // Khi thực hiện action login thất bại (Promise rejected)

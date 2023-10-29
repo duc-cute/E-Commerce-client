@@ -9,3 +9,5 @@ export { default as Daily } from "./Daily";
 export { default as CountDown } from "./CountDown";
 export { default as FeatureProducts } from "./FeatureProducts";
 export { default as ProductCard } from "./ProductCard";
+export { default as CustomSlider } from "./CustomSlider";
+export { default as HotCollection } from "./HotCollection";

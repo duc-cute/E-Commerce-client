@@ -5,6 +5,7 @@ import { IoMail } from "react-icons/io5";
 import { FaUserCircle, FaEye } from "react-icons/fa";
 import { BsHandbagFill } from "react-icons/bs";
 import { HiMenu } from "react-icons/hi";
+import { GrFormNext } from "react-icons/gr";
 import {
   AiOutlineMenuFold,
   AiFillHeart,
@@ -22,6 +23,7 @@ const icons = {
   HiMenu,
   AiFillStar,
   AiOutlineStar,
+  GrFormNext,
 };
 
 export default icons;

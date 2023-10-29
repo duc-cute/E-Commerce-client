@@ -1,8 +1,10 @@
 /** @format */
 import { getProducts } from "../apis";
 import { useEffect, useState } from "react";
-import Slider from "react-slick";
-import Product from "./Product";
+
+import { getNewProducts } from "../redux/products/productsAction";
+import { useDispatch, useSelector } from "react-redux";
+import CustomSlider from "./CustomSlider";
 
 const settings = {
   dots: false,
@@ -22,24 +24,22 @@ const tabs = [
 
 const BestSeller = () => {
   const [bestSellers, setBestSellers] = useState([]);
-  const [newProducts, setNewProducts] = useState([]);
   const [products, setProducts] = useState(null);
   const [isActive, setIsActive] = useState(1);
-
+  const dispatch = useDispatch();
+  const { newProducts } = useSelector((state) => state.product);
   const fetchProduct = async () => {
-    const response = await Promise.all([
-      getProducts({ sort: "-sold" }),
-      getProducts({ sort: "-createdAt" }),
-    ]);
-    if (response[0].success) {
-      setBestSellers(response[0].products);
-      setProducts(response[0].products);
+    const response = await getProducts({ sort: "-sold" });
+
+    if (response.success) {
+      setBestSellers(response.products);
+      setProducts(response.products);
     }
-    if (response[1].success) setNewProducts(response[1].products);
   };
 
   useEffect(() => {
     fetchProduct();
+    dispatch(getNewProducts());
   }, []);
 
   useEffect(() => {
@@ -62,11 +62,7 @@ const BestSeller = () => {
         ))}
       </div>
       <div className="mt-5 mb-5 mx-[-10px] ">
-        <Slider {...settings}>
-          {products?.map((item) => (
-            <Product key={item._id} productData={item} isActive={isActive} />
-          ))}
-        </Slider>
+        <CustomSlider products={products} isActive={isActive} sizeImage={243} />
       </div>
       <div className="flex gap-5">
         <img

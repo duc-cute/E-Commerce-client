@@ -25,7 +25,7 @@ const SideBar = () => {
             <div className="w-5 h-5">
               <img
                 className="object-contain"
-                src={category?.image}
+                src={category?.icon}
                 alt={category.title}
               />
             </div>

@@ -19,7 +19,7 @@ const FeatureProducts = () => {
   }, []);
   return (
     <div>
-      <h2 className="text-[20px] py-[15px] mb-[20px] font-semibold text-[#151515] uppercase border-b-2 border-main border-solid ">
+      <h2 className="text-[20px] py-[15px] mb-[20px] font-semibold text-heading uppercase border-b-2 border-main border-solid ">
         Feature Products
       </h2>
       <div className="flex flex-wrap mx-[-10px]">
