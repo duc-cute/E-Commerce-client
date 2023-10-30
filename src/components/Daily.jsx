@@ -1,5 +1,5 @@
 /** @format */
-import { useEffect, useState } from "react";
+import { useEffect, useState, memo } from "react";
 import { getProducts } from "../apis";
 import icons from "../ultils/icons";
 import { formatMoney, renderStars } from "../ultils/helper";
@@ -116,4 +116,4 @@ const Daily = () => {
   );
 };
 
-export default Daily;
+export default memo(Daily);

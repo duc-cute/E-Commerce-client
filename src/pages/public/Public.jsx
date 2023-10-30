@@ -1,14 +1,17 @@
 /** @format */
 import { Outlet } from "react-router-dom";
-import { Banner, SideBar, Header, Navigation } from "../../components";
+import { TopHeader, Header, Navigation, Footer } from "../../components";
 const Public = () => {
   return (
     <div className="w-full flex flex-col items-center  ">
+      <TopHeader />
       <Header />
       <Navigation />
-      <div className="w-main h-[3000px]">
+      <div className="w-main ">
         <Outlet />
       </div>
+      <Footer />
+      <div className="h-[1000px]"></div>
     </div>
   );
 };

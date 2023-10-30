@@ -10,6 +10,7 @@ const settings = {
 };
 import Slider from "react-slick";
 import Product from "./Product";
+import { memo } from "react";
 const CustomSlider = ({ products, isActive, sizeImage, showDes }) => {
   return (
     <>
@@ -30,4 +31,4 @@ const CustomSlider = ({ products, isActive, sizeImage, showDes }) => {
   );
 };
 
-export default CustomSlider;
+export default memo(CustomSlider);

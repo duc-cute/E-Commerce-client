@@ -6,6 +6,8 @@ import { FaUserCircle, FaEye } from "react-icons/fa";
 import { BsHandbagFill } from "react-icons/bs";
 import { HiMenu } from "react-icons/hi";
 import { GrFormNext } from "react-icons/gr";
+import { MdLocationPin } from "react-icons/md";
+import { BsFillTelephoneFill } from "react-icons/bs";
 import {
   AiOutlineMenuFold,
   AiFillHeart,
@@ -24,6 +26,8 @@ const icons = {
   AiFillStar,
   AiOutlineStar,
   GrFormNext,
+  MdLocationPin,
+  BsFillTelephoneFill,
 };
 
 export default icons;

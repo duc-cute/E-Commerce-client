@@ -5,11 +5,15 @@ import trending from "../assets/images/trending.png";
 import newImage from "../assets/images/new.png";
 import SlideOption from "./SlideOption";
 import icons from "../ultils/icons";
+import { Link } from "react-router-dom";
+import path from "../ultils/path";
 const { HiMenu, AiFillHeart, FaEye } = icons;
 const Product = ({ productData, isActive, sizeImage, showDes }) => {
   return (
     <div className="group cursor-pointer  bg-white z-10 relative w-full  flex flex-col border-solid border-[1px] border-[#ebebeb] text-[16px] text-[#2b3743]">
-      <div>
+      <Link
+        to={`${path.DETAIL_PRODUCT}/${productData?._id}/${productData?.title}`}
+      >
         <img
           src={
             productData?.thumb ||
@@ -61,7 +65,7 @@ const Product = ({ productData, isActive, sizeImage, showDes }) => {
           <SlideOption icon={<HiMenu size={16} />} />
           <SlideOption icon={<FaEye size={16} />} />
         </div>
-      </div>
+      </Link>
       <div
         className={`${
           showDes ? "group-hover:invisible" : ""
