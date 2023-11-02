@@ -11,7 +11,7 @@ import {
 } from "../../components";
 const Home = () => {
   const { newProducts } = useSelector((state) => state.product);
-
+  const { isLoggedIn, userData } = useSelector((state) => state.user);
   return (
     <>
       <div className="w-main  flex mt-5 px-5 ">
