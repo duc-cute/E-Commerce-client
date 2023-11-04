@@ -9,10 +9,11 @@ const InputField = ({
   setInvalidField,
   icon,
   w,
+  style,
 }) => {
   return (
     <div
-      className={`bg-white border border-solid border-[#d2d1d6] flex justify-between items-center rounded-md ${
+      className={`${style} bg-white border border-solid border-[#d2d1d6] flex justify-between items-center rounded-md ${
         w ? `w-[${w}px]` : ""
       }`}
     >

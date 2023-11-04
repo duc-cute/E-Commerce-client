@@ -1,10 +1,12 @@
 /** @format */
-
+import { memo } from "react";
 const Button = ({ name, handleOnClick, style }) => {
   return (
     <button
       type="button"
-      className="px-4 py-3 text-[#1A162E] font-semibold rounded-md bg-[#FFB700]"
+      className={`px-4 py-3 text-[#1A162E] font-semibold rounded-md ${
+        style ? `${style}` : "bg-[#FFB700]"
+      } `}
       onClick={() => {
         handleOnClick && handleOnClick();
       }}
@@ -14,4 +16,4 @@ const Button = ({ name, handleOnClick, style }) => {
   );
 };
 
-export default Button;
+export default memo(Button);

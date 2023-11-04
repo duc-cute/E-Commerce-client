@@ -1,5 +1,7 @@
 /** @format */
 import { Route, Routes } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   Public,
   Home,
@@ -9,6 +11,8 @@ import {
   FAQs,
   Services,
   Products,
+  FinalRegister,
+  ResetPassword,
 } from "./pages/public";
 import path from "./ultils/path";
 import { getCategories } from "./redux/app/appAction";
@@ -34,8 +38,23 @@ function App() {
           <Route path={path.PRODUCTS} element={<Products />} />
           <Route path={path.OUR_SERVICES} element={<Services />} />
         </Route>
+        <Route path={path.RESET_PASSWORD} element={<ResetPassword />} />
         <Route path={path.LOGIN} element={<Login />} />
+        <Route path={path.FINAL_REGISTER} element={<FinalRegister />} />
       </Routes>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
+      <ToastContainer />
     </div>
   );
 }

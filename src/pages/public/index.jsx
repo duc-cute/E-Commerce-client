@@ -8,3 +8,5 @@ export { default as Services } from "./Services";
 export { default as FAQs } from "./FAQs";
 export { default as DetailProduct } from "./DetailProduct";
 export { default as Products } from "./Products";
+export { default as FinalRegister } from "./FinalRegister";
+export { default as ResetPassword } from "./ResetPassword";
