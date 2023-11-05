@@ -3,14 +3,15 @@ import loginImage from "../../assets/images/login.png";
 import logoImage from "../../assets/images/IconLogo.png";
 import icons from "../../ultils/icons";
 import { toast } from "react-toastify";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { InputField, Button } from "../../components";
 import { apiLogin, apiRegister, apiForgotPassword } from "../../apis";
 import swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import path from "../../ultils/path";
-import { register } from "../../redux/user/userSlice";
+import { login } from "../../redux/user/userSlice";
 import { useDispatch } from "react-redux";
+import { validate } from "../../ultils/helper";
 
 const { HiOutlineMail, BiLock, FiUser, RiPhoneFill } = icons;
 const Login = () => {
@@ -19,6 +20,7 @@ const Login = () => {
   const [isRegister, setIsRegister] = useState(false);
   const [isForgotPassWord, setIsForgotPassWord] = useState(false);
   const [email, setEmail] = useState("");
+  const [invalidFields, setInvalidFields] = useState([]);
   const [payload, setPayload] = useState({
     email: "",
     password: "",
@@ -26,6 +28,7 @@ const Login = () => {
     lastname: "",
     mobile: "",
   });
+
   const resetPayload = () => {
     setPayload({
       email: "",
@@ -38,30 +41,34 @@ const Login = () => {
 
   const handleSubmit = useCallback(async () => {
     const { firstname, lastname, mobile, ...data } = payload;
-    if (isRegister) {
-      const rs = await apiRegister(payload);
-      console.log("rs registe", rs);
-      console.log("rs payload", payload);
-      if (rs.success) {
-        swal.fire("Congralation", rs?.mes, "success").then(() => {
-          setIsRegister(false);
-          resetPayload();
-        });
+    const invalids = isRegister
+      ? validate(payload, setInvalidFields)
+      : validate(data, setInvalidFields);
+    if (invalids === 0) {
+      if (isRegister) {
+        const rs = await apiRegister(payload);
+        console.log("rs payload", payload);
+        if (rs.success) {
+          swal.fire("Congralation", rs?.mes, "success").then(() => {
+            setIsRegister(false);
+            resetPayload();
+          });
+        } else {
+          swal.fire("Oops!", rs?.mes, "error");
+        }
       } else {
-        swal.fire("Oops!", rs?.mes, "error");
+        const rs = await apiLogin(data);
+        if (rs.success) {
+          dispatch(
+            login({
+              isLoggedIn: true,
+              token: rs.accessToken,
+              userData: rs.userData,
+            })
+          );
+          navigate(`/${path.HOME}`);
+        } else swal.fire("Oops!", rs?.mes, "error");
       }
-    } else {
-      const rs = await apiLogin(data);
-      if (rs.success) {
-        dispatch(
-          register({
-            isLoggedIn: true,
-            token: rs.accessToken,
-            userData: rs.userData,
-          })
-        );
-        navigate(`/${path.HOME}`);
-      } else swal.fire("Oops!", rs?.mes, "error");
     }
   }, [payload, isRegister]);
 
@@ -71,6 +78,11 @@ const Login = () => {
     if (response?.success) toast.success(response.mes);
     else toast.info(response.mes);
   };
+
+  useEffect(() => {
+    resetPayload();
+    setInvalidFields([]);
+  }, [isRegister]);
 
   return (
     <div className="relative flex items-center justify-around h-screen">
@@ -135,12 +147,16 @@ const Login = () => {
                 setValue={setPayload}
                 nameKey="firstname"
                 icon={<FiUser />}
+                invalidFied={invalidFields}
+                setInvalidField={setInvalidFields}
               />
               <InputField
                 value={payload.lastname}
                 setValue={setPayload}
                 nameKey="lastname"
                 icon={<FiUser />}
+                invalidFied={invalidFields}
+                setInvalidField={setInvalidFields}
               />
             </div>
           )}
@@ -151,6 +167,8 @@ const Login = () => {
             icon={<HiOutlineMail />}
             w={480}
             style={"mb-[30px]"}
+            invalidFied={invalidFields}
+            setInvalidField={setInvalidFields}
           />
           {isRegister && (
             <InputField
@@ -160,6 +178,8 @@ const Login = () => {
               icon={<RiPhoneFill />}
               w={480}
               style={"mb-[30px]"}
+              invalidFied={invalidFields}
+              setInvalidField={setInvalidFields}
             />
           )}
           <InputField
@@ -170,6 +190,8 @@ const Login = () => {
             w={480}
             type="password"
             style={"mb-[20px]"}
+            invalidFied={invalidFields}
+            setInvalidField={setInvalidFields}
           />
 
           <div className="flex justify-between text-[#0071DC] text-[14px] font-medium mb-[50px]">
