@@ -7,11 +7,11 @@ const Public = () => {
       <TopHeader />
       <Header />
       <Navigation />
-      <div className="w-main ">
+      <div className="w-full flex flex-col items-center">
         <Outlet />
       </div>
       <Footer />
-      <div className="h-[1000px]"></div>
+      {/* <div className="h-[1000px]"></div> */}
     </div>
   );
 };

@@ -1,6 +1,6 @@
 /** @format */
 import { useEffect, useState, memo } from "react";
-import { getProducts } from "../apis";
+import { apiGetProducts } from "../apis";
 import icons from "../ultils/icons";
 import { formatMoney, renderStars } from "../ultils/helper";
 import CountDown from "./CountDown";
@@ -14,7 +14,7 @@ const Daily = () => {
   const [expireTime, setExpireTime] = useState(false);
   let idInterval;
   const fetchProductDaily = async () => {
-    const response = await getProducts({
+    const response = await apiGetProducts({
       limit: 1,
       page: Math.round(Math.random() * 5),
       totalRating: 5,

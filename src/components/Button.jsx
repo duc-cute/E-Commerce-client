@@ -4,7 +4,7 @@ const Button = ({ name, handleOnClick, style }) => {
   return (
     <button
       type="button"
-      className={`px-4 py-3 text-[#1A162E] font-semibold rounded-md ${
+      className={`px-4 py-3  text-white font-semibold rounded-md ${
         style ? `${style}` : "bg-[#FFB700]"
       } `}
       onClick={() => {

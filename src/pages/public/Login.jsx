@@ -5,7 +5,12 @@ import icons from "../../ultils/icons";
 import { toast } from "react-toastify";
 import { useCallback, useEffect, useState } from "react";
 import { InputField, Button } from "../../components";
-import { apiLogin, apiRegister, apiForgotPassword } from "../../apis";
+import {
+  apiLogin,
+  apiRegister,
+  apiForgotPassword,
+  apiFinalRegister,
+} from "../../apis";
 import swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import path from "../../ultils/path";
@@ -18,8 +23,10 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isRegister, setIsRegister] = useState(false);
+  const [isVerifyToken, setIsVerifyToken] = useState(false);
   const [isForgotPassWord, setIsForgotPassWord] = useState(false);
   const [email, setEmail] = useState("");
+  const [token, setToken] = useState("");
   const [invalidFields, setInvalidFields] = useState([]);
   const [payload, setPayload] = useState({
     email: "",
@@ -47,10 +54,10 @@ const Login = () => {
     if (invalids === 0) {
       if (isRegister) {
         const rs = await apiRegister(payload);
-        console.log("rs payload", payload);
         if (rs.success) {
           swal.fire("Congralation", rs?.mes, "success").then(() => {
-            setIsRegister(false);
+            setIsVerifyToken(true);
+            setIsRegister(true);
             resetPayload();
           });
         } else {
@@ -73,10 +80,21 @@ const Login = () => {
   }, [payload, isRegister]);
 
   const handleForgot = async () => {
-    console.log(email);
     const response = await apiForgotPassword({ email });
     if (response?.success) toast.success(response.mes);
     else toast.info(response.mes);
+  };
+
+  const finalRegister = async () => {
+    const res = await apiFinalRegister(token);
+    if (res.success) {
+      swal.fire("Congralation", res?.mes, "success").then(() => {
+        setIsVerifyToken(false);
+        setIsRegister(false);
+        resetPayload();
+      });
+    } else swal.fire("Oops!", res?.mes, "error");
+    setToken("");
   };
 
   useEffect(() => {
@@ -86,6 +104,52 @@ const Login = () => {
 
   return (
     <div className="relative flex items-center justify-around h-screen">
+      {isVerifyToken && (
+        <div className="absolute left-0 right-0 bottom-0 top-0 bg-overlay">
+          <div
+            id="content"
+            role="main"
+            className="w-full max-w-md mx-auto p-6  "
+          >
+            <div className="mt-7 bg-white  rounded-xl shadow-lg">
+              <div className="p-4 sm:p-7">
+                <div className="text-center">
+                  <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                    We sent a code to your email.Please check your email and
+                    enter your code in here.
+                  </p>
+                </div>
+
+                <div className="mt-5">
+                  <div className="grid gap-y-4">
+                    <div>
+                      <input
+                        type="email"
+                        className="py-3 px-4 block w-full border-2 border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 shadow-sm"
+                        required
+                        onChange={(e) => setToken(e.target.value)}
+                      />
+                    </div>
+                    <div className="flex justify-end gap-2">
+                      <Button
+                        name="Submit"
+                        style="text-white bg-[#FFB700]"
+                        handleOnClick={() => finalRegister()}
+                      />
+
+                      <Button
+                        style="text-white bg-blue-500"
+                        name="Back"
+                        handleOnClick={() => setIsVerifyToken(false)}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       {isForgotPassWord && (
         <div className="absolute bg-white z-50 top-0 left-0 right-0 bottom-0 flex flex-col items-center pt-12 ">
           <div className="flex flex-col gap-4">

@@ -12,7 +12,7 @@ const Product = ({ productData, isActive, sizeImage, showDes }) => {
   return (
     <div className="group cursor-pointer  bg-white z-10 relative w-full  flex flex-col border-solid border-[1px] border-[#ebebeb] text-[16px] text-[#2b3743]">
       <Link
-        to={`${path.DETAIL_PRODUCT}/${productData?._id}/${productData?.title}`}
+        to={`${productData?.category}/${productData?._id}/${productData?.title}`}
       >
         <img
           src={

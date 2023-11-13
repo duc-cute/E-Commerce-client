@@ -1,5 +1,7 @@
 /** @format */
 
+import { memo } from "react";
+
 const InputField = ({
   value,
   setValue,
@@ -11,7 +13,6 @@ const InputField = ({
   w,
   style,
 }) => {
-  console.log("invalidFied", invalidFied);
   return (
     <div className={`${style}`}>
       <div
@@ -42,4 +43,4 @@ const InputField = ({
 };
 //[name:"password",mes:""]
 
-export default InputField;
+export default memo(InputField);

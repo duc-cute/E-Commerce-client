@@ -1,22 +1,41 @@
 /** @format */
 
 import { createSlice } from "@reduxjs/toolkit";
+import * as actions from "./userAction";
 export const usersSlice = createSlice({
   name: "user",
   initialState: {
     isLoggedIn: false,
-    userData: null,
+    current: null,
     token: null,
   },
   reducers: {
     login: (state, action) => {
-      console.log("action", action);
       state.isLoggedIn = action.payload.isLoggedIn;
-      state.userData = action.payload.userData;
       state.token = action.payload.token;
     },
+    logout: (state, action) => {
+      state.isLoggedIn = false;
+      state.token = null;
+    },
+  },
+
+  extraReducers: (builder) => {
+    builder.addCase(actions.getCurrent.pending, (state) => {
+      state.isLoading = true;
+    });
+
+    builder.addCase(actions.getCurrent.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.current = action.payload;
+    });
+
+    builder.addCase(actions.getCurrent.rejected, (state, action) => {
+      state.isLoading = false;
+      state.current = null;
+    });
   },
 });
-export const { login } = usersSlice.actions;
+export const { login, logout } = usersSlice.actions;
 
 export default usersSlice.reducer;

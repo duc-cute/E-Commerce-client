@@ -1,20 +1,10 @@
 /** @format */
-import { getProducts } from "../apis";
+import { apiGetProducts } from "../apis";
 import { useEffect, useState } from "react";
 
 import { getNewProducts } from "../redux/products/productsAction";
 import { useDispatch, useSelector } from "react-redux";
 import CustomSlider from "./CustomSlider";
-
-const settings = {
-  dots: false,
-  infinite: true,
-  speed: 500,
-  slidesToShow: 3,
-  slidesToScroll: 1,
-  // autoplay: true,
-  autoplaySpeed: 3000,
-};
 
 const tabs = [
   { id: 1, title: "Best Seller" },
@@ -29,7 +19,7 @@ const BestSeller = () => {
   const dispatch = useDispatch();
   const { newProducts } = useSelector((state) => state.product);
   const fetchProduct = async () => {
-    const response = await getProducts({ sort: "-sold" });
+    const response = await apiGetProducts({ sort: "-sold" });
 
     if (response.success) {
       setBestSellers(response.products);

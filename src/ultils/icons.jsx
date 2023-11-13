@@ -1,13 +1,13 @@
 /** @format */
 
 import { RiPhoneFill } from "react-icons/ri";
-import { FiUser } from "react-icons/fi";
+import { FiUser, FiLogOut } from "react-icons/fi";
 import { IoMail } from "react-icons/io5";
 import { FaUserCircle, FaEye } from "react-icons/fa";
 import { BsHandbagFill } from "react-icons/bs";
 import { HiMenu, HiOutlineMail } from "react-icons/hi";
 import { GrFormNext } from "react-icons/gr";
-import { MdLocationPin } from "react-icons/md";
+import { MdLocationPin, MdOutlineNavigateNext } from "react-icons/md";
 import { BsFillTelephoneFill } from "react-icons/bs";
 import { BiLock } from "react-icons/bi";
 import {
@@ -33,6 +33,8 @@ const icons = {
   BiLock,
   HiOutlineMail,
   FiUser,
+  FiLogOut,
+  MdOutlineNavigateNext,
 };
 
 export default icons;

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import logo from "../assets/images/logo.png";
 import icons from "../ultils/icons";
 import path from "../ultils/path";
+
 const { RiPhoneFill, IoMail, BsHandbagFill, FaUserCircle } = icons;
 const Header = () => {
   return (
@@ -29,8 +30,9 @@ const Header = () => {
           <BsHandbagFill color="red" size={20} />
           <span>0 item</span>
         </div>
-        <div className="flex border-l border-solid border-[#0000001a] px-5  items-center">
-          <FaUserCircle size={25} />
+        <div className="flex border-l border-solid gap-[10px] border-[#0000001a] px-5  items-center">
+          <FaUserCircle color="red" size={25} />
+          <span>profile</span>
         </div>
       </div>
     </header>

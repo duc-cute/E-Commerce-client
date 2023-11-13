@@ -1,13 +1,13 @@
 /** @format */
 
 import { useEffect, useState } from "react";
-import { getProducts } from "../apis";
+import { apiGetProducts } from "../apis";
 import ProductCard from "./ProductCard";
 
 const FeatureProducts = () => {
   const [products, setProducts] = useState(null);
   const fetchDataFeatureProduct = async () => {
-    const res = await getProducts({
+    const res = await apiGetProducts({
       limit: 9,
       // page: Math.round(Math.random() * 2),
       totalRating: 4,

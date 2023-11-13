@@ -19,16 +19,16 @@
   padding: 0 10px;
 }
 
-.slick-prev {
+.custom-slicer .slick-prev {
   left: 0 !important;
 }
 
-.slick-next {
+.custom-slicer .slick-next {
   right: 0 !important;
 }
 
-.slick-arrow.slick-prev,
-.slick-arrow.slick-next {
+.custom-slicer .slick-arrow.slick-prev,
+.custom-slicer .slick-arrow.slick-next {
   z-index: 10;
   background-color: #fff;
   width: 80px;
@@ -37,21 +37,29 @@
   opacity: 0.5;
 }
 
-.slick-arrow.slick-prev::before {
+.custom-slicer .slick-arrow.slick-prev::before {
   content: "\276E";
 }
 
-.slick-arrow.slick-next::before {
+.custom-slicer .slick-arrow.slick-next::before {
   content: "\276F";
 }
-.slick-arrow.slick-prev::before,
-.slick-arrow.slick-next::before {
+.custom-slicer .slick-arrow.slick-prev::before,
+.custom-slicer .slick-arrow.slick-next::before {
   font-weight: 400;
   color: #151515;
   opacity: 0.5;
   font-size: 40px;
 }
-.slick-arrow.slick-prev:hover::before,
-.slick-arrow.slick-next:hover::before {
+.custom-slicer .slick-arrow.slick-prev:hover::before,
+.custom-slicer .slick-arrow.slick-next:hover::before {
   color: #ee3131;
+}
+
+.detail-slider .slick-list {
+  margin: 0 -5px;
+}
+
+.detail-slider .slick-slide {
+  padding: 0 5px;
 }

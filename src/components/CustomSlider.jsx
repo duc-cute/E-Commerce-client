@@ -7,6 +7,7 @@ const settings = {
   slidesToScroll: 1,
   // autoplay: true,
   autoplaySpeed: 3000,
+  className: "custom-slicer",
 };
 import Slider from "react-slick";
 import Product from "./Product";
