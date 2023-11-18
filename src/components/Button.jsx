@@ -1,6 +1,6 @@
 /** @format */
 import { memo } from "react";
-const Button = ({ name, handleOnClick, style }) => {
+const Button = ({ children, handleOnClick, style }) => {
   return (
     <button
       type="button"
@@ -11,7 +11,7 @@ const Button = ({ name, handleOnClick, style }) => {
         handleOnClick && handleOnClick();
       }}
     >
-      <span className="text-center">{name}</span>
+      {children}
     </button>
   );
 };

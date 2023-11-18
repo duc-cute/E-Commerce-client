@@ -12,11 +12,18 @@ const settings = {
 import Slider from "react-slick";
 import Product from "./Product";
 import { memo } from "react";
-const CustomSlider = ({ products, isActive, sizeImage, showDes }) => {
+const CustomSlider = ({
+  products,
+  isActive,
+  sizeImage,
+  showDes,
+  slidesToShow,
+  notFlag,
+}) => {
   return (
     <>
       {products && (
-        <Slider {...settings}>
+        <Slider {...settings} slidesToShow={slidesToShow ? slidesToShow : 3}>
           {products?.map((item) => (
             <Product
               key={item._id}
@@ -24,6 +31,7 @@ const CustomSlider = ({ products, isActive, sizeImage, showDes }) => {
               isActive={isActive}
               sizeImage={sizeImage}
               showDes={showDes}
+              notFlag={notFlag}
             />
           ))}
         </Slider>

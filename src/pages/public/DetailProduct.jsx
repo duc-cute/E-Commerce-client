@@ -1,19 +1,28 @@
 /** @format */
 
-import React, { useEffect, useState } from "react";
-import { apiGetProduct } from "../../apis";
+import React, { useCallback, useEffect, useState } from "react";
+import { apiGetProduct, apiGetProducts } from "../../apis";
 import { useParams } from "react-router-dom";
-import { BreadCrumb } from "../../components";
+import {
+  BreadCrumb,
+  Button,
+  CustomSlider,
+  ProductInfo,
+  SelectQuantity,
+} from "../../components";
 import Slider from "react-slick";
 import ReactImageMagnify from "react-image-magnify";
-
+import imgEmpty from "../../assets/images/imgEmpty.jpg";
+import { formatMoney, renderStars } from "../../ultils/helper";
+import ProductExtraInfo from "../../components/ProductExtraInfo";
+import { productExtra } from "../../ultils/constains";
 const settings = {
   dots: false,
   infinite: true,
   speed: 500,
   slidesToShow: 3,
   slidesToScroll: 1,
-  // autoplay: true,
+  autoplay: true,
   autoplaySpeed: 3000,
   className: "detail-slider",
 };
@@ -21,18 +30,44 @@ const settings = {
 const DetailProduct = () => {
   const { pid, title, category } = useParams();
   const [product, setProduct] = useState(null);
+  const [relatedProducts, setRelatedProducts] = useState(null);
+  const [quantity, setQuantity] = useState(1);
   const fetchProduct = async () => {
     const response = await apiGetProduct(pid);
-    console.log("response", response);
     setProduct(response.product);
+  };
+  const fetchRelatedProducts = async () => {
+    const response = await apiGetProducts({ category });
+    setRelatedProducts(response.products);
   };
 
   useEffect(() => {
-    fetchProduct();
+    if (pid) {
+      fetchProduct();
+      fetchRelatedProducts();
+    }
   }, [pid]);
 
+  const handleQuantity = useCallback(
+    (number) => {
+      if (!Number(number) || Number(number) < 1) {
+        return;
+      } else setQuantity(number);
+    },
+    [quantity]
+  );
+
+  const handleChangeQuantity = useCallback(
+    (action) => {
+      if (action === "minus" && quantity == 1) return;
+      if (action === "minus") setQuantity((prev) => +prev - 1);
+      if (action === "plus") setQuantity((prev) => +prev + 1);
+    },
+    [quantity]
+  );
+
   return (
-    <div className="w-full   flex flex-col items-center">
+    <div className="w-full   flex flex-col items-center pb-16">
       <div className="w-full flex justify-center px-[20px] py-[15px] mb-[20px]  bg-[#f7f7f7] ">
         <div className="w-main px-[20px] flex flex-col items-start">
           <h1 className="text-[18px] text-[#151515] font-semibold leading-5">
@@ -41,35 +76,32 @@ const DetailProduct = () => {
           <BreadCrumb title={title} category={category} />
         </div>
       </div>
-      <div className="flex w-main px-[20px]">
+      <div className="flex w-main px-[20px] ">
         <div className="flex-4   ">
           <div className="w-[458px] h-[458px] object-cover mb-[30px] border-[#e7e5e5] border-[1px] border-solid">
-            <ReactImageMagnify
-              {...{
-                smallImage: {
-                  alt: "Wristwatch by Ted Baker London",
-                  isFluidWidth: true,
-                  src: product?.thumb,
-                },
-                largeImage: {
-                  src: product?.thumb,
-                  width: 1000,
-                  height: 1200,
-                },
-              }}
-            />
+            <div className="">
+              <ReactImageMagnify
+                {...{
+                  smallImage: {
+                    alt: "Wristwatch by Ted Baker London",
+                    isFluidWidth: true,
+                    src: product?.thumb || imgEmpty,
+                  },
+                  largeImage: {
+                    src: product?.thumb || imgEmpty,
+                    width: 1000,
+                    height: 1200,
+                  },
+                }}
+              />
+            </div>
           </div>
-          {/* <img
-            className="w-[458px] h-[458px] object-cover mb-[30px] border-[#e7e5e5] border-[1px] border-solid"
-            src={product?.thumb}
-            alt={product?.title}
-          /> */}
           <div className="w-[458px]">
             <Slider {...settings}>
               {product?.images?.map((img, index) => (
                 <img
                   key={index}
-                  className="  border-[#e7e5e5] border-[1px] border-solid"
+                  className="  border-[#e7e5e5] border-[1px] border-solid h-[146px] px-2 object-cover "
                   src={img}
                   alt={product?.title}
                 />
@@ -77,10 +109,65 @@ const DetailProduct = () => {
             </Slider>
           </div>
         </div>
-        <div className="flex-4">detail</div>
-        <div className="flex-2">info</div>
+        <div className="flex-4 ml-10 ">
+          <h2 className="text-[#333] text-[32px] font-semibold   mb-[20px]">
+            {formatMoney(product?.price)} VND
+          </h2>
+          <div className="flex">
+            {renderStars(product?.totalRating, 14).map((star, index) => (
+              <span key={index}>{star}</span>
+            ))}
+            <span className="ml-2 text-main italic text-[12px] font-normal">
+              (Đã bán: {product?.sold} cái)
+            </span>
+          </div>
+          <ul className=" list-square ml-5 text-[14px] text-[#505050] flex flex-col gap-[5px] mt-5">
+            {product?.description.map((el, index) => (
+              <li className="leading-5" key={index}>
+                {el}
+              </li>
+            ))}
+          </ul>
+          <div className="flex gap-5 items-center mt-5 ">
+            <span className="font-semibold text-[16px]">Quantity</span>
+            <SelectQuantity
+              quantity={quantity}
+              handleQuantity={handleQuantity}
+              handleChangeQuantity={handleChangeQuantity}
+            />
+          </div>
+          <Button style="w-full max-w-[420px]  bg-main mt-3 text-[16px] font-lato py-3 rounded-none hover:bg-black hover:text-white transition-all ease-in-out duration-200">
+            ADD TO CART
+          </Button>
+        </div>
+        <div className="flex-2 flex flex-col gap-[10px]">
+          {productExtra?.map((el) => (
+            <ProductExtraInfo
+              key={el.id}
+              title={el.title}
+              icon={el.icon}
+              subtitle={el.subtitle}
+            />
+          ))}
+        </div>
       </div>
-      <div className="h-[500px]"></div>
+      <div className="mt-[30px] items-start w-main px-[20px]">
+        <ProductInfo />
+      </div>
+      <div className="w-main px-5 flex flex-col  mt-5">
+        <h2 className="flex gap-5 font-semibold text-[20px] py-5  text-heading uppercase border-b-2 border-main border-solid pb-2 mb-6">
+          orthoer customer also by:
+        </h2>
+        <div className="mt-5 mb-5 mx-[-10px] ">
+          <CustomSlider
+            slidesToShow={4}
+            products={relatedProducts}
+            sizeImage={345}
+            showDes={true}
+            notFlag={true}
+          />
+        </div>
+      </div>
     </div>
   );
 };

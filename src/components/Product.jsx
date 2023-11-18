@@ -8,7 +8,7 @@ import icons from "../ultils/icons";
 import { Link } from "react-router-dom";
 import path from "../ultils/path";
 const { HiMenu, AiFillHeart, FaEye } = icons;
-const Product = ({ productData, isActive, sizeImage, showDes }) => {
+const Product = ({ productData, isActive, sizeImage, showDes, notFlag }) => {
   return (
     <div className="group cursor-pointer  bg-white z-10 relative w-full  flex flex-col border-solid border-[1px] border-[#ebebeb] text-[16px] text-[#2b3743]">
       <Link
@@ -49,13 +49,15 @@ const Product = ({ productData, isActive, sizeImage, showDes }) => {
             </ul>
           </div>
         )}
-        <img
-          className={`absolute top-[15px] right-[15px] w-[75px] h-[25px] ${
-            showDes ? "group-hover:hidden" : ""
-          }`}
-          src={isActive === 1 ? trending : newImage}
-          alt="label"
-        />
+        {!notFlag && (
+          <img
+            className={`absolute top-[15px] right-[15px] w-[75px] h-[25px] ${
+              showDes ? "group-hover:hidden" : ""
+            }`}
+            src={isActive === 1 ? trending : newImage}
+            alt="label"
+          />
+        )}
         <div
           className={`${
             showDes ? "justify-start px-5" : "justify-center"

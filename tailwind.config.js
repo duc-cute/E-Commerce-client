@@ -10,6 +10,15 @@ module.exports = {
       main: ["Poppins", "sans-serif"],
       lato: ["Lato", "sans-serif"],
     },
+    listStyleType: {
+      none: "none",
+      disc: "disc",
+      decimal: "decimal",
+      square: "square",
+    },
+    flexGrow: {
+      1: 1,
+    },
     extend: {
       width: {
         main: "1220px",
