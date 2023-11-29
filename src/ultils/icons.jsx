@@ -3,7 +3,13 @@
 import { RiPhoneFill } from "react-icons/ri";
 import { FiUser, FiLogOut } from "react-icons/fi";
 import { IoMail } from "react-icons/io5";
-import { FaUserCircle, FaEye, FaShieldAlt, FaTruck } from "react-icons/fa";
+import {
+  FaUserCircle,
+  FaEye,
+  FaShieldAlt,
+  FaTruck,
+  FaChevronDown,
+} from "react-icons/fa";
 import { FaGift } from "react-icons/fa6";
 import { BsHandbagFill } from "react-icons/bs";
 import { HiMenu, HiOutlineMail } from "react-icons/hi";
@@ -16,7 +22,7 @@ import {
 import { BsFillTelephoneFill } from "react-icons/bs";
 import { BiLock } from "react-icons/bi";
 import { GiReturnArrow } from "react-icons/gi";
-
+import { IoIosArrowDown } from "react-icons/io";
 import {
   AiOutlineMenuFold,
   AiFillHeart,
@@ -47,6 +53,8 @@ const icons = {
   FaGift,
   GiReturnArrow,
   MdOutlinePermPhoneMsg,
+  FaChevronDown,
+  IoIosArrowDown,
 };
 
 export default icons;

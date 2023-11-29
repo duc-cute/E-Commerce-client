@@ -18,3 +18,4 @@ export { default as Button } from "./Button";
 export { default as BreadCrumb } from "./BreadCrumb";
 export { default as SelectQuantity } from "./SelectQuantity";
 export { default as ProductInfo } from "./ProductInfo";
+export { default as SearchItem } from "./SearchItem";

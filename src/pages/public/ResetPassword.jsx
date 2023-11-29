@@ -30,9 +30,10 @@ const ResetPassword = () => {
         <div className="flex justify-end gap-2">
           <Button
             style="bg-blue-500 text-white "
-            name="Change Password"
             handleOnClick={() => handleResetPassword()}
-          />
+          >
+            Change Password
+          </Button>
         </div>
       </div>
     </div>

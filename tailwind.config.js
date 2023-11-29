@@ -43,6 +43,9 @@ module.exports = {
       animation: {
         "slide-top": "slide-top 1s ease",
       },
+      boxShadow: {
+        search: "0 0 0 0.1rem #1a1b188c",
+      },
       keyframes: {
         "slide-top": {
           "0%": {

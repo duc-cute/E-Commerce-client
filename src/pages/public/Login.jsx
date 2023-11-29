@@ -165,14 +165,16 @@ const Login = () => {
             <div className="flex justify-end gap-2">
               <Button
                 style="bg-blue-500 text-white w-[100px]"
-                name="Submit"
                 handleOnClick={() => handleForgot()}
-              />
+              >
+                Submit
+              </Button>
               <Button
                 style="text-white bg-[#FFB700] w-[100px]"
-                name="Back"
                 handleOnClick={() => setIsForgotPassWord(false)}
-              />
+              >
+                Back
+              </Button>
             </div>
           </div>
         </div>
@@ -283,10 +285,9 @@ const Login = () => {
               </span>
             )}
           </div>
-          <Button
-            handleOnClick={handleSubmit}
-            name={isRegister ? "Sign Up" : "Login"}
-          />
+          <Button handleOnClick={handleSubmit}>
+            {isRegister ? "Sign Up" : "Login"}
+          </Button>
         </div>
       </div>
     </div>

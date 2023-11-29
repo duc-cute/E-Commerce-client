@@ -65,3 +65,24 @@ export const productExtra = [
     icon: <MdOutlinePermPhoneMsg />,
   },
 ];
+
+export const colors = [
+  "white",
+  "black",
+  "red",
+  "green",
+  "yellow",
+  "gray",
+  "gold",
+  "titanium bronze",
+];
+
+export const sorts = [
+  { id: 1, value: "-sold", title: "Best Selling" },
+  { id: 2, value: "-title", title: "Alphabetically,A-Z" },
+  { id: 3, value: "title", title: "Alphabetically,Z-A" },
+  { id: 4, value: "price", title: "Price, low to high" },
+  { id: 5, value: "-price", title: "Price, high to low" },
+  { id: 6, value: "createdAt", title: "Date, old to new" },
+  { id: 7, value: "-createdAt", title: "Date, new to old" },
+];

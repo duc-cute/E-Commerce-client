@@ -9,7 +9,7 @@ const BreadCrumb = ({ title, category }) => {
     { path: "/", breadcrumb: "Home" },
     {
       path: "/:category/:pit/:title",
-      breadcrumb: title.toLowerCase(),
+      breadcrumb: title?.toLowerCase(),
     },
   ];
   const breadcrumbs = useBreadcrumbs(routes);

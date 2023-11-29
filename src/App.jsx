@@ -35,8 +35,8 @@ function App() {
             element={<DetailProduct />}
           />
           <Route path={path.FAQS} element={<FAQs />} />
-          <Route path={path.PRODUCTS} element={<Products />} />
           <Route path={path.OUR_SERVICES} element={<Services />} />
+          <Route path={path.PRODUCTS} element={<Products />} />
         </Route>
         <Route path={path.RESET_PASSWORD} element={<ResetPassword />} />
         <Route path={path.LOGIN} element={<Login />} />
