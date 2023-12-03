@@ -1,6 +1,6 @@
 /** @format */
 
-import { formatMoney, renderStars } from "../ultils/helper";
+import { formatMoney, renderStars } from "../../ultils/helper";
 
 const ProductCard = ({ title, price, rating, image }) => {
   return (

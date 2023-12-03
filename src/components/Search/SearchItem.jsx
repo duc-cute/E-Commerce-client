@@ -1,12 +1,12 @@
 /** @format */
 
 import React, { memo, useEffect, useState } from "react";
-import icons from "../ultils/icons";
-import { colors } from "../ultils/constains";
+import icons from "../../ultils/icons";
+import { colors } from "../../ultils/constains";
 import { createSearchParams, useNavigate, useParams } from "react-router-dom";
-import { apiGetProducts } from "../apis";
-import { formatMoney } from "../ultils/helper";
-import useDebounce from "../hooks/useDebounce";
+import { apiGetProducts } from "../../apis";
+import { formatMoney } from "../../ultils/helper";
+import useDebounce from "../../hooks/useDebounce";
 const { IoIosArrowDown } = icons;
 
 const SearchItem = ({ name, activeClick, changeActiveClick, type }) => {

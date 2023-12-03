@@ -1,6 +1,6 @@
 /** @format */
 
-import icons from "../ultils/icons";
+import icons from "../../ultils/icons";
 const { GrFormNext } = icons;
 import { useSelector } from "react-redux";
 

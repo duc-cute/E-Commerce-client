@@ -1,8 +1,8 @@
 /** @format */
 import { Link } from "react-router-dom";
-import logo from "../assets/images/logo.png";
-import icons from "../ultils/icons";
-import path from "../ultils/path";
+import logo from "../../assets/images/logo.png";
+import icons from "../../ultils/icons";
+import path from "../../ultils/path";
 
 const { RiPhoneFill, IoMail, BsHandbagFill, FaUserCircle } = icons;
 const Header = () => {

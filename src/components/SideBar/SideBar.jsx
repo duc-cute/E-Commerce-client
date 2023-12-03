@@ -1,6 +1,6 @@
 /** @format */
 import { Link } from "react-router-dom";
-import icons from "../ultils/icons";
+import icons from "../../ultils/icons";
 import { useSelector } from "react-redux";
 
 const { AiOutlineMenuFold } = icons;

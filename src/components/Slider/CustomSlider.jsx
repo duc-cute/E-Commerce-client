@@ -10,7 +10,7 @@ const settings = {
   className: "custom-slicer",
 };
 import Slider from "react-slick";
-import Product from "./Product";
+import Product from "../Product/Product";
 import { memo } from "react";
 const CustomSlider = ({
   products,

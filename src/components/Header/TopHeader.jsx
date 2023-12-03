@@ -2,11 +2,11 @@
 
 import { memo, useEffect } from "react";
 import { Link } from "react-router-dom";
-import path from "../ultils/path";
+import path from "../../ultils/path";
 import { useDispatch, useSelector } from "react-redux";
-import { getCurrent } from "../redux/user/userAction";
-import icons from "../ultils/icons";
-import { logout } from "../redux/user/userSlice";
+import { getCurrent } from "../../redux/user/userAction";
+import icons from "../../ultils/icons";
+import { logout } from "../../redux/user/userSlice";
 const { FiLogOut } = icons;
 const TopHeader = () => {
   const dispatch = useDispatch();

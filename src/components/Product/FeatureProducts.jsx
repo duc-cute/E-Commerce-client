@@ -1,7 +1,7 @@
 /** @format */
 
 import { useEffect, useState } from "react";
-import { apiGetProducts } from "../apis";
+import { apiGetProducts } from "../../apis";
 import ProductCard from "./ProductCard";
 
 const FeatureProducts = () => {

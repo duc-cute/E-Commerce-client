@@ -1,9 +1,9 @@
 /** @format */
 import { useEffect, useState, memo } from "react";
-import { apiGetProducts } from "../apis";
-import icons from "../ultils/icons";
-import { formatMoney, renderStars } from "../ultils/helper";
-import CountDown from "./CountDown";
+import { apiGetProducts } from "../../apis";
+import icons from "../../ultils/icons";
+import { formatMoney, renderStars } from "../../ultils/helper";
+import CountDown from "../CountDown/CountDown";
 
 const { AiFillStar, HiMenu } = icons;
 const Daily = () => {

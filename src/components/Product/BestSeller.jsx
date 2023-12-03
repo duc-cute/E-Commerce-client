@@ -1,10 +1,10 @@
 /** @format */
-import { apiGetProducts } from "../apis";
+import { apiGetProducts } from "../../apis";
 import { useEffect, useState } from "react";
 
-import { getNewProducts } from "../redux/products/productsAction";
+import { getNewProducts } from "../../redux/products/productsAction";
 import { useDispatch, useSelector } from "react-redux";
-import CustomSlider from "./CustomSlider";
+import CustomSlider from "../Slider/CustomSlider";
 
 const tabs = [
   { id: 1, title: "Best Seller" },

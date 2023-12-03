@@ -1,7 +1,7 @@
 /** @format */
 import React, { useCallback, useEffect, useState } from "react";
 
-import { BreadCrumb, SearchItem } from "../../components";
+import { BreadCrumb, SearchItem, InputSelect, Product } from "../../components";
 import {
   createSearchParams,
   useNavigate,
@@ -9,8 +9,6 @@ import {
   useSearchParams,
 } from "react-router-dom";
 import { apiGetProducts } from "../../apis";
-import Product from "../../components/Product";
-import InputSelect from "../../components/InputSelect";
 import { sorts } from "../../ultils/constains";
 
 const Products = () => {

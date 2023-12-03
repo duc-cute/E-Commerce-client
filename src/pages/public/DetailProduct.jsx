@@ -14,7 +14,7 @@ import Slider from "react-slick";
 import ReactImageMagnify from "react-image-magnify";
 import imgEmpty from "../../assets/images/imgEmpty.jpg";
 import { formatMoney, renderStars } from "../../ultils/helper";
-import ProductExtraInfo from "../../components/ProductExtraInfo";
+import ProductExtraInfo from "../../components/Product/ProductExtraInfo";
 import { productExtra } from "../../ultils/constains";
 const settings = {
   dots: false,
@@ -32,13 +32,20 @@ const DetailProduct = () => {
   const [product, setProduct] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState(null);
   const [quantity, setQuantity] = useState(1);
+  const [update, setUpdate] = useState(false);
+  const [imageShow, setImageShow] = useState("");
   const fetchProduct = async () => {
     const response = await apiGetProduct(pid);
-    setProduct(response.product);
+    if (response.success) {
+      setProduct(response.product);
+      setImageShow(response.product?.thumb);
+    }
   };
   const fetchRelatedProducts = async () => {
     const response = await apiGetProducts({ category });
-    setRelatedProducts(response.products);
+    if (response.success) {
+      setRelatedProducts(response.products);
+    }
   };
 
   useEffect(() => {
@@ -46,8 +53,17 @@ const DetailProduct = () => {
       fetchProduct();
       fetchRelatedProducts();
     }
+    window.scrollTo(0, 0);
   }, [pid]);
 
+  useEffect(() => {
+    if (pid) {
+      fetchProduct();
+    }
+  }, [update]);
+  const reRender = useCallback(() => {
+    setUpdate((prev) => !prev);
+  }, [update]);
   const handleQuantity = useCallback(
     (number) => {
       if (!Number(number) || Number(number) < 1) {
@@ -66,6 +82,10 @@ const DetailProduct = () => {
     [quantity]
   );
 
+  const handleShowImage = (e, img) => {
+    setImageShow(img);
+  };
+
   return (
     <div className="w-full   flex flex-col items-center pb-16">
       <div className="w-full flex justify-center px-[20px] py-[15px] mb-[20px]  bg-[#f7f7f7] ">
@@ -79,16 +99,16 @@ const DetailProduct = () => {
       <div className="flex w-main px-[20px] ">
         <div className="flex-4   ">
           <div className="w-[458px] h-[458px] object-cover mb-[30px] border-[#e7e5e5] border-[1px] border-solid">
-            <div className="">
+            <div className="w-full h-full detail-image">
               <ReactImageMagnify
                 {...{
                   smallImage: {
                     alt: "Wristwatch by Ted Baker London",
                     isFluidWidth: true,
-                    src: product?.thumb || imgEmpty,
+                    src: imageShow || imgEmpty,
                   },
                   largeImage: {
-                    src: product?.thumb || imgEmpty,
+                    src: imageShow || imgEmpty,
                     width: 1000,
                     height: 1200,
                   },
@@ -100,6 +120,7 @@ const DetailProduct = () => {
             <Slider {...settings}>
               {product?.images?.map((img, index) => (
                 <img
+                  onClick={(e) => handleShowImage(e, img)}
                   key={index}
                   className="  border-[#e7e5e5] border-[1px] border-solid h-[146px] px-2 object-cover "
                   src={img}
@@ -152,7 +173,13 @@ const DetailProduct = () => {
         </div>
       </div>
       <div className="mt-[30px] items-start w-main px-[20px]">
-        <ProductInfo />
+        <ProductInfo
+          totalRating={product?.totalRating}
+          ratings={product?.ratings}
+          title={product?.title}
+          pid={product?._id}
+          reRender={reRender}
+        />
       </div>
       <div className="w-main px-5 flex flex-col  mt-5">
         <h2 className="flex gap-5 font-semibold text-[20px] py-5  text-heading uppercase border-b-2 border-main border-solid pb-2 mb-6">

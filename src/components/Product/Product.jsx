@@ -1,18 +1,17 @@
 /** @format */
-import { formatMoney, renderStars } from "../ultils/helper";
+import { formatMoney, renderStars } from "../../ultils/helper";
 
-import trending from "../assets/images/trending.png";
-import newImage from "../assets/images/new.png";
+import trending from "../../assets/images/trending.png";
+import newImage from "../../assets/images/new.png";
 import SlideOption from "./SlideOption";
-import icons from "../ultils/icons";
+import icons from "../../ultils/icons";
 import { Link } from "react-router-dom";
-import path from "../ultils/path";
 const { HiMenu, AiFillHeart, FaEye } = icons;
 const Product = ({ productData, isActive, sizeImage, showDes, notFlag }) => {
   return (
     <div className="group cursor-pointer  bg-white z-10 relative w-full  flex flex-col border-solid border-[1px] border-[#ebebeb] text-[16px] text-[#2b3743]">
       <Link
-        to={`${productData?.category}/${productData?._id}/${productData?.title}`}
+        to={`/${productData?.category}/${productData?._id}/${productData?.title}`}
       >
         <img
           src={

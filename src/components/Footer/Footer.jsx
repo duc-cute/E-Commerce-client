@@ -1,7 +1,7 @@
 /** @format */
 
 import { memo } from "react";
-import icons from "../ultils/icons";
+import icons from "../../ultils/icons";
 const { IoMail, BsFillTelephoneFill, MdLocationPin } = icons;
 const Footer = () => {
   return (

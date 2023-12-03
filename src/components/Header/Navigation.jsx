@@ -1,6 +1,6 @@
 /** @format */
 import { NavLink } from "react-router-dom";
-import { navigation } from "../ultils/constains";
+import { navigation } from "../../ultils/constains";
 const Navigation = () => {
   return (
     <div className="w-main h-12 px-5">
