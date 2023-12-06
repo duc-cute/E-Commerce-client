@@ -22,6 +22,7 @@ export { default as ProductInfo } from "./Product/ProductInfo";
 export { default as Product } from "./Product/Product";
 export { default as SearchItem } from "./Search/SearchItem";
 export { default as Ratings } from "./Rating/Ratings";
+export { default as Comment } from "./Rating/Comment";
 export { default as VoteBar } from "./Rating/VoteBar";
 export { default as VoteOption } from "./Rating/VoteOption";
 export { default as Modal } from "./Modal/Modal";
