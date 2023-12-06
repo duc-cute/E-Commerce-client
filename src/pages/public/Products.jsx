@@ -1,7 +1,13 @@
 /** @format */
 import React, { useCallback, useEffect, useState } from "react";
 
-import { BreadCrumb, SearchItem, InputSelect, Product } from "../../components";
+import {
+  BreadCrumb,
+  SearchItem,
+  InputSelect,
+  Product,
+  Pagination,
+} from "../../components";
 import {
   createSearchParams,
   useNavigate,
@@ -34,7 +40,6 @@ const Products = () => {
     }
     queries.category = category;
 
-    console.log("queries", queries);
     let queryPrice = {};
 
     if (queries.from) {
@@ -137,6 +142,9 @@ const Products = () => {
               </li>
             ))}
           </ul>
+        </div>
+        <div className="flex justify-end">
+          <Pagination />
         </div>
       </div>
     </div>

@@ -60,3 +60,8 @@ export const validate = (payload, setInvalidFields) => {
 };
 
 export const formatPrice = (number) => Math.round(number / 1000) * 1000;
+export const generateRange = (start, end) => {
+  const length = end - start + 1;
+
+  return Array.from({ length }, (_, index) => index + start);
+};
