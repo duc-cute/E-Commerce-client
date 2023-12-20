@@ -10,13 +10,14 @@ const FeatureProducts = () => {
     const res = await apiGetProducts({
       limit: 9,
       // page: Math.round(Math.random() * 2),
-      totalRating: 4,
+      // totalRating: 4,
     });
     if (res.success) setProducts(res.products);
   };
   useEffect(() => {
     fetchDataFeatureProduct();
   }, []);
+  console.log("fproducts", products);
   return (
     <div>
       <h2 className="text-[20px] py-[15px] mb-[20px] font-semibold text-heading uppercase border-b-2 border-main border-solid ">

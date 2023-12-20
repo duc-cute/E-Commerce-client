@@ -3,7 +3,12 @@
 import React, { memo, useEffect, useState } from "react";
 import icons from "../../ultils/icons";
 import { colors } from "../../ultils/constains";
-import { createSearchParams, useNavigate, useParams } from "react-router-dom";
+import {
+  createSearchParams,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import { apiGetProducts } from "../../apis";
 import { formatMoney } from "../../ultils/helper";
 import useDebounce from "../../hooks/useDebounce";
@@ -17,6 +22,7 @@ const SearchItem = ({ name, activeClick, changeActiveClick, type }) => {
     to: "",
   });
   const { category } = useParams();
+  const [params] = useSearchParams();
   const navigate = useNavigate();
 
   const onChangeSelected = (item) => {
@@ -30,18 +36,6 @@ const SearchItem = ({ name, activeClick, changeActiveClick, type }) => {
     const res = await apiGetProducts({ sort: "-price", limit: 1 });
     if (res.success) setBestPrice(res.products[0].price);
   };
-  useEffect(() => {
-    if (selected.length > 0) {
-      navigate({
-        pathname: `/${category}`,
-        search: createSearchParams({
-          color: selected.join(","),
-        }).toString(),
-      });
-    } else {
-      navigate(`/${category}`);
-    }
-  }, [selected]);
 
   useEffect(() => {
     if (type === "input") {
@@ -52,15 +46,48 @@ const SearchItem = ({ name, activeClick, changeActiveClick, type }) => {
   const debouncePriceFrom = useDebounce(price.from, 500);
   const debouncePriceTo = useDebounce(price.to, 500);
   useEffect(() => {
-    let data = {};
-    if (Number(price.from) > 0) data.from = price.from;
-    if (Number(price.to) > 0) data.to = price.to;
+    let param = [{ category }];
+    for (let i of params.entries()) param.push(i);
+
+    const queries = {};
+    for (let i of params) {
+      queries[i[0]] = i[1];
+    }
+    if (Number(price.from) > 0) queries.from = price.from;
+    if (Number(price.to) > 0) queries.to = price.to;
+    if (selected.length > 0) queries.color = selected.join(",");
+    queries.page = 1;
 
     navigate({
       pathname: `/${category}`,
-      search: createSearchParams(data).toString(),
+      search: createSearchParams({
+        ...queries,
+      }).toString(),
     });
-  }, [debouncePriceFrom, debouncePriceTo]);
+  }, [debouncePriceFrom, debouncePriceTo, selected]);
+
+  const handleReset = (name) => {
+    let param = [{ category }];
+    for (let i of params.entries()) param.push(i);
+
+    const queries = {};
+    for (let i of params) {
+      queries[i[0]] = i[1];
+    }
+    if (name === "color") {
+      setSelected([]);
+      delete queries.color;
+    } else if (name === "price") {
+      delete queries.from;
+      delete queries.to;
+    }
+    navigate({
+      pathname: `/${category}`,
+      search: createSearchParams({
+        ...queries,
+      }).toString(),
+    });
+  };
 
   return (
     <div className="relative text-[12px] text-[#1a1b18bf]">
@@ -68,7 +95,7 @@ const SearchItem = ({ name, activeClick, changeActiveClick, type }) => {
         onClick={() => changeActiveClick(name)}
         className={`${
           activeClick === name ? "shadow-search border-none" : ""
-        } flex items-center  gap-5 justify-between pl-4 pr-2 border-[1px] border-solid border-[#1a1b188c]`}
+        } cursor-pointer flex items-center  gap-5 justify-between pl-4 pr-2 border-[1px] border-solid border-[#1a1b188c]`}
       >
         <span className="capitalize leading-[45px]  ">{name}</span>
         <IoIosArrowDown size={12} color="#1a1b18bf" />
@@ -84,8 +111,8 @@ const SearchItem = ({ name, activeClick, changeActiveClick, type }) => {
                 <span>{selected.length} selected</span>
                 <label
                   onClick={() => {
-                    setSelected([]);
                     changeActiveClick(null);
+                    handleReset("color");
                   }}
                   className="underline text-[#1a1b18]"
                 >
@@ -125,9 +152,8 @@ const SearchItem = ({ name, activeClick, changeActiveClick, type }) => {
                 )} VND`}</span>
                 <label
                   onClick={() => {
-                    setSelected([]);
-                    changeActiveClick(null);
                     setPrice({ from: "", to: "" });
+                    handleReset("price");
                   }}
                   className="underline text-[#1a1b18]"
                 >

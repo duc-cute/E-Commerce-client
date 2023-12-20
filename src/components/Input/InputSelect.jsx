@@ -7,7 +7,7 @@ const InputSelect = ({ value, onChangeValue, options }) => {
     <select
       value={value}
       onChange={(e) => onChangeValue(e.target.value)}
-      className="w-full text-[12px] text-[#1a1b18bf] pl-4 pr-5 border-[1px] border-solid border-[#1a1b188c] leading-[45px] h-[45px] outline-none"
+      className="cursor-pointer w-full text-[12px] text-[#1a1b18bf] pl-4 pr-5 border-[1px] border-solid border-[#1a1b188c] leading-[45px] h-[45px] outline-none"
     >
       {options?.map((el) => (
         <option key={el.id} value={el.value}>

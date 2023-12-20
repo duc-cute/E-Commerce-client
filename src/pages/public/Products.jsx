@@ -22,6 +22,7 @@ const Products = () => {
   const [params] = useSearchParams();
   const navigate = useNavigate();
   const [products, setProducts] = useState(null);
+  const [countProducts, setCountProducts] = useState(null);
   const [activeClick, setActiveClick] = useState(null);
   const [sort, setSort] = useState("-sold");
 
@@ -29,17 +30,18 @@ const Products = () => {
     const response = await apiGetProducts(queries);
     // const response = await apiGetProducts({ ...queries, limit: 8 });
     setProducts(response.products);
+    setCountProducts(response.counts);
   };
 
   useEffect(() => {
     let param = [{ category }];
     for (let i of params.entries()) param.push(i);
+
     const queries = {};
     for (let i of params) {
       queries[i[0]] = i[1];
     }
-    queries.category = category;
-
+    // queries.category = category;
     let queryPrice = {};
 
     if (queries.from) {
@@ -62,6 +64,8 @@ const Products = () => {
     delete queries.to;
 
     fetchProductByCategory({ ...queryPrice, ...queries });
+
+    window.scrollTo(0, 0);
   }, [params]);
 
   const handleChangeActive = useCallback(
@@ -79,9 +83,18 @@ const Products = () => {
   );
 
   useEffect(() => {
+    let param = [{ category }];
+    for (let i of params.entries()) param.push(i);
+
+    const queries = {};
+    for (let i of params) {
+      queries[i[0]] = i[1];
+    }
+
     navigate({
       pathname: `/${category}`,
       search: createSearchParams({
+        ...queries,
         sort,
       }).toString(),
     });
@@ -143,8 +156,8 @@ const Products = () => {
             ))}
           </ul>
         </div>
-        <div className="flex justify-end">
-          <Pagination />
+        <div className="w-full">
+          <Pagination totalCount={countProducts} />
         </div>
       </div>
     </div>

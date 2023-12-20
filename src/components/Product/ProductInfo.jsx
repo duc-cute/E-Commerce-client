@@ -97,7 +97,7 @@ const ProductInfo = ({ totalRating, ratings, title, pid, reRender }) => {
               ))}
             </div>
             <div className="text-[#0c53b7] underline text-[18px]">
-              <span className="font-semibold">{ratings.length || 0} </span>
+              <span className="font-semibold">{ratings?.length || 0} </span>
               reviewers and commentors
             </div>
           </div>
@@ -109,9 +109,9 @@ const ProductInfo = ({ totalRating, ratings, title, pid, reRender }) => {
                   key={el}
                   number={el + 1}
                   ratingCount={
-                    ratings.filter((rating) => rating.star === el + 1).length
+                    ratings?.filter((rating) => rating.star === el + 1)?.length
                   }
-                  ratingTotal={ratings.length}
+                  ratingTotal={ratings?.length}
                 />
               ))}
           </div>
@@ -123,14 +123,16 @@ const ProductInfo = ({ totalRating, ratings, title, pid, reRender }) => {
           </Button>
         </div>
         <div className="flex flex-col gap-4">
-          {ratings?.map((el) => (
-            <Comment
-              name={`${el.postedBy.lastname} ${el.postedBy.firstname}`}
-              updatedAt={el?.updatedAt}
-              avatar={el?.avatar}
-              comment={el.comment}
-              star={el.star}
-            />
+          {ratings?.map((el, index) => (
+            <div key={index}>
+              <Comment
+                name={`${el.postedBy.lastname} ${el.postedBy.firstname}`}
+                updatedAt={el?.updatedAt}
+                avatar={el?.avatar}
+                comment={el.comment}
+                star={el.star}
+              />
+            </div>
           ))}
         </div>
       </div>
