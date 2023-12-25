@@ -2,8 +2,17 @@
 
 import path from "./path";
 import icons from "./icons";
-const { FaGift, FaShieldAlt, FaTruck, GiReturnArrow, MdOutlinePermPhoneMsg } =
-  icons;
+const {
+  FaGift,
+  FaShieldAlt,
+  FaTruck,
+  GiReturnArrow,
+  MdOutlinePermPhoneMsg,
+  MdGroup,
+  LuLayoutDashboard,
+  RiBillLine,
+  RiProductHuntFill,
+} = icons;
 
 export const navigation = [
   {
@@ -153,4 +162,44 @@ export const voteOptions = [
   { id: 3, title: "Neutral" },
   { id: 4, title: "Good" },
   { id: 5, title: "Perfect" },
+];
+
+export const adminSideBar = [
+  {
+    id: 1,
+    path: `/${path.ADMIN}/${path.DASHBOARD}`,
+    type: "SINGLE",
+    text: "DashBoard",
+    icon: <LuLayoutDashboard />,
+  },
+  {
+    id: 2,
+    path: `/${path.ADMIN}/${path.MANAGE_USER}`,
+    type: "SINGLE",
+    text: "Manage User",
+    icon: <MdGroup />,
+  },
+  {
+    id: 3,
+    type: "PARENT",
+    text: "Products",
+    icon: <RiProductHuntFill />,
+    submenu: [
+      {
+        text: "Create Product",
+        path: `/${path.ADMIN}/${path.CREATE_PRODUCT}`,
+      },
+      {
+        text: "Manage Product",
+        path: `/${path.ADMIN}/${path.MANAGE_PRODUCT}`,
+      },
+    ],
+  },
+  {
+    id: 4,
+    path: `/${path.ADMIN}/${path.MANAGE_ORDER}`,
+    type: "SINGLE",
+    text: "Manage Order",
+    icon: <RiBillLine />,
+  },
 ];

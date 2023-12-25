@@ -1,6 +1,6 @@
 /** @format */
 
-import { RiPhoneFill } from "react-icons/ri";
+import { RiPhoneFill, RiBillLine, RiProductHuntFill } from "react-icons/ri";
 import { FiUser, FiLogOut } from "react-icons/fi";
 import { IoMail } from "react-icons/io5";
 import {
@@ -18,17 +18,25 @@ import {
   MdLocationPin,
   MdOutlineNavigateNext,
   MdOutlinePermPhoneMsg,
+  MdGroup,
 } from "react-icons/md";
 import { BsFillTelephoneFill } from "react-icons/bs";
 import { BiLock } from "react-icons/bi";
 import { GiReturnArrow } from "react-icons/gi";
 import { IoIosArrowDown } from "react-icons/io";
+import { LuLayoutDashboard, LuPencilLine } from "react-icons/lu";
+import { CgImport } from "react-icons/cg";
+import { TiPlus } from "react-icons/ti";
+import { FiTrash2 } from "react-icons/fi";
 import {
   AiOutlineMenuFold,
   AiFillHeart,
   AiFillStar,
   AiOutlineStar,
+  AiOutlineCloudUpload,
+  AiOutlineSend,
 } from "react-icons/ai";
+
 const icons = {
   RiPhoneFill,
   IoMail,
@@ -55,6 +63,16 @@ const icons = {
   MdOutlinePermPhoneMsg,
   FaChevronDown,
   IoIosArrowDown,
+  MdGroup,
+  LuLayoutDashboard,
+  RiBillLine,
+  RiProductHuntFill,
+  AiOutlineCloudUpload,
+  AiOutlineSend,
+  CgImport,
+  TiPlus,
+  FiTrash2,
+  LuPencilLine,
 };
 
 export default icons;

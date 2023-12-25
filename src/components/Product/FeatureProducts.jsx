@@ -17,7 +17,6 @@ const FeatureProducts = () => {
   useEffect(() => {
     fetchDataFeatureProduct();
   }, []);
-  console.log("fproducts", products);
   return (
     <div>
       <h2 className="text-[20px] py-[15px] mb-[20px] font-semibold text-heading uppercase border-b-2 border-main border-solid ">

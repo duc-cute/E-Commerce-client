@@ -33,6 +33,8 @@ export const usersSlice = createSlice({
     builder.addCase(actions.getCurrent.rejected, (state, action) => {
       state.isLoading = false;
       state.current = null;
+      state.isLoggedIn = false;
+      state.token = null;
     });
   },
 });

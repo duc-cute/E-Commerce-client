@@ -3,9 +3,12 @@ import { Link } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
 import icons from "../../ultils/icons";
 import path from "../../ultils/path";
+import { useSelector } from "react-redux";
 
 const { RiPhoneFill, IoMail, BsHandbagFill, FaUserCircle } = icons;
+
 const Header = () => {
+  const { isLoggedIn, current } = useSelector((state) => state.user);
   return (
     <header className="w-main h-[110px] py-[35px] flex justify-between px-5">
       <Link to={`/${path.HOME}`}>
@@ -26,14 +29,25 @@ const Header = () => {
           </div>
           <span className="text-[12px]">Online Support 24/7</span>
         </div>
-        <div className="flex   gap-[10px] items-center px-5">
-          <BsHandbagFill color="red" size={20} />
-          <span>0 item</span>
-        </div>
-        <div className="flex border-l border-solid gap-[10px] border-[#0000001a] px-5  items-center">
-          <FaUserCircle color="red" size={25} />
-          <span>profile</span>
-        </div>
+        {isLoggedIn && current && (
+          <>
+            <div className="flex   gap-[10px] items-center px-5">
+              <BsHandbagFill color="red" size={20} />
+              <span>0 item</span>
+            </div>
+            <Link
+              to={`${
+                current?.role === "user"
+                  ? `${path.MEMBER}/${path.PERSONAL}`
+                  : `${path.ADMIN}/${path.DASHBOARD}`
+              }`}
+              className="flex border-l border-solid gap-[10px] border-[#0000001a] px-5  items-center"
+            >
+              <FaUserCircle color="red" size={25} />
+              <span>profile</span>
+            </Link>
+          </>
+        )}
       </div>
     </header>
   );

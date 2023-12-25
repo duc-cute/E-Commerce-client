@@ -11,6 +11,7 @@ const { FiLogOut } = icons;
 const TopHeader = () => {
   const dispatch = useDispatch();
   const { isLoggedIn, current } = useSelector((state) => state.user);
+  console.log("current", current?.id);
   useEffect(() => {
     if (isLoggedIn) {
       setTimeout(() => {
@@ -23,7 +24,7 @@ const TopHeader = () => {
     <div className="w-full flex justify-center items-center  h-[38px] bg-main text-[12px] text-white">
       <div className="w-main p-[10px] flex justify-between px-5">
         <span>ORDER ONLINE OR CALL US (+1800) 000 8808</span>
-        {isLoggedIn ? (
+        {isLoggedIn && current ? (
           <small className="flex gap-2 items-center">
             <span>{`Welcome,${current?.firstname} ${current?.lastname}`}</span>
             <FiLogOut

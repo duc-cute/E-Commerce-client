@@ -11,7 +11,6 @@ import {
 } from "../../components";
 const Home = () => {
   const { newProducts } = useSelector((state) => state.product);
-  console.log("new", newProducts);
   const { isLoggedIn, userData } = useSelector((state) => state.user);
   return (
     <>

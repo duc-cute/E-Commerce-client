@@ -11,7 +11,6 @@ const Public = () => {
         <Outlet />
       </div>
       <Footer />
-      {/* <div className="h-[1000px]"></div> */}
     </div>
   );
 };
