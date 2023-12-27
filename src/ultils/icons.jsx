@@ -35,6 +35,7 @@ import {
   AiOutlineStar,
   AiOutlineCloudUpload,
   AiOutlineSend,
+  AiOutlineSearch,
 } from "react-icons/ai";
 
 const icons = {
@@ -73,6 +74,7 @@ const icons = {
   TiPlus,
   FiTrash2,
   LuPencilLine,
+  AiOutlineSearch,
 };
 
 export default icons;

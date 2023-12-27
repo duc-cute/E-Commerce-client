@@ -1,10 +1,12 @@
 /** @format */
 
 import React, { useEffect, useState } from "react";
-import { Button, Table, Tag } from "../../components";
+import { Button, InputField, Pagination, Table, Tag } from "../../components";
 import icons from "../../ultils/icons";
 import { apiGetUsers } from "../../apis";
-const { TiPlus, FiTrash2, LuPencilLine } = icons;
+import useDebounce from "../../hooks/useDebounce";
+import { useSearchParams } from "react-router-dom";
+const { TiPlus, FiTrash2, LuPencilLine, AiOutlineSearch } = icons;
 
 let columns = [
   {
@@ -42,40 +44,64 @@ let columns = [
   },
 ];
 
-const groupButton = [
-  {
-    id: 1,
-    button: (
-      <Button
-        style={
-          "py-[10px] text-white rounded-md bg-[#1677ff] flex gap-1 items-center font-lato text-[14px]"
-        }
-      >
-        <TiPlus />
-        Thêm mới
-      </Button>
-    ),
-  },
-];
-
 const ManageUser = () => {
   const [listUser, setListUser] = useState([]);
-  const fetchUser = async () => {
-    const response = await apiGetUsers();
-    const data = response.users.map((user, index) => ({
-      no: index,
-      fullname: user.firstname + " " + user.lastname,
-      email: user.email,
-      role: user.role,
-      phone: user.mobile,
-      status: user.isBlocked,
-      createdAt: user.createdAt,
-    }));
-    setListUser(data);
+  const [params] = useSearchParams();
+  const [count, setCount] = useState(null);
+  const [querySearch, setQuerySearch] = useState({
+    search: "",
+  });
+  const fetchUser = async (params) => {
+    const response = await apiGetUsers(params);
+    if (response.success) {
+      const data = response?.users?.map((user, index) => ({
+        no: index,
+        fullname: user.firstname + " " + user.lastname,
+        email: user.email,
+        role: user.role,
+        phone: user.mobile,
+        status: user.isBlocked,
+        createdAt: user.createdAt,
+      }));
+      setListUser(data);
+      setCount(response.counts);
+    }
   };
+  const queriesDebounce = useDebounce(querySearch.search, 500);
   useEffect(() => {
-    fetchUser();
-  }, []);
+    const queries = Object.fromEntries(params);
+
+    if (queriesDebounce) queries.search = queriesDebounce;
+    fetchUser({ ...queries, limit: import.meta.env.VITE_PROD_LIMIT });
+  }, [queriesDebounce, params]);
+
+  const groupButton = [
+    {
+      id: 1,
+      button: (
+        <InputField
+          value={querySearch.queries}
+          setValue={setQuerySearch}
+          nameKey="search"
+          icon={<AiOutlineSearch />}
+        />
+      ),
+    },
+    {
+      id: 2,
+      button: (
+        <Button
+          style={
+            "py-[10px] text-white rounded-md bg-[#1677ff] flex gap-1 items-center font-lato text-[14px]"
+          }
+        >
+          <TiPlus />
+          Thêm mới
+        </Button>
+      ),
+    },
+  ];
+
   return (
     <div className=" h-[1000px]">
       {/* <div className=" mx-4 flex flex-col px-4 bg-[#ebebeb] rounded-xl pb-4">
@@ -96,6 +122,7 @@ const ManageUser = () => {
           columns={columns}
           data={listUser}
           groupButton={groupButton}
+          count={count}
         />
       </div>
     </div>

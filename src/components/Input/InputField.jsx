@@ -13,6 +13,7 @@ const InputField = ({
   w,
   style,
 }) => {
+  // console.log("va", value);
   return (
     <div className={`${style}`}>
       <div
@@ -28,7 +29,7 @@ const InputField = ({
           onChange={(e) =>
             setValue((prev) => ({ ...prev, [nameKey]: e.target.value }))
           }
-          onFocus={() => setInvalidField([])}
+          onFocus={() => setInvalidField && setInvalidField([])}
         />
 
         <span className="text-[#d2d1d6] pr-2 text-[20px]">{icon}</span>

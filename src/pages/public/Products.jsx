@@ -34,14 +34,7 @@ const Products = () => {
   };
 
   useEffect(() => {
-    let param = [{ category }];
-    for (let i of params.entries()) param.push(i);
-
-    const queries = {};
-    for (let i of params) {
-      queries[i[0]] = i[1];
-    }
-    // queries.category = category;
+    const queries = Object.fromEntries([...params]);
     let queryPrice = {};
 
     if (queries.from) {
@@ -63,7 +56,7 @@ const Products = () => {
     delete queries.from;
     delete queries.to;
 
-    fetchProductByCategory({ ...queryPrice, ...queries });
+    fetchProductByCategory({ ...queryPrice, ...queries, category });
 
     window.scrollTo(0, 0);
   }, [params]);

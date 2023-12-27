@@ -3,17 +3,21 @@
 import React, { useState } from "react";
 import logo from "../../assets/images/logo.png";
 import { adminSideBar } from "../../ultils/constains";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io";
 const activeClass =
   "flex items-center gap-2  hover:bg-[#1677ff] hover:text-white py-3 rounded-md  pl-6";
 const AdminSideBar = () => {
+  const location = useLocation();
   const [activeTabs, setActiveTabs] = useState([]);
+  const [path, setPath] = useState(location.pathname);
+  console.log("lo", location);
   const handleShowTab = (tabId) => {
     if (activeTabs.some((tab) => tab === tabId))
       setActiveTabs((prev) => prev.filter((tab) => tab !== tabId));
     else setActiveTabs((prev) => [...prev, tabId]);
   };
+
   return (
     <aside className="w-[200px] fixed top-0 bottom-0 bg-[#001529] text-white h-full">
       <div className="flex items-center flex-col  mt-5">
@@ -28,10 +32,18 @@ const AdminSideBar = () => {
       </div>
       <ul className="mt-6 flex flex-col gap-2 select-none">
         {adminSideBar.map((el) => (
-          <li key={el.id} className="text-[#ffffffa6]">
+          <li
+            key={el.id}
+            className="text-[#ffffffa6]"
+            onClick={() => setPath(el.path)}
+          >
             {el.type === "SINGLE" ? (
               <NavLink to={el.path}>
-                <span className={`mx-1 ${activeClass}`}>
+                <span
+                  className={`${
+                    path === el.path ? "bg-[#1677ff] text-white" : ""
+                  } mx-1 ${activeClass}`}
+                >
                   <span className="text-[18px]">{el.icon} </span>
                   {el.text}
                 </span>
@@ -40,7 +52,9 @@ const AdminSideBar = () => {
               <>
                 <div
                   className={`justify-between  mx-1 ${activeClass}`}
-                  onClick={() => handleShowTab(el.id)}
+                  onClick={() => {
+                    handleShowTab(el.id);
+                  }}
                 >
                   <span className="flex items-center gap-2">
                     <span className="text-[18px]">{el.icon} </span>
@@ -58,7 +72,16 @@ const AdminSideBar = () => {
                 {activeTabs.some((tab) => tab === el.id) && (
                   <ul className="flex flex-col gap-2 mx-1 text-[14px]">
                     {el.submenu.map((item, index) => (
-                      <li key={index} className={`pl-10 ${activeClass}`}>
+                      <li
+                        key={index}
+                        className={`${
+                          path === item.path ? "bg-[#1677ff] text-white" : ""
+                        } pl-10 ${activeClass}`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setPath(item.path);
+                        }}
+                      >
                         <NavLink to={item.path}>{item.text}</NavLink>
                       </li>
                     ))}

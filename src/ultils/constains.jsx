@@ -186,10 +186,13 @@ export const adminSideBar = [
     icon: <RiProductHuntFill />,
     submenu: [
       {
+        id: 3.1,
         text: "Create Product",
         path: `/${path.ADMIN}/${path.CREATE_PRODUCT}`,
       },
       {
+        id: 3.2,
+
         text: "Manage Product",
         path: `/${path.ADMIN}/${path.MANAGE_PRODUCT}`,
       },
