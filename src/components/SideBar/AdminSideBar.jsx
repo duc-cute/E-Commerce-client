@@ -11,7 +11,6 @@ const AdminSideBar = () => {
   const location = useLocation();
   const [activeTabs, setActiveTabs] = useState([]);
   const [path, setPath] = useState(location.pathname);
-  console.log("lo", location);
   const handleShowTab = (tabId) => {
     if (activeTabs.some((tab) => tab === tabId))
       setActiveTabs((prev) => prev.filter((tab) => tab !== tabId));

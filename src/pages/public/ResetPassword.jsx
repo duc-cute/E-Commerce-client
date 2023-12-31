@@ -12,6 +12,7 @@ const ResetPassword = () => {
   const { token } = useParams();
   const handleResetPassword = async () => {
     const rs = await apiResetPassword({ token, password: newPassword });
+
     if (rs?.success) toast.success(rs.mes, { theme: "colored" });
     else toast.info(rs.mes, { theme: "colored" });
   };

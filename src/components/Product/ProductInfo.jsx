@@ -39,7 +39,6 @@ const ProductInfo = ({ totalRating, ratings, title, pid, reRender }) => {
     },
     [pid]
   );
-  useEffect(() => {}, []);
   const handleVoteNow = () => {
     if (!isLoggedIn) {
       Swal.fire({

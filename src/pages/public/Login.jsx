@@ -70,7 +70,7 @@ const Login = () => {
             login({
               isLoggedIn: true,
               token: rs.accessToken,
-              userData: rs.userData,
+              current: rs.userData,
             })
           );
           navigate(`/${path.HOME}`);
@@ -81,6 +81,7 @@ const Login = () => {
 
   const handleForgot = async () => {
     const response = await apiForgotPassword({ email });
+    console.log("response", response);
     if (response?.success) toast.success(response.mes);
     else toast.info(response.mes);
   };
