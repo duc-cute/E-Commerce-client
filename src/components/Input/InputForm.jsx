@@ -23,11 +23,11 @@ const InputForm = ({
         }`}
       >
         {label && (
-          <label htmlFor={id} className="min-w-[80px]">
+          <label htmlFor={id} className="min-w-[80px] mb-5 font-medium">
             {label}
           </label>
         )}
-        <div className="flex flex-col gap-2  w-full">
+        <div className="flex flex-col gap-2  w-full min-h-[80px]">
           <input
             type={type}
             id={id}

@@ -17,7 +17,7 @@ const AdminLayout = () => {
         <AdminSideBar />
       </div>
 
-      <div className="flex-auto bg-[#f5f5f5]">
+      <div className="flex-auto bg-[#f5f5f5] h-screen">
         <HeaderAdmin />
         <Outlet />
       </div>

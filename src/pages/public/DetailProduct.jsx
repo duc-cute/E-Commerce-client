@@ -16,6 +16,7 @@ import imgEmpty from "../../assets/images/imgEmpty.jpg";
 import { formatMoney, renderStars } from "../../ultils/helper";
 import ProductExtraInfo from "../../components/Product/ProductExtraInfo";
 import { productExtra } from "../../ultils/constains";
+import DOMPurify from "dompurify";
 const settings = {
   dots: false,
   infinite: true,
@@ -130,7 +131,7 @@ const DetailProduct = () => {
             </Slider>
           </div>
         </div>
-        <div className="flex-4 ml-10 ">
+        <div className="flex-4 ml-10 pr-5">
           <h2 className="text-[#333] text-[32px] font-semibold   mb-[20px]">
             {formatMoney(product?.price)} VND
           </h2>
@@ -143,11 +144,20 @@ const DetailProduct = () => {
             </span>
           </div>
           <ul className=" list-square ml-5 text-[14px] text-[#505050] flex flex-col gap-[5px] mt-5">
-            {product?.description.map((el, index) => (
-              <li className="leading-5" key={index}>
-                {el}
-              </li>
-            ))}
+            {product?.description.length > 1 &&
+              product?.description.map((el, index) => (
+                <li className="leading-5" key={index}>
+                  {el}
+                </li>
+              ))}
+            {product?.description.length === 1 && (
+              <div
+                className="leading-5"
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(product.description[0]),
+                }}
+              ></div>
+            )}
           </ul>
           <div className="flex gap-5 items-center mt-5 ">
             <span className="font-semibold text-[16px]">Quantity</span>

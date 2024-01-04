@@ -6,6 +6,7 @@ import newImage from "../../assets/images/new.png";
 import SlideOption from "./SlideOption";
 import icons from "../../ultils/icons";
 import { Link } from "react-router-dom";
+import DOMPurify from "dompurify";
 const { HiMenu, AiFillHeart, FaEye } = icons;
 const Product = ({ productData, isActive, sizeImage, showDes, notFlag }) => {
   return (
@@ -36,15 +37,24 @@ const Product = ({ productData, isActive, sizeImage, showDes, notFlag }) => {
                 VND
               </span>
             </div>
-            <ul className="p-5">
-              {productData?.description.map((el, index) => (
-                <li
+            <ul className="p-5  line-clamp-[9]">
+              {productData?.description.length > 1 &&
+                productData?.description.map((el, index) => (
+                  <li
+                    className="text-[#505050] text-[13px] leading-5 "
+                    key={index}
+                  >
+                    {el}
+                  </li>
+                ))}
+              {productData?.description.length === 1 && (
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: DOMPurify.sanitize(productData?.description[0]),
+                  }}
                   className="text-[#505050] text-[13px] leading-5"
-                  key={index}
-                >
-                  {el}
-                </li>
-              ))}
+                ></div>
+              )}
             </ul>
           </div>
         )}
