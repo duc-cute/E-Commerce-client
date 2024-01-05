@@ -150,7 +150,7 @@ const CreateProduct = () => {
       <div className="bg-[#0505050f] h-[1px] w-full my-5"></div>
       <form
         onSubmit={handleSubmit(handleCreate)}
-        className="mx-5  px-5 py-5 flex flex-col "
+        className="mx-5  px-5 pb-5 flex flex-col "
       >
         <div className="flex items-center w-full gap-8">
           <InputForm
@@ -190,7 +190,7 @@ const CreateProduct = () => {
             placeholder={"Color Of New Product"}
           />
         </div>
-        <div className="flex items-center w-full gap-8">
+        <div className="flex items-center w-full gap-8 mb-2">
           <SelectForm
             id={"category"}
             label={"Category"}

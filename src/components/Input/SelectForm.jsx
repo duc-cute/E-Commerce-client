@@ -22,11 +22,11 @@ const SelectForm = ({
       >
         <label
           htmlFor={id}
-          className="block text-sm font-medium text-gray-900 min-w-[80px] mb-5"
+          className="block text-sm font-medium text-gray-900 min-w-[80px] "
         >
           {label}
         </label>
-        <div className="flex flex-col gap-2 w-full min-h-[80px]">
+        <div className="flex flex-col justify-center gap-2 w-full min-h-[80px]">
           <select
             disabled={disabled}
             id={id}

@@ -5,11 +5,15 @@ import usePagination from "../../hooks/usePagination";
 import PaginaItem from "./PaginaItem";
 import { useSearchParams } from "react-router-dom";
 
-const Pagination = ({ totalCount }) => {
+const Pagination = ({ totalCount, limit }) => {
   const [params] = useSearchParams();
   const page = +params.get("page");
-  const limit = +import.meta.env.VITE_PROD_LIMIT;
-  const paginateArr = usePagination(totalCount, page);
+  const limits = limit || +import.meta.env.VITE_PROD_LIMIT;
+  const paginateArr = usePagination({
+    totalProduct: totalCount,
+    currentPage: page,
+    limit: limits,
+  });
   return (
     <>
       <nav className="flex justify-between items-center">
@@ -18,7 +22,7 @@ const Pagination = ({ totalCount }) => {
             Showing <span className="font-semibold text-gray-900 ">1</span> to
             <span className="font-semibold text-gray-900 ">
               {" "}
-              {Math.min(limit, totalCount)}
+              {Math.min(limits, totalCount)}
             </span>{" "}
             of
             <span className="font-semibold text-gray-900 ">
@@ -31,12 +35,12 @@ const Pagination = ({ totalCount }) => {
           <span className="text-sm text-gray-700 ">
             Showing{" "}
             <span className="font-semibold text-gray-900 ">
-              {(page - 1) * limit + 1}
+              {(page - 1) * limits + 1}
             </span>{" "}
             to
             <span className="font-semibold text-gray-900 ">
               {" "}
-              {Math.min(page * limit, totalCount)}
+              {Math.min(page * limits, totalCount)}
             </span>{" "}
             of
             <span className="font-semibold text-gray-900 ">

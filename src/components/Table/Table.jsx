@@ -3,7 +3,7 @@
 import React, { memo } from "react";
 import Pagination from "../Paginate/Pagination";
 
-const Table = ({ title, columns, data, groupButton, count }) => {
+const Table = ({ title, columns, data, groupButton, count, limit }) => {
   return (
     <>
       <div className="relative overflow-x-auto  font-lato text-[#000000E0]">
@@ -20,7 +20,7 @@ const Table = ({ title, columns, data, groupButton, count }) => {
             <tr>
               {columns.map((column, index) => (
                 <th key={index} scope="col" className="px-4 py-3 ">
-                  <div className="flex items-center">
+                  <div className="flex items-center justify-center">
                     {column?.title}
                     {column?.sort && (
                       <a href="#">
@@ -47,7 +47,10 @@ const Table = ({ title, columns, data, groupButton, count }) => {
                 className="bg-white text-[14px] border-b border-[1px] border-gray-100 border-solid font-medium  hover:bg-gray-50 "
               >
                 {columns.map((column, index) => (
-                  <td key={column?.key} className="px-4 py-4 ">
+                  <td
+                    key={column?.key}
+                    className="px-4 py-4 align-middle text-center"
+                  >
                     {column.render
                       ? column.render(item[column.key], index)
                       : item[column.key]}
@@ -62,7 +65,13 @@ const Table = ({ title, columns, data, groupButton, count }) => {
           className="w-full bg-white px-4 py-1"
           aria-label="Table navigation"
         >
-          <Pagination totalCount={count} />
+          {count > 0 ? (
+            <Pagination totalCount={count} limit={limit} />
+          ) : (
+            <div className="leading-5 text-center min-h-[200px] flex items-center justify-center">
+              Không có sản phẩm nào
+            </div>
+          )}
         </div>
       </div>
     </>

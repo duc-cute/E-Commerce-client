@@ -3,9 +3,14 @@
 import React, { useMemo } from "react";
 import { generateRange } from "../ultils/helper";
 import { BsThreeDots } from "react-icons/bs";
-const usePagination = (totalProduct, currentPage, siblingCount = 1) => {
+const usePagination = ({
+  totalProduct,
+  currentPage,
+  siblingCount = 1,
+  limit,
+}) => {
   const paginationArr = useMemo(() => {
-    const pageSize = import.meta.env.VITE_PROD_LIMIT || 10;
+    const pageSize = limit || +import.meta.env.VITE_PROD_LIMIT || 10;
     const paginationCount = Math.ceil(totalProduct / pageSize);
     const totalPaginationItem = siblingCount + 5;
 
