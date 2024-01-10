@@ -19,6 +19,7 @@ import {
   MdOutlineNavigateNext,
   MdOutlinePermPhoneMsg,
   MdGroup,
+  MdOutlineDashboardCustomize,
 } from "react-icons/md";
 import { BsFillTelephoneFill } from "react-icons/bs";
 import { BiLock } from "react-icons/bi";
@@ -75,6 +76,7 @@ const icons = {
   FiTrash2,
   LuPencilLine,
   AiOutlineSearch,
+  MdOutlineDashboardCustomize,
 };
 
 export default icons;

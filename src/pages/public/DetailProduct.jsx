@@ -9,6 +9,7 @@ import {
   CustomSlider,
   ProductInfo,
   SelectQuantity,
+  Varriant,
 } from "../../components";
 import Slider from "react-slick";
 import ReactImageMagnify from "react-image-magnify";
@@ -17,6 +18,7 @@ import { formatMoney, renderStars } from "../../ultils/helper";
 import ProductExtraInfo from "../../components/Product/ProductExtraInfo";
 import { productExtra } from "../../ultils/constains";
 import DOMPurify from "dompurify";
+import { BsFillNutFill } from "react-icons/bs";
 const settings = {
   dots: false,
   infinite: true,
@@ -31,6 +33,7 @@ const settings = {
 const DetailProduct = () => {
   const { pid, title, category } = useParams();
   const [product, setProduct] = useState(null);
+  const [varriantSelect, setVarriantSelect] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [update, setUpdate] = useState(false);
@@ -61,7 +64,7 @@ const DetailProduct = () => {
     if (pid) {
       fetchProduct();
     }
-  }, [update]);
+  }, [update, varriantSelect]);
   const reRender = useCallback(() => {
     setUpdate((prev) => !prev);
   }, [update]);
@@ -87,12 +90,23 @@ const DetailProduct = () => {
     setImageShow(img);
   };
 
+  const handleMouseEnterVarriant = (id) => {
+    if (product.varriants.length > 0) {
+      setVarriantSelect(product.varriants.find((varr) => varr.sku === id));
+    }
+  };
+  console.log("ff", varriantSelect);
+
+  const handleMouseLeaveVarriant = (id) => {
+    setVarriantSelect(null);
+  };
+
   return (
     <div className="w-full   flex flex-col items-center pb-16">
       <div className="w-full flex justify-center px-[20px] py-[15px] mb-[20px]  bg-[#f7f7f7] ">
         <div className="w-main px-[20px] flex flex-col items-start">
           <h1 className="text-[18px] text-[#151515] font-semibold leading-5">
-            {title}
+            {varriantSelect?.title || title}
           </h1>
           <BreadCrumb title={title} category={category} />
         </div>
@@ -106,10 +120,10 @@ const DetailProduct = () => {
                   smallImage: {
                     alt: "Wristwatch by Ted Baker London",
                     isFluidWidth: true,
-                    src: imageShow || imgEmpty,
+                    src: varriantSelect?.thumb || imageShow || imgEmpty,
                   },
                   largeImage: {
-                    src: imageShow || imgEmpty,
+                    src: varriantSelect?.thumb || imageShow || imgEmpty,
                     width: 1000,
                     height: 1200,
                   },
@@ -119,21 +133,32 @@ const DetailProduct = () => {
           </div>
           <div className="w-[458px]">
             <Slider {...settings}>
-              {product?.images?.map((img, index) => (
-                <img
-                  onClick={(e) => handleShowImage(e, img)}
-                  key={index}
-                  className="  border-[#e7e5e5] border-[1px] border-solid h-[146px] px-2 object-cover "
-                  src={img}
-                  alt={product?.title}
-                />
-              ))}
+              {varriantSelect?.images.length > 0 &&
+                varriantSelect.images.map((img, index) => (
+                  <img
+                    onClick={(e) => handleShowImage(e, img)}
+                    key={index}
+                    className="  border-[#e7e5e5] border-[1px] border-solid h-[146px] px-2 object-cover "
+                    src={img}
+                    alt={""}
+                  />
+                ))}
+              {(!varriantSelect || varriantSelect?.images.length === 0) &&
+                product?.images?.map((img, index) => (
+                  <img
+                    onClick={(e) => handleShowImage(e, img)}
+                    key={index}
+                    className="  border-[#e7e5e5] border-[1px] border-solid h-[146px] px-2 object-cover "
+                    src={img}
+                    alt={product?.title}
+                  />
+                ))}
             </Slider>
           </div>
         </div>
         <div className="flex-4 ml-10 pr-5">
           <h2 className="text-[#333] text-[32px] font-semibold   mb-[20px]">
-            {formatMoney(product?.price)} VND
+            {formatMoney(varriantSelect?.price || product?.price)} VND
           </h2>
           <div className="flex">
             {renderStars(product?.totalRating, 14).map((star, index) => (
@@ -159,6 +184,22 @@ const DetailProduct = () => {
               ></div>
             )}
           </ul>
+          <div className="flex gap-3 items-center mt-5 flex-wrap">
+            {product?.varriants.length > 0 &&
+              product?.varriants.map((el) => (
+                <div
+                  key={el.sku}
+                  onMouseEnter={() => handleMouseEnterVarriant(el.sku)}
+                  onMouseLeave={() => handleMouseLeaveVarriant(el.sku)}
+                >
+                  <Varriant
+                    title={el.title === product.title ? "" : el.title}
+                    color={el.color}
+                  />
+                </div>
+              ))}
+          </div>
+
           <div className="flex gap-5 items-center mt-5 ">
             <span className="font-semibold text-[16px]">Quantity</span>
             <SelectQuantity

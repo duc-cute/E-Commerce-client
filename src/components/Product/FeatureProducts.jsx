@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { apiGetProducts } from "../../apis";
 import ProductCard from "./ProductCard";
+import { Link } from "react-router-dom";
 
 const FeatureProducts = () => {
   const [products, setProducts] = useState(null);
@@ -24,7 +25,8 @@ const FeatureProducts = () => {
       </h2>
       <div className="flex flex-wrap mx-[-10px]">
         {products?.map((prod) => (
-          <div
+          <Link
+            to={`/${prod?.category}/${prod?._id}/${prod?.title}`}
             key={prod._id}
             className="w-1/3 px-[10px] mb-[20px] cursor-pointer"
           >
@@ -34,7 +36,7 @@ const FeatureProducts = () => {
               price={prod.price}
               image={prod.images[0]}
             />
-          </div>
+          </Link>
         ))}
       </div>
       <div className="flex gap-5">

@@ -11,7 +11,6 @@ const MarkDown = ({
   invalidField,
   setInvalidField,
 }) => {
-  console.log("in", invalidField);
   return (
     <div className="flex flex-col flex-1  ">
       <label className="block text-sm font-medium text-gray-900 min-w-[80px] mb-2">

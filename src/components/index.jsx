@@ -37,4 +37,5 @@ export { default as AdminSideBar } from "./SideBar/AdminSideBar";
 export { default as HeaderAdmin } from "./Header/HeaderAdmin";
 export { default as Table } from "./Table/Table";
 export { default as Tag } from "./Tag/Tag";
+export { default as Varriant } from "./Varriant/Varriant";
 export { default as UpdateFormUser } from "./Form/UpdateFormUser";

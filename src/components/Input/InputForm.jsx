@@ -14,20 +14,25 @@ const InputForm = ({
   placeholder,
   fullwidth,
   style,
+  col,
 }) => {
   return (
     <div className={`${style} flex-1`}>
       <div
-        className={` bg-white  flex justify-between items-center  ${
-          fullwidth ? `w-full` : ""
-        }`}
+        className={` bg-white  flex justify-between  ${
+          col ? "flex-col items-start gap-2" : "items-center"
+        }  ${fullwidth ? `w-full` : ""}`}
       >
         {label && (
           <label htmlFor={id} className="min-w-[80px]  font-medium">
             {label}
           </label>
         )}
-        <div className="flex flex-col gap-2 justify-center w-full min-h-[80px]">
+        <div
+          className={`flex flex-col gap-2 justify-center w-full  ${
+            col ? "" : "min-h-[80px]"
+          }`}
+        >
           <input
             type={type}
             id={id}

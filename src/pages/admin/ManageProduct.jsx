@@ -15,10 +15,16 @@ import {
 } from "react-router-dom";
 import path from "../../ultils/path";
 import useDebounce from "../../hooks/useDebounce";
+import UpdateProduct from "./UpdateProduct";
+import { AddVarriant } from ".";
 
-const { FiTrash2, LuPencilLine, TiPlus } = icons;
+const { FiTrash2, LuPencilLine, TiPlus, MdOutlineDashboardCustomize } = icons;
 
 const ManageProduct = () => {
+  const [showUpdate, setShowUpdate] = useState(false);
+  const [showVarriant, setShowVarriant] = useState(false);
+  const [dataUpdate, setDataUpdate] = useState([]);
+  const [dataVarriant, setDataVarriant] = useState([]);
   const [dataProd, setDataProd] = useState([]);
   const [count, setCount] = useState(null);
   const [params] = useSearchParams();
@@ -26,10 +32,9 @@ const ManageProduct = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const currentPage = +params.get("page") || 1;
+
   const {
     register,
-    handleSubmit,
-    reset,
     watch,
     formState: { errors },
   } = useForm();
@@ -84,6 +89,10 @@ const ManageProduct = () => {
       sort: true,
     },
     {
+      title: "Varriants",
+      key: "varriants",
+    },
+    {
       title: "Color",
       key: "color",
     },
@@ -96,7 +105,22 @@ const ManageProduct = () => {
             <FiTrash2 color="red" />
           </span>
           <span>
-            <LuPencilLine color="#1677ff" />
+            <LuPencilLine
+              color="#1677ff"
+              onClick={() => {
+                setShowUpdate(true);
+                setDataUpdate(info);
+              }}
+            />
+          </span>
+          <span>
+            <MdOutlineDashboardCustomize
+              color="#52c41a"
+              onClick={() => {
+                setShowVarriant(true);
+                setDataVarriant(info);
+              }}
+            />
           </span>
         </div>
       ),
@@ -152,7 +176,9 @@ const ManageProduct = () => {
         color: el.color,
         brand: el.branch,
         category: el.category,
+        varriants: el?.varriants.length,
         ratings: el.totalRating,
+        action: el,
       }));
       setDataProd(data);
       setCount(res.counts);
@@ -164,7 +190,7 @@ const ManageProduct = () => {
     const queries = Object.fromEntries(params);
     console.log("queri", queries);
     fetchData({ ...queries, limit });
-  }, [params]);
+  }, [params, showUpdate, showVarriant]);
 
   const queryDebounce = useDebounce(watch("search"), 500);
   useEffect(() => {
@@ -184,16 +210,28 @@ const ManageProduct = () => {
 
   return (
     <div>
-      <div className="mx-4 mt-4">
-        <Table
-          columns={columns}
-          data={dataProd}
-          count={count}
-          title={"Manage Product"}
-          groupButton={groupButton}
-          limit={limit}
+      {showUpdate && (
+        <UpdateProduct dataUpdate={dataUpdate} setShowUpdate={setShowUpdate} />
+      )}
+      {showVarriant && (
+        <AddVarriant
+          dataVarriant={dataVarriant}
+          setShowVarriant={setShowVarriant}
         />
-      </div>
+      )}
+
+      {!(showUpdate || showVarriant) && (
+        <div className="mx-4 mt-4 overflow-x-auto">
+          <Table
+            columns={columns}
+            data={dataProd}
+            count={count}
+            title={"Manage Product"}
+            groupButton={groupButton}
+            limit={limit}
+          />
+        </div>
+      )}
     </div>
   );
 };

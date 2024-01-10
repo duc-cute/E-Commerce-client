@@ -27,7 +27,7 @@ const InputFileImg = ({ id, label, register, errors, validate, multiple }) => {
             <span>Upload</span>
           </div>
           <input
-            {...register(id, validate)}
+            {...(validate ? register(id, validate) : register(id))}
             id={id}
             type="file"
             className="hidden"

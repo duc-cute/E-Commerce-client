@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useCallback, useEffect, useState } from "react";
+import React, { memo, useCallback, useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import {
@@ -15,9 +15,9 @@ import { useSelector } from "react-redux";
 import { getBase64, validate } from "../../ultils/helper";
 import { toast } from "react-toastify";
 import { FiTrash2 } from "react-icons/fi";
-import { apiCreateProduct } from "../../apis";
+import { apiUpdateProduct } from "../../apis";
 
-const CreateProduct = () => {
+const UpdateProduct = ({ dataUpdate, setShowUpdate }) => {
   const { categories } = useSelector((state) => state.app);
   const [preview, setPreview] = useState({
     thumb: null,
@@ -36,30 +36,44 @@ const CreateProduct = () => {
     formState: { errors },
   } = useForm();
 
-  const handleCreate = async (data) => {
+  const handleUpdate = async (data) => {
     const invalid = validate(payload, setInvalidField);
     if (invalid === 0) {
-      data.thumb = preview.thumb.file;
+      if (preview.thumb?.file) {
+        data.thumb = preview.thumb?.file;
+      }
       data.images = preview.images.map((el) => ({
         file: el.file,
+        url: el.url,
       }));
       const finalData = { ...data, ...payload };
-      console.log("finalData", finalData);
 
       const formData = new FormData();
       for (let i of Object.entries(finalData)) {
-        if (i[0] === "images") {
+        if (i[0] === "images" || i[0] === "thumb") {
           continue;
         }
         formData.append(i[0], i[1]);
       }
+      if (preview?.thumb?.file) formData.append("thumb", finalData.thumb);
+
       if (finalData.images) {
-        console.log("finalData.images", finalData.images[0].file);
-        finalData.images.map((image) => formData.append("images", image.file));
+        finalData.images.map((image) =>
+          image?.file
+            ? formData.append("images", image?.file)
+            : formData.append("imgOld", image?.url)
+        );
       }
-      console.log();
-      const res = await apiCreateProduct(formData);
-      console.log("res", res);
+
+      if (!preview.thumb) {
+        toast.error("Please select a thumbnail!");
+        return;
+      }
+      const res = await apiUpdateProduct(formData, dataUpdate._id);
+      if (res.success) {
+        setShowUpdate(false);
+        toast.success(res.mes);
+      } else toast.warning(res.mes);
     }
   };
 
@@ -87,13 +101,17 @@ const CreateProduct = () => {
         toast.warning("File not supported");
         return;
       }
-
       if (
         imgPreview.length > 0 &&
-        imgPreview.some((el) => el.file.name === file.name)
+        imgPreview.some((el) => el?.file?.name === file?.name)
       ) {
         // toast.warning(`File ${file.name} has existed`);
         continue;
+      }
+      if (typeof file === "string") {
+        if (imgPreview.length > 0)
+          setPreview((prev) => ({ ...prev, images: [...imgPreview] }));
+        return;
       }
       const urlImg = await getBase64(file);
       imgPreview.push({
@@ -101,34 +119,26 @@ const CreateProduct = () => {
         file: file,
         uid: uuidv4(),
       });
+      if (imgPreview.length > 0)
+        setPreview((prev) => ({ ...prev, images: [...imgPreview] }));
     }
-    if (imgPreview.length > 0)
-      setPreview((prev) => ({ ...prev, images: [...imgPreview] }));
   };
 
-  const handleDeletePreview = (type, uid, name) => {
+  const handleDeletePreview = (type, uid) => {
     if (type === "thumb") {
-      reset({ thumb: {} });
       setPreview((prev) => ({ ...prev, thumb: null }));
     } else {
       setPreview((prev) => ({
         ...prev,
         images: preview.images.filter((image) => image.uid !== uid),
       }));
-
-      try {
-        setValue(
-          "images",
-          watch("images").filter((img) => img.name !== name)
-        );
-      } catch (error) {
-        console.log("ẻ", error);
-      }
     }
   };
 
   useEffect(() => {
-    if (watch("thumb")[0]) handlePreviewThumb(watch("thumb")[0]);
+    if (watch("thumb") && watch("thumb").length > 0) {
+      handlePreviewThumb(watch("thumb")[0]);
+    }
   }, [watch("thumb")]);
 
   useEffect(() => {
@@ -137,20 +147,42 @@ const CreateProduct = () => {
     }
   }, [watch("images")]);
 
+  useEffect(() => {
+    reset({
+      title: dataUpdate.title,
+      quantity: dataUpdate.quantity,
+      color: dataUpdate.color,
+      branch: dataUpdate.branch.toLowerCase(),
+      category: dataUpdate.category.toLowerCase(),
+      price: dataUpdate.price,
+    });
+    setPayload({ description: dataUpdate.description.join("") });
+    setPreview({
+      thumb: {
+        url: dataUpdate?.thumb,
+      },
+      images: dataUpdate?.images.map((img) => ({ url: img, uid: uuidv4() })),
+    });
+  }, [dataUpdate]);
+
   const changeValue = useCallback(
     (e) => {
       setPayload(e);
     },
     [payload]
   );
-  console.log("payload", payload);
 
   return (
     <div className="bg-white mx-4 mt-4 p-5">
-      <h1 className="text-[24px] font-semibold">Create New Product</h1>
+      <div className=" flex justify-between">
+        <h2 className="text-[24px] font-semibold">Update New Product</h2>
+        <Button handleOnClick={() => setShowUpdate(false)}>
+          Back to Manage Product
+        </Button>
+      </div>
       <div className="bg-[#0505050f] h-[1px] w-full my-5"></div>
       <form
-        onSubmit={handleSubmit(handleCreate)}
+        onSubmit={handleSubmit(handleUpdate)}
         className="mx-5  px-5 pb-5 flex flex-col "
       >
         <div className="flex items-center w-full gap-8">
@@ -199,7 +231,7 @@ const CreateProduct = () => {
             register={register}
             validate={{ required: "Need Fill This Field" }}
             options={categories?.map((cate) => ({
-              value: cate?.title,
+              value: cate?.title.toLowerCase(),
               title: cate?.title,
             }))}
           />
@@ -210,9 +242,12 @@ const CreateProduct = () => {
             register={register}
             validate={{ required: "Need Fill This Field" }}
             options={categories
-              ?.find((el) => el.title === watch("category"))
+              ?.find(
+                (el) =>
+                  el.title?.toLowerCase() === watch("category")?.toLowerCase()
+              )
               ?.brand.map((el) => ({
-                value: el,
+                value: el.toLowerCase(),
                 title: el,
               }))}
           />
@@ -224,6 +259,7 @@ const CreateProduct = () => {
           label={"Description"}
           invalidField={invalidField}
           setInvalidField={setInvalidField}
+          value={payload.description}
         />
         <div className="flex items-center justify-between w-full gap-8 mt-8">
           <div className="flex-1 flex ">
@@ -232,8 +268,8 @@ const CreateProduct = () => {
               label={"Thumbnail"}
               errors={errors}
               register={register}
-              validate={{ required: "Need Fill tThis Field" }}
             />
+
             {preview?.thumb && preview?.thumb?.url && (
               <div className="flex items-end ml-2 cursor-pointer relative group">
                 <img
@@ -258,7 +294,6 @@ const CreateProduct = () => {
               label={"Slider"}
               errors={errors}
               register={register}
-              validate={{ required: true }}
               multiple
             />
             <div className="flex gap-2 ml-2">
@@ -266,16 +301,14 @@ const CreateProduct = () => {
                 preview.images.map((el, index) => (
                   <div className="flex items-end relative group" key={index}>
                     <img
-                      className="w-[100px] object-contain border-[1px] border-[#d9d9d9] border-solid rounded-lg p-2 cursor-pointer"
+                      className="w-[100px] h-[100px] object-contain border-[1px] border-[#d9d9d9] border-solid rounded-lg p-2 cursor-pointer"
                       src={el.url}
                       alt={el.name}
                     />
                     <div className="invisible group-hover:visible  bg-overlay absolute l-0 r-0 b-0 t-0 w-[100px] h-[100px] flex items-center justify-center">
                       <FiTrash2
                         color="#fff"
-                        onClick={() =>
-                          handleDeletePreview("images", el.uid, el.file.name)
-                        }
+                        onClick={() => handleDeletePreview("images", el.uid)}
                       />
                     </div>
                   </div>
@@ -285,7 +318,7 @@ const CreateProduct = () => {
         </div>
         <div className="mt-5 flex justify-end">
           <Button w={"w-[200px]"} style={"bg-[#1677ff]"} type="submit">
-            Create Product
+            Update Product
           </Button>
         </div>
       </form>
@@ -293,4 +326,4 @@ const CreateProduct = () => {
   );
 };
 
-export default CreateProduct;
+export default memo(UpdateProduct);

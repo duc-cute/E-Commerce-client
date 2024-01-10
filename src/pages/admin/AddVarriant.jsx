@@ -1,32 +1,20 @@
 /** @format */
 
-import React, { useCallback, useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-
-import {
-  Button,
-  InputFileImg,
-  InputForm,
-  MarkDown,
-  SelectForm,
-} from "../../components";
+import { Button, InputFileImg, InputForm } from "../../components";
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
 import { getBase64, validate } from "../../ultils/helper";
 import { toast } from "react-toastify";
 import { FiTrash2 } from "react-icons/fi";
-import { apiCreateProduct } from "../../apis";
-
-const CreateProduct = () => {
-  const { categories } = useSelector((state) => state.app);
+import { apiUpdateVarriant } from "../../apis";
+import swal from "sweetalert2";
+const AddVariant = ({ dataVarriant, setShowVarriant }) => {
   const [preview, setPreview] = useState({
     thumb: null,
     images: [],
   });
-  const [payload, setPayload] = useState({
-    description: "",
-  });
-  const [invalidField, setInvalidField] = useState([]);
+
   const {
     register,
     watch,
@@ -36,31 +24,44 @@ const CreateProduct = () => {
     formState: { errors },
   } = useForm();
 
-  const handleCreate = async (data) => {
-    const invalid = validate(payload, setInvalidField);
-    if (invalid === 0) {
-      data.thumb = preview.thumb.file;
-      data.images = preview.images.map((el) => ({
-        file: el.file,
-      }));
-      const finalData = { ...data, ...payload };
-      console.log("finalData", finalData);
+  const handleUpdateVarriant = async (data) => {
+    data.thumb = preview?.thumb?.file;
+    data.images = preview?.images.map((el) => ({
+      file: el.file,
+    }));
+    console.log("data", data);
+    console.log("dataVarriant", dataVarriant);
 
-      const formData = new FormData();
-      for (let i of Object.entries(finalData)) {
-        if (i[0] === "images") {
-          continue;
-        }
-        formData.append(i[0], i[1]);
+    const formData = new FormData();
+    for (let i of Object.entries(data)) {
+      if (i[0] === "images") {
+        continue;
       }
-      if (finalData.images) {
-        console.log("finalData.images", finalData.images[0].file);
-        finalData.images.map((image) => formData.append("images", image.file));
-      }
-      console.log();
-      const res = await apiCreateProduct(formData);
-      console.log("res", res);
+      formData.append(i[0], i[1]);
     }
+    if (data.images) {
+      console.log("finalData.images", data?.images[0]?.file);
+      data.images.map((image) => formData.append("images", image.file));
+    }
+    if (
+      data?.title === dataVarriant?.title &&
+      data?.color === dataVarriant.color
+    ) {
+      swal.fire({
+        title: "Some things went wrong!",
+        text: "You cannot set the title and color to match the original",
+        icon: "warning",
+        showCancelButton: true,
+        cancelButtonColor: "#d33",
+      });
+      return;
+    }
+
+    const res = await apiUpdateVarriant(formData, dataVarriant._id);
+    if (res.success) {
+      setShowVarriant(false);
+      toast.success(res.mes);
+    } else toast.warning(res.mes);
   };
 
   const handlePreviewThumb = async (file) => {
@@ -136,95 +137,64 @@ const CreateProduct = () => {
       handlePreviewImage(watch("images"));
     }
   }, [watch("images")]);
+  console.log("image", watch("images"));
+  console.log("thumb", watch("thumb"));
+  console.log("preview", preview);
 
-  const changeValue = useCallback(
-    (e) => {
-      setPayload(e);
-    },
-    [payload]
-  );
-  console.log("payload", payload);
+  useEffect(() => {
+    reset({
+      title: dataVarriant.title,
+      color: dataVarriant.color,
+      price: dataVarriant.price,
+    });
+  }, [dataVarriant]);
 
   return (
     <div className="bg-white mx-4 mt-4 p-5">
-      <h1 className="text-[24px] font-semibold">Create New Product</h1>
+      <div className=" flex justify-between">
+        <h2 className="text-[24px] font-semibold">Add New Varriant Product</h2>
+        <Button handleOnClick={() => setShowVarriant(false)}>
+          Back to Manage Product
+        </Button>
+      </div>
       <div className="bg-[#0505050f] h-[1px] w-full my-5"></div>
       <form
-        onSubmit={handleSubmit(handleCreate)}
+        onSubmit={handleSubmit(handleUpdateVarriant)}
         className="mx-5  px-5 pb-5 flex flex-col "
       >
-        <div className="flex items-center w-full gap-8">
+        <div className="flex items-center w-full mb-5">
           <InputForm
             id="title"
-            label={"Name"}
+            label={"Original name"}
             register={register}
             errors={errors}
             validate={{ required: "Need Fill This Field." }}
             placeholder={"Name of product"}
+            col={true}
           />
+        </div>
+        <div className="flex items-center w-full gap-8">
           <InputForm
             id="price"
-            label={"Price"}
+            label={"Price Varriant"}
             register={register}
             errors={errors}
             validate={{ required: "Need Fill This Field." }}
             placeholder={"Price Of New Product"}
             type="number"
-          />
-        </div>
-        <div className="flex items-center w-full gap-8">
-          <InputForm
-            id="quantity"
-            label={"Quantity"}
-            register={register}
-            errors={errors}
-            validate={{ required: "Need Fill This Field." }}
-            placeholder={"Quantity Of Product"}
-            type="number"
+            col={true}
           />
           <InputForm
             id="color"
-            label={"Color"}
+            label={"Color Varriant"}
             register={register}
             errors={errors}
             validate={{ required: "Need Fill This Field." }}
             placeholder={"Color Of New Product"}
-          />
-        </div>
-        <div className="flex items-center w-full gap-8 mb-2">
-          <SelectForm
-            id={"category"}
-            label={"Category"}
-            errors={errors}
-            register={register}
-            validate={{ required: "Need Fill This Field" }}
-            options={categories?.map((cate) => ({
-              value: cate?.title,
-              title: cate?.title,
-            }))}
-          />
-          <SelectForm
-            id={"branch"}
-            label={"Brand"}
-            errors={errors}
-            register={register}
-            validate={{ required: "Need Fill This Field" }}
-            options={categories
-              ?.find((el) => el.title === watch("category"))
-              ?.brand.map((el) => ({
-                value: el,
-                title: el,
-              }))}
+            col={true}
           />
         </div>
 
-        <MarkDown
-          name={"description"}
-          changeValue={changeValue}
-          label={"Description"}
-          invalidField={invalidField}
-          setInvalidField={setInvalidField}
-        />
         <div className="flex items-center justify-between w-full gap-8 mt-8">
           <div className="flex-1 flex ">
             <InputFileImg
@@ -232,8 +202,8 @@ const CreateProduct = () => {
               label={"Thumbnail"}
               errors={errors}
               register={register}
-              validate={{ required: "Need Fill tThis Field" }}
             />
+
             {preview?.thumb && preview?.thumb?.url && (
               <div className="flex items-end ml-2 cursor-pointer relative group">
                 <img
@@ -258,7 +228,6 @@ const CreateProduct = () => {
               label={"Slider"}
               errors={errors}
               register={register}
-              validate={{ required: true }}
               multiple
             />
             <div className="flex gap-2 ml-2">
@@ -266,16 +235,14 @@ const CreateProduct = () => {
                 preview.images.map((el, index) => (
                   <div className="flex items-end relative group" key={index}>
                     <img
-                      className="w-[100px] object-contain border-[1px] border-[#d9d9d9] border-solid rounded-lg p-2 cursor-pointer"
+                      className="w-[100px] h-[100px] object-contain border-[1px] border-[#d9d9d9] border-solid rounded-lg p-2 cursor-pointer"
                       src={el.url}
                       alt={el.name}
                     />
                     <div className="invisible group-hover:visible  bg-overlay absolute l-0 r-0 b-0 t-0 w-[100px] h-[100px] flex items-center justify-center">
                       <FiTrash2
                         color="#fff"
-                        onClick={() =>
-                          handleDeletePreview("images", el.uid, el.file.name)
-                        }
+                        onClick={() => handleDeletePreview("images", el.uid)}
                       />
                     </div>
                   </div>
@@ -284,8 +251,8 @@ const CreateProduct = () => {
           </div>
         </div>
         <div className="mt-5 flex justify-end">
-          <Button w={"w-[200px]"} style={"bg-[#1677ff]"} type="submit">
-            Create Product
+          <Button w={"w-[240px]"} style={"bg-[#1677ff]"} type="submit">
+            Update Varriant Product
           </Button>
         </div>
       </form>
@@ -293,4 +260,4 @@ const CreateProduct = () => {
   );
 };
 
-export default CreateProduct;
+export default memo(AddVariant);
