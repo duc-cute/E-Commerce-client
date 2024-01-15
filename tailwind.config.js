@@ -3,6 +3,7 @@
  * @type {import('tailwindcss').Config}
  */
 
+import bgAvatar from "./src/assets/images/bg-avatar.svg";
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}", "./index.html"],
   theme: {
@@ -16,6 +17,7 @@ module.exports = {
       decimal: "decimal",
       square: "square",
     },
+
     flexGrow: {
       1: 1,
     },

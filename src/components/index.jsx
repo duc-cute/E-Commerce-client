@@ -34,6 +34,8 @@ export { default as Modal } from "./Modal/Modal";
 export { default as PaginaItem } from "./Paginate/PaginaItem";
 export { default as Pagination } from "./Paginate/Pagination";
 export { default as AdminSideBar } from "./SideBar/AdminSideBar";
+export { default as MemberSideBar } from "./SideBar/MemberSideBar";
+
 export { default as HeaderAdmin } from "./Header/HeaderAdmin";
 export { default as Table } from "./Table/Table";
 export { default as Tag } from "./Tag/Tag";

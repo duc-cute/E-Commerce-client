@@ -15,6 +15,7 @@ const InputForm = ({
   fullwidth,
   style,
   col,
+  customInput,
 }) => {
   return (
     <div className={`${style} flex-1`}>
@@ -29,7 +30,7 @@ const InputForm = ({
           </label>
         )}
         <div
-          className={`flex flex-col gap-2 justify-center w-full  ${
+          className={`flex flex-col gap-2 justify-center w-full   ${
             col ? "" : "min-h-[80px]"
           }`}
         >
@@ -38,7 +39,7 @@ const InputForm = ({
             id={id}
             disabled={disabled}
             {...register(id, validate)}
-            className="bg-gray-50 border border-gray-300 border-solid text-gray-900 text-sm rounded-lg outline-none focus:ring-blue-500 focus:border-blue-500 block p-2"
+            className={` bg-gray-50 border ${customInput} border-gray-300 border-solid text-gray-900 text-sm rounded-lg outline-none focus:ring-blue-500 focus:border-blue-500 block p-2`}
             placeholder={placeholder}
             defaultValue={defaultValue}
           />

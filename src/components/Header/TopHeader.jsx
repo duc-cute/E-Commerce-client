@@ -11,7 +11,6 @@ const { FiLogOut } = icons;
 const TopHeader = () => {
   const dispatch = useDispatch();
   const { isLoggedIn, current } = useSelector((state) => state.user);
-  console.log("current", current?.id);
   useEffect(() => {
     if (isLoggedIn) {
       setTimeout(() => {

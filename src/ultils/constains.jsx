@@ -2,6 +2,10 @@
 
 import path from "./path";
 import icons from "./icons";
+import cart from "../assets/images/Buy.svg";
+import wishlist from "../assets/images/Heart.svg";
+import history from "../assets/images/DownLoad.svg";
+import personal from "../assets/images/Profile.svg";
 const {
   FaGift,
   FaShieldAlt,
@@ -204,6 +208,37 @@ export const adminSideBar = [
     type: "SINGLE",
     text: "Manage Order",
     icon: <RiBillLine />,
+  },
+];
+export const memberSideBar = [
+  {
+    id: 1,
+    path: `/${path.MEMBER}/${path.PERSONAL}`,
+    type: "SINGLE",
+    text: "Personal info",
+    icon: personal,
+  },
+  {
+    id: 2,
+    path: `/${path.MEMBER}/${path.MY_CART}`,
+    type: "SINGLE",
+    text: "My Cart",
+    icon: cart,
+  },
+  {
+    id: 3,
+    path: `/${path.MEMBER}/${path.HISTORY}`,
+    type: "SINGLE",
+    text: "History",
+    icon: history,
+  },
+
+  {
+    id: 4,
+    path: `/${path.MEMBER}/${path.WISHLIST}`,
+    type: "SINGLE",
+    text: "WishList",
+    icon: wishlist,
   },
 ];
 
