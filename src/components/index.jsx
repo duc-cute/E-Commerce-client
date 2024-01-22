@@ -25,6 +25,7 @@ export { default as RadioForm } from "./Input/RadioForm";
 export { default as SelectForm } from "./Input/SelectForm";
 export { default as ProductInfo } from "./Product/ProductInfo";
 export { default as Product } from "./Product/Product";
+export { default as SlideOption } from "./Product/SlideOption";
 export { default as SearchItem } from "./Search/SearchItem";
 export { default as Ratings } from "./Rating/Ratings";
 export { default as Comment } from "./Rating/Comment";
@@ -35,9 +36,9 @@ export { default as PaginaItem } from "./Paginate/PaginaItem";
 export { default as Pagination } from "./Paginate/Pagination";
 export { default as AdminSideBar } from "./SideBar/AdminSideBar";
 export { default as MemberSideBar } from "./SideBar/MemberSideBar";
-
 export { default as HeaderAdmin } from "./Header/HeaderAdmin";
 export { default as Table } from "./Table/Table";
 export { default as Tag } from "./Tag/Tag";
 export { default as Varriant } from "./Varriant/Varriant";
 export { default as UpdateFormUser } from "./Form/UpdateFormUser";
+export { default as QuickView } from "./Product/QuickView";

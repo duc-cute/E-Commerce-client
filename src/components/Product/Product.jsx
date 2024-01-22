@@ -3,16 +3,48 @@ import { formatMoney, renderStars } from "../../ultils/helper";
 
 import trending from "../../assets/images/trending.png";
 import newImage from "../../assets/images/new.png";
-import SlideOption from "./SlideOption";
+import { QuickView, SlideOption } from "../../components";
 import icons from "../../ultils/icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import DOMPurify from "dompurify";
+import { useDispatch } from "react-redux";
+import { showModal } from "../../redux/app/appSlice";
+import { useRef } from "react";
 const { HiMenu, AiFillHeart, FaEye } = icons;
 const Product = ({ productData, isActive, sizeImage, showDes, notFlag }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const showDetailBtnRef = useRef();
+  const handleWishList = (e) => {
+    e.stopPropagation();
+    console.log("wishlist");
+  };
+  const handleNavigateDetail = () => {
+    navigate(
+      `/${productData?.category}/${productData?._id}/${productData?.title}`
+    );
+  };
+  const handleQuickView = (e) => {
+    showDetailBtnRef.current.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+    });
+    e.stopPropagation();
+    dispatch(
+      showModal({
+        isShowModal: true,
+        modalChildren: <QuickView data={productData} top={e.pageY} />,
+      })
+    );
+  };
   return (
     <div className="group cursor-pointer  bg-white z-10 relative w-full  flex flex-col border-solid border-[1px] border-[#ebebeb] text-[16px] text-[#2b3743]">
-      <Link
-        to={`/${productData?.category}/${productData?._id}/${productData?.title}`}
+      <div
+        onClick={() =>
+          navigate(
+            `/${productData?.category}/${productData?._id}/${productData?.title}`
+          )
+        }
       >
         <img
           src={
@@ -72,11 +104,17 @@ const Product = ({ productData, isActive, sizeImage, showDes, notFlag }) => {
             showDes ? "justify-start px-5" : "justify-center"
           } flex gap-[12px]   opacity-0 group-hover:opacity-100 group-hover:translate-y-[-20px] duration-500   transition-all ease-in-out  z-1 translate-y-[30px] `}
         >
-          <SlideOption icon={<AiFillHeart size={16} />} />
-          <SlideOption icon={<HiMenu size={16} />} />
-          <SlideOption icon={<FaEye size={16} />} />
+          <span onClick={(e) => handleWishList(e)}>
+            <SlideOption icon={<AiFillHeart size={16} />} />
+          </span>
+          <span ref={showDetailBtnRef} onClick={(e) => handleNavigateDetail(e)}>
+            <SlideOption icon={<HiMenu size={16} />} />
+          </span>
+          <span onClick={(e) => handleQuickView(e)}>
+            <SlideOption icon={<FaEye size={16} />} />
+          </span>
         </div>
-      </Link>
+      </div>
       <div
         className={`${
           showDes ? "group-hover:invisible" : ""

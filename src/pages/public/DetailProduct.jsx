@@ -18,7 +18,6 @@ import { formatMoney, renderStars } from "../../ultils/helper";
 import ProductExtraInfo from "../../components/Product/ProductExtraInfo";
 import { productExtra } from "../../ultils/constains";
 import DOMPurify from "dompurify";
-import { BsFillNutFill } from "react-icons/bs";
 const settings = {
   dots: false,
   infinite: true,

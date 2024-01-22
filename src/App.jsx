@@ -36,7 +36,7 @@ function App() {
     dispatch(getCategories());
   }, []);
   return (
-    <div className="min-h-screen font-main relative">
+    <div className={`$ min-h-screen font-main relative`}>
       {isShowModal && <Modal>{modalChildren}</Modal>}
       <Routes>
         <Route path={path.PUBLIC} element={<Public />}>
