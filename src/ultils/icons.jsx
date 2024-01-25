@@ -3,6 +3,7 @@
 import { RiPhoneFill, RiBillLine, RiProductHuntFill } from "react-icons/ri";
 import { FiUser, FiLogOut } from "react-icons/fi";
 import { IoMail } from "react-icons/io5";
+import { GrPrevious } from "react-icons/gr";
 import {
   FaUserCircle,
   FaEye,
@@ -14,6 +15,7 @@ import { FaGift } from "react-icons/fa6";
 import { BsHandbagFill } from "react-icons/bs";
 import { HiMenu, HiOutlineMail } from "react-icons/hi";
 import { GrFormNext } from "react-icons/gr";
+import { FaRegHeart } from "react-icons/fa6";
 import {
   MdLocationPin,
   MdOutlineNavigateNext,
@@ -21,7 +23,11 @@ import {
   MdGroup,
   MdOutlineDashboardCustomize,
 } from "react-icons/md";
-import { BsFillTelephoneFill } from "react-icons/bs";
+import {
+  BsFillTelephoneFill,
+  BsFillCartPlusFill,
+  BsCartCheckFill,
+} from "react-icons/bs";
 import { BiLock } from "react-icons/bi";
 import { GiReturnArrow } from "react-icons/gi";
 import { IoIosArrowDown } from "react-icons/io";
@@ -77,6 +83,10 @@ const icons = {
   LuPencilLine,
   AiOutlineSearch,
   MdOutlineDashboardCustomize,
+  BsFillCartPlusFill,
+  BsCartCheckFill,
+  FaRegHeart,
+  GrPrevious,
 };
 
 export default icons;

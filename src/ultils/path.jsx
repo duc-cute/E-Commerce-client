@@ -8,6 +8,7 @@ const path = {
   PRODUCTS: ":category",
   BLOGS: "blogs",
   FAQS: "faqs",
+  CART: "my-cart",
   OUR_SERVICES: "services",
   DETAIL_PRODUCT_CATEGORY_PID_TITLE: ":category/:pid/:title",
   FINAL_REGISTER: "finalregister/:status",

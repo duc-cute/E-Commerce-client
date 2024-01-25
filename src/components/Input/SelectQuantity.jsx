@@ -8,7 +8,7 @@ const SelectQuantity = ({ quantity, handleQuantity, handleChangeQuantity }) => {
     <div className="flex items-center">
       <span
         onClick={() => handleChangeQuantity("minus")}
-        className="cursor-pointer select-none px-2 bg-[#f6f6f6] py-[10px] text-[#333] border-r-[1px] border-solid  border-[#333]"
+        className="cursor-pointer select-none px-3 bg-[#f6f6f6] py-[8px] text-[#333] border-r-[1px] border-solid  border-[#333]"
       >
         -
       </span>
@@ -20,7 +20,7 @@ const SelectQuantity = ({ quantity, handleQuantity, handleChangeQuantity }) => {
       />
       <span
         onClick={() => handleChangeQuantity("plus")}
-        className="cursor-pointer select-none px-2 bg-[#f6f6f6] py-[10px] text-[#333] border-l-[1px] border-solid  border-[#333]"
+        className="cursor-pointer select-none px-3 bg-[#f6f6f6] py-[8px] text-[#333] border-l-[1px] border-solid  border-[#333]"
       >
         +
       </span>

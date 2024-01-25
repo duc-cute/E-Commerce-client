@@ -5,24 +5,72 @@ import trending from "../../assets/images/trending.png";
 import newImage from "../../assets/images/new.png";
 import { QuickView, SlideOption } from "../../components";
 import icons from "../../ultils/icons";
-import { Link, useNavigate } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
+
+import {
+  Link,
+  createSearchParams,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import DOMPurify from "dompurify";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { showModal } from "../../redux/app/appSlice";
 import { useRef } from "react";
-const { HiMenu, AiFillHeart, FaEye } = icons;
+import Swal from "sweetalert2";
+import path from "../../ultils/path";
+import { apiRemoveCart, apiUpdateCart } from "../../apis";
+import { getCurrent } from "../../redux/user/userAction";
+import { toast } from "react-toastify";
+
+const { AiFillHeart, FaEye, BsFillCartPlusFill, BsCartCheckFill } = icons;
 const Product = ({ productData, isActive, sizeImage, showDes, notFlag }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const { current } = useSelector((state) => state.user);
   const showDetailBtnRef = useRef();
   const handleWishList = (e) => {
     e.stopPropagation();
-    console.log("wishlist");
   };
-  const handleNavigateDetail = () => {
-    navigate(
-      `/${productData?.category}/${productData?._id}/${productData?.title}`
-    );
+  const handleUpdateCart = async (e, flag, sku) => {
+    e.stopPropagation();
+    if (!current) {
+      Swal.fire({
+        title: "Almost...",
+        text: "Please Login first",
+        showCloseButton: true,
+        showCancelButton: true,
+        icon: "info",
+        confirmButtonText: "Go Login",
+        cancelButtonText: "Not now!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          <div className="bg-[#D2D1D6] h-[1px] w-full my-5"></div>;
+          navigate({
+            pathname: `/${path.LOGIN}`,
+            search: createSearchParams({
+              redirect: location.pathname,
+            }).toString(),
+          });
+        }
+      });
+    }
+    if (flag === "remove") {
+      const res = await apiRemoveCart(productData._id);
+      if (res.success) toast.success(res.mes);
+    } else {
+      const res = await apiUpdateCart({
+        pid: productData._id,
+        color: productData.color,
+        title: productData.title,
+        price: productData.price,
+        thumb: productData.thumb,
+        sku: uuidv4(),
+      });
+      if (res.success) toast.success(res.mes);
+    }
+    dispatch(getCurrent());
   };
   const handleQuickView = (e) => {
     showDetailBtnRef.current.scrollIntoView({
@@ -107,10 +155,25 @@ const Product = ({ productData, isActive, sizeImage, showDes, notFlag }) => {
           <span onClick={(e) => handleWishList(e)}>
             <SlideOption icon={<AiFillHeart size={16} />} />
           </span>
-          <span ref={showDetailBtnRef} onClick={(e) => handleNavigateDetail(e)}>
-            <SlideOption icon={<HiMenu size={16} />} />
-          </span>
-          <span onClick={(e) => handleQuickView(e)}>
+          {current?.cart.some(
+            (prod) => prod.product._id === productData._id
+          ) ? (
+            <>
+              <span onClick={(e) => handleUpdateCart(e, "remove")}>
+                <SlideOption
+                  choose={true}
+                  icon={<BsCartCheckFill size={18} />}
+                />
+              </span>
+            </>
+          ) : (
+            <>
+              <span onClick={(e) => handleUpdateCart(e)}>
+                <SlideOption icon={<BsFillCartPlusFill size={18} />} />
+              </span>
+            </>
+          )}
+          <span ref={showDetailBtnRef} onClick={(e) => handleQuickView(e)}>
             <SlideOption icon={<FaEye size={16} />} />
           </span>
         </div>

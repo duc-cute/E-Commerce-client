@@ -8,6 +8,7 @@ export { default as BestSeller } from "./Product/BestSeller";
 export { default as Daily } from "./Product/Daily";
 export { default as CountDown } from "./CountDown/CountDown";
 export { default as FeatureProducts } from "./Product/FeatureProducts";
+export { default as Cart } from "./Product/Cart";
 export { default as ProductCard } from "./Product/ProductCard";
 export { default as CustomSlider } from "./Slider/CustomSlider";
 export { default as HotCollection } from "./Product/HotCollection";

@@ -12,16 +12,16 @@ import {
   apiFinalRegister,
 } from "../../apis";
 import swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import path from "../../ultils/path";
 import { login } from "../../redux/user/userSlice";
 import { useDispatch } from "react-redux";
 import { validate } from "../../ultils/helper";
-
 const { HiOutlineMail, BiLock, FiUser, RiPhoneFill } = icons;
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [searchParams] = useSearchParams();
   const [isRegister, setIsRegister] = useState(false);
   const [isVerifyToken, setIsVerifyToken] = useState(false);
   const [isForgotPassWord, setIsForgotPassWord] = useState(false);
@@ -73,7 +73,9 @@ const Login = () => {
               current: rs.userData,
             })
           );
-          navigate(`/${path.HOME}`);
+          searchParams.get("redirect")
+            ? navigate(searchParams.get("redirect"))
+            : navigate(`/${path.HOME}`);
         } else swal.fire("Oops!", rs?.mes, "error");
       }
     }

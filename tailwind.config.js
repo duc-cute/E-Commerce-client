@@ -47,7 +47,9 @@ module.exports = {
       },
       boxShadow: {
         search: "0 0 0 0.1rem #1a1b188c",
+        cart: "0px 20px 45px 10px #c8c8c866",
       },
+
       keyframes: {
         "slide-top": {
           "0%": {

@@ -1,8 +1,13 @@
 /** @format */
 
 import React, { useCallback, useEffect, useState } from "react";
-import { apiGetProduct, apiGetProducts } from "../../apis";
-import { useParams } from "react-router-dom";
+import { apiGetProduct, apiGetProducts, apiUpdateCart } from "../../apis";
+import {
+  createSearchParams,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import {
   BreadCrumb,
   Button,
@@ -18,6 +23,13 @@ import { formatMoney, renderStars } from "../../ultils/helper";
 import ProductExtraInfo from "../../components/Product/ProductExtraInfo";
 import { productExtra } from "../../ultils/constains";
 import DOMPurify from "dompurify";
+import { useDispatch, useSelector } from "react-redux";
+import Swal from "sweetalert2";
+import path from "../../ultils/path";
+import { getCurrent } from "../../redux/user/userAction";
+import { toast } from "react-toastify";
+import { v4 as uuidv4 } from "uuid";
+
 const settings = {
   dots: false,
   infinite: true,
@@ -31,12 +43,16 @@ const settings = {
 
 const DetailProduct = () => {
   const { pid, title, category } = useParams();
+  const { current } = useSelector((state) => state.user);
   const [product, setProduct] = useState(null);
   const [varriantSelect, setVarriantSelect] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [update, setUpdate] = useState(false);
   const [imageShow, setImageShow] = useState("");
+  const navigate = useNavigate();
+  const location = useLocation();
+  const dispatch = useDispatch();
   const fetchProduct = async () => {
     const response = await apiGetProduct(pid);
     if (response.success) {
@@ -64,9 +80,11 @@ const DetailProduct = () => {
       fetchProduct();
     }
   }, [update, varriantSelect]);
+
   const reRender = useCallback(() => {
     setUpdate((prev) => !prev);
   }, [update]);
+
   const handleQuantity = useCallback(
     (number) => {
       if (!Number(number) || Number(number) < 1) {
@@ -89,15 +107,53 @@ const DetailProduct = () => {
     setImageShow(img);
   };
 
-  const handleMouseEnterVarriant = (id) => {
+  const handleAddToCart = async () => {
+    if (!current) {
+      Swal.fire({
+        title: "Almost...",
+        text: "Please Login first",
+        showCloseButton: true,
+        showCancelButton: true,
+        icon: "info",
+        confirmButtonText: "Go Login",
+        cancelButtonText: "Not now!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate({
+            pathname: `/${path.LOGIN}`,
+            search: createSearchParams({
+              redirect: location.pathname,
+            }).toString(),
+          });
+        }
+      });
+    }
+    let productData;
+    if (varriantSelect) {
+      const { _id, images, ...variantWithoutId } = varriantSelect;
+      productData = { ...product, ...variantWithoutId };
+    } else {
+      productData = { ...product, sku: uuidv4() };
+    }
+    // console.log("quan", quantity);
+    const res = await apiUpdateCart({
+      pid: productData._id,
+      color: productData.color,
+      title: productData.title,
+      price: productData.price,
+      thumb: productData.thumb,
+      sku: productData.sku,
+      quantity,
+    });
+    if (res.success) toast.success(res.mes);
+
+    dispatch(getCurrent());
+  };
+
+  const handleOnclickVarriant = (id) => {
     if (product.varriants.length > 0) {
       setVarriantSelect(product.varriants.find((varr) => varr.sku === id));
     }
-  };
-  console.log("ff", varriantSelect);
-
-  const handleMouseLeaveVarriant = (id) => {
-    setVarriantSelect(null);
   };
 
   return (
@@ -186,14 +242,11 @@ const DetailProduct = () => {
           <div className="flex gap-3 items-center mt-5 flex-wrap">
             {product?.varriants.length > 0 &&
               product?.varriants.map((el) => (
-                <div
-                  key={el.sku}
-                  onMouseEnter={() => handleMouseEnterVarriant(el.sku)}
-                  onMouseLeave={() => handleMouseLeaveVarriant(el.sku)}
-                >
+                <div key={el.sku} onClick={() => handleOnclickVarriant(el.sku)}>
                   <Varriant
                     title={el.title === product.title ? "" : el.title}
                     color={el.color}
+                    choose={el.sku === varriantSelect?.sku}
                   />
                 </div>
               ))}
@@ -207,7 +260,10 @@ const DetailProduct = () => {
               handleChangeQuantity={handleChangeQuantity}
             />
           </div>
-          <Button style="w-full max-w-[420px]  bg-main mt-3 text-[16px] font-lato py-3 rounded-none hover:bg-black hover:text-white transition-all ease-in-out duration-200">
+          <Button
+            handleOnClick={() => handleAddToCart()}
+            style="w-full max-w-[420px]  bg-main mt-3 text-[16px] font-lato py-3 rounded-none hover:bg-black hover:text-white transition-all ease-in-out duration-200"
+          >
             ADD TO CART
           </Button>
         </div>

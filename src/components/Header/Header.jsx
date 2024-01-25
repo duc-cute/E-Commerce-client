@@ -6,18 +6,20 @@ import path from "../../ultils/path";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/user/userSlice";
 import { useEffect, useState } from "react";
-
+import { Cart } from "../../components";
 const { RiPhoneFill, IoMail, BsHandbagFill, FaUserCircle } = icons;
 
 const Header = ({ isMember, w = "w-main", h = "110px" }) => {
   const { isLoggedIn, current } = useSelector((state) => state.user);
   const [showOptions, setShowOptions] = useState(false);
-  const dispach = useDispatch();
-
+  const [showCart, setShowCart] = useState(false);
+  const dispatch = useDispatch();
   useEffect(() => {
     const handleClickOptions = (e) => {
       const optionEl = document.getElementById("optional");
-      if (!optionEl.contains(e.target)) setShowOptions(false);
+      if (optionEl) {
+        if (!optionEl.contains(e.target)) setShowOptions(false);
+      }
     };
     document.addEventListener("click", handleClickOptions);
 
@@ -56,9 +58,18 @@ const Header = ({ isMember, w = "w-main", h = "110px" }) => {
         )}
         {isLoggedIn && current && (
           <>
-            <div className="flex   gap-[10px] items-center px-5">
+            <div
+              className="flex cursor-pointer  gap-[10px] items-center px-5"
+              onMouseEnter={() => setShowCart(true)}
+              onMouseLeave={() => setShowCart(false)}
+            >
               <BsHandbagFill color="red" size={20} />
-              <span>0 Item</span>
+              <div>
+                <span className="relative ">
+                  {current?.cart?.length || 0} Item
+                  {showCart && <Cart data={current?.cart} />}
+                </span>
+              </div>
             </div>
             <div className="relative select-none flex border-l border-solid gap-[10px] border-[#0000001a] px-5  items-center">
               <div
@@ -92,7 +103,7 @@ const Header = ({ isMember, w = "w-main", h = "110px" }) => {
                     </li>
                   )}
                 </ul>
-                <div className="py-2" onClick={() => dispach(logout())}>
+                <div className="py-2" onClick={() => dispatch(logout())}>
                   <Link to={`/${path.LOGIN}`}>
                     <span className="block px-4 pt-2 pb-1 text-sm  text-gray-700 hover:bg-gray-200 border-t border-solid border-[#ccc]">
                       Sign out

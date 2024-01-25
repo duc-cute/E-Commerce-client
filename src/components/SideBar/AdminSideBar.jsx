@@ -3,8 +3,9 @@
 import React, { useState } from "react";
 import logo from "../../assets/images/logo.png";
 import { adminSideBar } from "../../ultils/constains";
-import { NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io";
+
 const activeClass =
   "flex items-center gap-2  hover:bg-[#1677ff] hover:text-white py-3 rounded-md  pl-6";
 const AdminSideBar = () => {
@@ -19,7 +20,7 @@ const AdminSideBar = () => {
 
   return (
     <aside className="w-[200px] fixed top-0 bottom-0 bg-[#001529] text-white h-full">
-      <div className="flex items-center flex-col  mt-5">
+      <Link to={`/`} className="flex items-center flex-col  mt-5">
         <img
           className="w-[160px] h-[100px] object-contain"
           src={logo}
@@ -28,7 +29,7 @@ const AdminSideBar = () => {
         <h2 className="  w-[150px] break-words text-center text-[16px] leading-5">
           Admin Workplace
         </h2>
-      </div>
+      </Link>
       <ul className="mt-6 flex flex-col gap-2 select-none">
         {adminSideBar.map((el) => (
           <li
