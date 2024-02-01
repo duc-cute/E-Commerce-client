@@ -76,3 +76,21 @@ export const apiRemoveCart = (pid, sku) =>
     url: `/user/remove-cart/${pid}/${sku}`,
     method: "delete",
   });
+export const apiAddAddress = (data) =>
+  axios({
+    url: "/user/add-address",
+    method: "put",
+    data,
+  });
+export const apiRemoveAddress = (id) =>
+  axios({
+    url: "/user/remove-address/" + id,
+    method: "delete",
+  });
+
+export const apiUpdateAddress = (data, id) =>
+  axios({
+    url: "/user/update-address/" + id,
+    method: "put",
+    data,
+  });

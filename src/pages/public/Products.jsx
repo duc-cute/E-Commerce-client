@@ -8,6 +8,7 @@ import {
   Product,
   Pagination,
 } from "../../components";
+
 import {
   createSearchParams,
   useNavigate,

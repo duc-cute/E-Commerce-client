@@ -9,11 +9,13 @@ export const appSlice = createSlice({
     isLoading: false,
     isShowModal: false,
     modalChildren: null,
+    modalCenter: false,
   },
   reducers: {
     showModal: (state, action) => {
       state.isShowModal = action.payload.isShowModal;
       state.modalChildren = action.payload.modalChildren;
+      state.modalCenter = action.payload.modalCenter;
     },
   },
   // Code logic xử lý async action

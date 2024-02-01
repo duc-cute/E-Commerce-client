@@ -13,7 +13,7 @@ import {
   Products,
   FinalRegister,
   ResetPassword,
-  Cart,
+  MyCart,
 } from "./pages/public";
 import {
   CreateProduct,
@@ -22,7 +22,7 @@ import {
   ManageProduct,
   ManageUser,
 } from "./pages/admin";
-import { MemberLayout, Personal } from "./pages/member";
+import { Addresses, MemberLayout, Personal } from "./pages/member";
 import path from "./ultils/path";
 import { getCategories } from "./redux/app/appAction";
 import { useDispatch, useSelector } from "react-redux";
@@ -32,13 +32,15 @@ import AdminLayout from "./pages/admin/AdminLayout";
 
 function App() {
   const dispatch = useDispatch();
-  const { isShowModal, modalChildren } = useSelector((state) => state.app);
+  const { isShowModal, modalChildren, modalCenter } = useSelector(
+    (state) => state.app
+  );
   useEffect(() => {
     dispatch(getCategories());
   }, []);
   return (
     <div className={`$ min-h-screen font-main relative`}>
-      {isShowModal && <Modal>{modalChildren}</Modal>}
+      {isShowModal && <Modal center={modalCenter}>{modalChildren}</Modal>}
       <Routes>
         <Route path={path.PUBLIC} element={<Public />}>
           <Route path={path.HOME} element={<Home />} />
@@ -50,7 +52,7 @@ function App() {
           <Route path={path.FAQS} element={<FAQs />} />
           <Route path={path.OUR_SERVICES} element={<Services />} />
           <Route path={path.PRODUCTS} element={<Products />} />
-          <Route path={path.CART} element={<Cart />} />
+          <Route path={path.CART} element={<MyCart />} />
           <Route path={path.ALL} element={<Home />} />
         </Route>
         <Route path={path.ADMIN} element={<AdminLayout />}>
@@ -62,6 +64,7 @@ function App() {
         </Route>
         <Route path={path.MEMBER} element={<MemberLayout />}>
           <Route path={path.PERSONAL} element={<Personal />} />
+          <Route path={path.ADDRESSES} element={<Addresses />} />
         </Route>
 
         <Route path={path.RESET_PASSWORD} element={<ResetPassword />} />

@@ -1,6 +1,6 @@
 /** @format */
 
-import { memo, useEffect } from "react";
+import { memo } from "react";
 
 const InputForm = ({
   label,
@@ -16,6 +16,7 @@ const InputForm = ({
   style,
   col,
   customInput,
+  area,
 }) => {
   return (
     <div className={`${style} flex-1`}>
@@ -34,15 +35,31 @@ const InputForm = ({
             col ? "" : "min-h-[80px]"
           }`}
         >
-          <input
-            type={type}
-            id={id}
-            disabled={disabled}
-            {...register(id, validate)}
-            className={` bg-gray-50 border ${customInput} border-gray-300 border-solid text-gray-900 text-sm rounded-lg outline-none focus:ring-blue-500 focus:border-blue-500 block p-2`}
-            placeholder={placeholder}
-            defaultValue={defaultValue}
-          />
+          {area ? (
+            <>
+              <textarea
+                id={id}
+                disabled={disabled}
+                {...register(id, validate)}
+                className={` bg-gray-50 border ${customInput} border-gray-300 border-solid text-gray-900 text-sm rounded-lg outline-none focus:ring-blue-500 focus:border-blue-500 block p-2`}
+                placeholder={placeholder}
+                defaultValue={defaultValue}
+                rows="4"
+              ></textarea>
+            </>
+          ) : (
+            <>
+              <input
+                type={type}
+                id={id}
+                disabled={disabled}
+                {...register(id, validate)}
+                className={` bg-gray-50 border ${customInput} border-gray-300 border-solid text-gray-900 text-sm rounded-lg outline-none focus:ring-blue-500 focus:border-blue-500 block p-2`}
+                placeholder={placeholder}
+                defaultValue={defaultValue}
+              />
+            </>
+          )}
           {errors[id] && (
             <small className="text-[12px] text-main italic  ">
               {errors[id]?.message}

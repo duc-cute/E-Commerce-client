@@ -33,6 +33,7 @@ const Product = ({ productData, isActive, sizeImage, showDes, notFlag }) => {
   const handleWishList = (e) => {
     e.stopPropagation();
   };
+
   const handleUpdateCart = async (e, flag, sku) => {
     e.stopPropagation();
     if (!current) {
@@ -57,6 +58,7 @@ const Product = ({ productData, isActive, sizeImage, showDes, notFlag }) => {
       });
     }
     if (flag === "remove") {
+      console.log("pro", productData);
       const res = await apiRemoveCart(productData._id);
       if (res.success) toast.success(res.mes);
     } else {

@@ -10,7 +10,9 @@ import { Cart } from "../../components";
 const { RiPhoneFill, IoMail, BsHandbagFill, FaUserCircle } = icons;
 
 const Header = ({ isMember, w = "w-main", h = "110px" }) => {
-  const { isLoggedIn, current } = useSelector((state) => state.user);
+  const { isLoggedIn, current, currentCart } = useSelector(
+    (state) => state.user
+  );
   const [showOptions, setShowOptions] = useState(false);
   const [showCart, setShowCart] = useState(false);
   const dispatch = useDispatch();
@@ -66,8 +68,8 @@ const Header = ({ isMember, w = "w-main", h = "110px" }) => {
               <BsHandbagFill color="red" size={20} />
               <div>
                 <span className="relative ">
-                  {current?.cart?.length || 0} Item
-                  {showCart && <Cart data={current?.cart} />}
+                  {currentCart?.length || 0} Item
+                  {showCart && <Cart data={currentCart} />}
                 </span>
               </div>
             </div>

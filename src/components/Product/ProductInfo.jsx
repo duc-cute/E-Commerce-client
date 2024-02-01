@@ -61,6 +61,7 @@ const ProductInfo = ({ totalRating, ratings, title, pid, reRender }) => {
           modalChildren: (
             <VoteOption title={title} handleSubmitVote={handleSubmitVote} />
           ),
+          modalCenter: true,
         })
       );
     }

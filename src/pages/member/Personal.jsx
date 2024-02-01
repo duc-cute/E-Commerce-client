@@ -25,7 +25,8 @@ const Personal = () => {
   console.log("cr", current);
   const dispatch = useDispatch();
 
-  const handleUpdate = async (data) => {
+  const handleUpdate = async (dataSubmit) => {
+    const { address, ...data } = dataSubmit;
     if (preview?.avatar?.file) {
       data.avatar = preview.avatar.file;
     }
@@ -63,6 +64,8 @@ const Personal = () => {
       lastname: current.lastname,
       phone: current.mobile,
       email: current.email,
+      address: current.address.find((item) => item.defaultAddress === true)
+        .addressDetail,
     });
     if (current?.avatar)
       setPreview({
@@ -129,6 +132,17 @@ const Personal = () => {
             customInput={"h-[46px] mt-2"}
             col={true}
             placeholder={"Phone"}
+          />
+        </div>
+        <div className="flex gap-5">
+          <InputForm
+            register={register}
+            errors={errors}
+            id={"address"}
+            label={"Address"}
+            customInput={"h-[46px] mt-2"}
+            col={true}
+            disabled={true}
           />
         </div>
         <div className="flex-1 flex ">

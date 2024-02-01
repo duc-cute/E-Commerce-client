@@ -1,6 +1,8 @@
 /** @format */
 import icons from "./icons";
 const { AiFillStar, AiOutlineStar } = icons;
+import { apiAddresses as apiUrl } from "./constains";
+import axios from "axios";
 export const formatMoney = (number) =>
   Number(number?.toFixed(1)).toLocaleString();
 
@@ -73,3 +75,14 @@ export const getBase64 = (file) =>
     reader.onload = () => resolve(reader.result);
     reader.onerror = reject;
   });
+
+export const getDistrict = async (idProvince) => {
+  const res = await axios.get(`${apiUrl}/district/?idProvince=` + idProvince);
+
+  return res.data;
+};
+
+export const getWard = async (idDistrict) => {
+  const res = await axios.get(`${apiUrl}/commune/?idDistrict=` + idDistrict);
+  return res.data;
+};

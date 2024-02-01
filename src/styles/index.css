@@ -100,3 +100,58 @@ html {
   width: 0 !important;
   display: none;
 }
+.tabs {
+  display: flex;
+  position: relative;
+}
+.line {
+  position: absolute;
+  width: 0px;
+  left: 0;
+  bottom: 0;
+  height: 4px;
+  border-radius: 15px;
+  background-color: #f539f8;
+  transition: all 0.2s ease;
+}
+.tab-item {
+  min-width: 200px;
+  color: #f539f8;
+  font-size: 22px;
+  padding: 16px 20px 10px;
+  background-color: #fff;
+  font-weight: 500;
+  border-bottom: 5px solid transparent;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: all 0.5s ease;
+}
+.tab-item.active {
+  opacity: 1;
+}
+.tab-icon {
+  font-size: 24px;
+  width: 32px;
+}
+.tab-item:hover {
+  opacity: 1;
+  background-color: rgba(194, 53, 100, 0.05);
+  border-color: rgba(194, 53, 100, 0.1);
+}
+
+.tab-pane {
+  display: none;
+  color: #333;
+  border: 1px solid #f0f0f0;
+  padding: 20px 30px;
+}
+.tab-pane.active {
+  display: block;
+}
+.tab-pane h2 {
+  font-size: 22px;
+  margin-bottom: 8px;
+}

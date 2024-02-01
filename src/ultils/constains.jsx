@@ -6,6 +6,7 @@ import cart from "../assets/images/Buy.svg";
 import wishlist from "../assets/images/Heart.svg";
 import history from "../assets/images/DownLoad.svg";
 import personal from "../assets/images/Profile.svg";
+import address from "../assets/images/Location.svg";
 const {
   FaGift,
   FaShieldAlt,
@@ -220,13 +221,20 @@ export const memberSideBar = [
   },
   {
     id: 2,
+    path: `/${path.MEMBER}/${path.ADDRESSES}`,
+    type: "SINGLE",
+    text: "Addresses",
+    icon: address,
+  },
+  {
+    id: 3,
     path: `/${path.MEMBER}/${path.MY_CART}`,
     type: "SINGLE",
     text: "My Cart",
     icon: cart,
   },
   {
-    id: 3,
+    id: 4,
     path: `/${path.MEMBER}/${path.HISTORY}`,
     type: "SINGLE",
     text: "History",
@@ -234,7 +242,7 @@ export const memberSideBar = [
   },
 
   {
-    id: 4,
+    id: 5,
     path: `/${path.MEMBER}/${path.WISHLIST}`,
     type: "SINGLE",
     text: "WishList",
@@ -265,5 +273,264 @@ export const statusBlocks = [
     id: 2,
     title: "active",
     value: "active",
+  },
+];
+
+export const apiAddresses =
+  "https://vietnam-administrative-division-json-server-swart.vercel.app";
+
+export const cities = [
+  {
+    id: "01",
+    city: "Thành phố Hà Nội",
+  },
+
+  {
+    id: "79",
+    city: "Thành phố Hồ Chí Minh",
+  },
+  {
+    id: "31",
+    city: "Thành phố Hải Phòng",
+  },
+  {
+    id: "48",
+    city: "Thành phố Đà Nẵng",
+  },
+  {
+    id: "92",
+    city: "Thành phố Cần Thơ",
+  },
+  {
+    id: "02",
+    city: "Tỉnh Hà Giang",
+  },
+  {
+    id: "04",
+    city: "Tỉnh Cao Bằng",
+  },
+  {
+    id: "06",
+    city: "Tỉnh Bắc Kạn",
+  },
+  {
+    id: "08",
+    city: "Tỉnh Tuyên Quang",
+  },
+  {
+    id: "10",
+    city: "Tỉnh Lào Cai",
+  },
+  {
+    id: "11",
+    city: "Tỉnh Điện Biên",
+  },
+  {
+    id: "12",
+    city: "Tỉnh Lai Châu",
+  },
+  {
+    id: "14",
+    city: "Tỉnh Sơn La",
+  },
+  {
+    id: "15",
+    city: "Tỉnh Yên Bái",
+  },
+  {
+    id: "17",
+    city: "Tỉnh Hoà Bình",
+  },
+  {
+    id: "19",
+    city: "Tỉnh Thái Nguyên",
+  },
+  {
+    id: "20",
+    city: "Tỉnh Lạng Sơn",
+  },
+  {
+    id: "22",
+    city: "Tỉnh Quảng Ninh",
+  },
+  {
+    id: "24",
+    city: "Tỉnh Bắc Giang",
+  },
+  {
+    id: "25",
+    city: "Tỉnh Phú Thọ",
+  },
+  {
+    id: "26",
+    city: "Tỉnh Vĩnh Phúc",
+  },
+  {
+    id: "27",
+    city: "Tỉnh Bắc Ninh",
+  },
+  {
+    id: "30",
+    city: "Tỉnh Hải Dương",
+  },
+  {
+    id: "33",
+    city: "Tỉnh Hưng Yên",
+  },
+  {
+    id: "34",
+    city: "Tỉnh Thái Bình",
+  },
+  {
+    id: "35",
+    city: "Tỉnh Hà Nam",
+  },
+  {
+    id: "36",
+    city: "Tỉnh Nam Định",
+  },
+  {
+    id: "37",
+    city: "Tỉnh Ninh Bình",
+  },
+  {
+    id: "38",
+    city: "Tỉnh Thanh Hóa",
+  },
+  {
+    id: "40",
+    city: "Tỉnh Nghệ An",
+  },
+  {
+    id: "42",
+    city: "Tỉnh Hà Tĩnh",
+  },
+  {
+    id: "44",
+    city: "Tỉnh Quảng Bình",
+  },
+  {
+    id: "45",
+    city: "Tỉnh Quảng Trị",
+  },
+  {
+    id: "46",
+    city: "Tỉnh Thừa Thiên Huế",
+  },
+  {
+    id: "49",
+    city: "Tỉnh Quảng Nam",
+  },
+  {
+    id: "51",
+    city: "Tỉnh Quảng Ngãi",
+  },
+  {
+    id: "52",
+    city: "Tỉnh Bình Định",
+  },
+  {
+    id: "54",
+    city: "Tỉnh Phú Yên",
+  },
+  {
+    id: "56",
+    city: "Tỉnh Khánh Hòa",
+  },
+  {
+    id: "58",
+    city: "Tỉnh Ninh Thuận",
+  },
+  {
+    id: "60",
+    city: "Tỉnh Bình Thuận",
+  },
+  {
+    id: "62",
+    city: "Tỉnh Kon Tum",
+  },
+  {
+    id: "64",
+    city: "Tỉnh Gia Lai",
+  },
+  {
+    id: "66",
+    city: "Tỉnh Đắk Lắk",
+  },
+  {
+    id: "67",
+    city: "Tỉnh Đắk Nông",
+  },
+  {
+    id: "68",
+    city: "Tỉnh Lâm Đồng",
+  },
+  {
+    id: "70",
+    city: "Tỉnh Bình Phước",
+  },
+  {
+    id: "72",
+    city: "Tỉnh Tây Ninh",
+  },
+  {
+    id: "74",
+    city: "Tỉnh Bình Dương",
+  },
+  {
+    id: "75",
+    city: "Tỉnh Đồng Nai",
+  },
+  {
+    id: "77",
+    city: "Tỉnh Bà Rịa - Vũng Tàu",
+  },
+  {
+    id: "80",
+    city: "Tỉnh Long An",
+  },
+  {
+    id: "82",
+    city: "Tỉnh Tiền Giang",
+  },
+  {
+    id: "83",
+    city: "Tỉnh Bến Tre",
+  },
+  {
+    id: "84",
+    city: "Tỉnh Trà Vinh",
+  },
+  {
+    id: "86",
+    city: "Tỉnh Vĩnh Long",
+  },
+  {
+    id: "87",
+    city: "Tỉnh Đồng Tháp",
+  },
+  {
+    id: "89",
+    city: "Tỉnh An Giang",
+  },
+  {
+    id: "91",
+    city: "Tỉnh Kiên Giang",
+  },
+  {
+    id: "93",
+    city: "Tỉnh Hậu Giang",
+  },
+  {
+    id: "94",
+    city: "Tỉnh Sóc Trăng",
+  },
+  {
+    id: "95",
+    city: "Tỉnh Bạc Liêu",
+  },
+  {
+    id: "96",
+    city: "Tỉnh Cà Mau",
   },
 ];

@@ -5,7 +5,6 @@ import Button from "../Button/Button";
 import InputForm from "../Input/InputForm";
 
 const UpdateFormUser = ({ info, handleSubmit, register, errors }) => {
-  useEffect(() => {}, [info]);
   return (
     <form
       className="bg-white w-[700px] pt-8 pb-6 px-8 flex flex-col items-center text-[14px] gap-4"

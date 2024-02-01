@@ -1,8 +1,10 @@
 /** @format */
 
 import { RiPhoneFill, RiBillLine, RiProductHuntFill } from "react-icons/ri";
+
 import { FiUser, FiLogOut } from "react-icons/fi";
 import { IoMail } from "react-icons/io5";
+import { CiEdit } from "react-icons/ci";
 import { GrPrevious } from "react-icons/gr";
 import {
   FaUserCircle,
@@ -43,6 +45,7 @@ import {
   AiOutlineCloudUpload,
   AiOutlineSend,
   AiOutlineSearch,
+  AiOutlinePlus,
 } from "react-icons/ai";
 
 const icons = {
@@ -87,6 +90,8 @@ const icons = {
   BsCartCheckFill,
   FaRegHeart,
   GrPrevious,
+  AiOutlinePlus,
+  CiEdit,
 };
 
 export default icons;
