@@ -94,3 +94,9 @@ export const apiUpdateAddress = (data, id) =>
     method: "put",
     data,
   });
+export const apiCreateOrder = (data) =>
+  axios({
+    url: "/order",
+    method: "post",
+    data,
+  });

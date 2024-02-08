@@ -7,9 +7,10 @@ import icons from "../../ultils/icons";
 import { Link } from "react-router-dom";
 import path from "../../ultils/path";
 import { formatMoney } from "../../ultils/helper";
+import withBaseComponent from "../../hocs/withBaseComponent";
 
 const { GrPrevious } = icons;
-const MyCart = () => {
+const MyCart = ({ navigate }) => {
   const { currentCart } = useSelector((state) => state.user);
   const totalPrice = () => {
     return currentCart.reduce((acc, curr) => {
@@ -89,7 +90,11 @@ const MyCart = () => {
                 <span className="">Estimated Total</span>
                 <span className="">{formatMoney(totalPrice())} VND</span>
               </div>
-              <Button>Continue to checkout</Button>
+              <Button
+                handleOnClick={() => navigate(`/${path.CART}/${path.SHIPPING}`)}
+              >
+                Continue to checkout
+              </Button>
             </div>
           </div>
         </div>
@@ -98,4 +103,4 @@ const MyCart = () => {
   );
 };
 
-export default MyCart;
+export default withBaseComponent(MyCart);

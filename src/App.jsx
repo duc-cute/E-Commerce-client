@@ -14,6 +14,8 @@ import {
   FinalRegister,
   ResetPassword,
   MyCart,
+  Shipping,
+  Payment,
 } from "./pages/public";
 import {
   CreateProduct,
@@ -51,8 +53,16 @@ function App() {
           />
           <Route path={path.FAQS} element={<FAQs />} />
           <Route path={path.OUR_SERVICES} element={<Services />} />
-          <Route path={path.PRODUCTS} element={<Products />} />
+          <Route path={path.PRODUCTS_CATEGORY} element={<Products />} />
           <Route path={path.CART} element={<MyCart />} />
+          <Route
+            path={`${path.CART}/${path.SHIPPING}`}
+            element={<Shipping />}
+          />
+          <Route
+            path={`${path.CART}/${path.SHIPPING}/${path.PAYMENT}`}
+            element={<Payment />}
+          />
           <Route path={path.ALL} element={<Home />} />
         </Route>
         <Route path={path.ADMIN} element={<AdminLayout />}>

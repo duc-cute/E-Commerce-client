@@ -1,18 +1,19 @@
 /** @format */
 
-import React, { useCallback, useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { SelectQuantity, Varriant } from "../../components";
-import wishBaseComponent from "../../hocs/withBaseComponent";
 import icons from "../../ultils/icons";
 import { formatMoney } from "../../ultils/helper";
 import { updateCart } from "../../redux/user/userSlice";
 import { apiRemoveCart } from "../../apis";
 import { getCurrent } from "../../redux/user/userAction";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
 
 const { FaRegHeart, FiTrash2 } = icons;
-const OrderItem = ({ el, dispatch }) => {
+const OrderItem = ({ el }) => {
   const [quantity, setQuantity] = useState(() => el.quantity);
+  const dispatch = useDispatch();
 
   const handleChangeQuantity = (action) => {
     if (action === "minus" && quantity == 1) return;
@@ -92,4 +93,4 @@ const OrderItem = ({ el, dispatch }) => {
   );
 };
 
-export default wishBaseComponent(OrderItem);
+export default memo(OrderItem);

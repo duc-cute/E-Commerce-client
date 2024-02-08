@@ -4,7 +4,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 
-const wishBaseComponent = (Component) => (props) => {
+const withBaseComponent = (Component) => (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
@@ -18,4 +18,4 @@ const wishBaseComponent = (Component) => (props) => {
   );
 };
 
-export default wishBaseComponent;
+export default withBaseComponent;

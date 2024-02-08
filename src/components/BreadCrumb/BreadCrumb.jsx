@@ -11,6 +11,12 @@ const BreadCrumb = ({ title, category }) => {
       path: "/:category/:pit/:title",
       breadcrumb: title?.toLowerCase(),
     },
+    {
+      path: "/my-cart/shipping",
+    },
+    {
+      path: "/my-cart/shipping/payment",
+    },
   ];
   const breadcrumbs = useBreadcrumbs(routes);
 

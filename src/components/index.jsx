@@ -14,6 +14,7 @@ export { default as ProductCard } from "./Product/ProductCard";
 export { default as CustomSlider } from "./Slider/CustomSlider";
 export { default as HotCollection } from "./Product/HotCollection";
 export { default as Footer } from "./Footer/Footer";
+export { default as Congrat } from "./Congrat/Congrat";
 export { default as TopHeader } from "./Header/TopHeader";
 export { default as Tab } from "./Tabs/Tab";
 export { default as InputField } from "./Input/InputField";
@@ -21,6 +22,7 @@ export { default as InputFileImg } from "./Input/InputFileImg";
 export { default as MarkDown } from "./Input/MarkDown";
 export { default as Button } from "./Button/Button";
 export { default as Address } from "./Address/Address";
+export { default as Paypal } from "./Paypal/Paypal";
 export { default as CreateAddress } from "./Address/CreateAddress";
 export { default as UpdateAddress } from "./Address/UpdateAddress";
 

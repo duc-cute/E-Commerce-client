@@ -11,3 +11,5 @@ export { default as Products } from "./Products";
 export { default as FinalRegister } from "./FinalRegister";
 export { default as ResetPassword } from "./ResetPassword";
 export { default as MyCart } from "./MyCart";
+export { default as Shipping } from "./Shipping";
+export { default as Payment } from "./Payment";

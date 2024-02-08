@@ -26,6 +26,7 @@ const Products = () => {
   const [countProducts, setCountProducts] = useState(null);
   const [activeClick, setActiveClick] = useState(null);
   const [sort, setSort] = useState("-sold");
+  console.log("category", category);
 
   const fetchProductByCategory = async (queries) => {
     const response = await apiGetProducts(queries);
@@ -57,7 +58,11 @@ const Products = () => {
     delete queries.from;
     delete queries.to;
 
-    fetchProductByCategory({ ...queryPrice, ...queries, category });
+    if (category === "all-product") {
+      fetchProductByCategory({ ...queryPrice, ...queries });
+    } else {
+      fetchProductByCategory({ ...queryPrice, ...queries, category });
+    }
 
     window.scrollTo(0, 0);
   }, [params]);

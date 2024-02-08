@@ -7,7 +7,12 @@ import { cities } from "../../ultils/constains";
 import { getDistrict, getWard } from "../../ultils/helper";
 const { CiEdit, FiTrash2 } = icons;
 
-const Address = ({ handleRemoveAddress, handleUpdateAddress, info }) => {
+const Address = ({
+  handleRemoveAddress,
+  handleUpdateAddress,
+  info,
+  setDefault = true,
+}) => {
   const [address, setAddress] = useState("");
   const getNameAddress = async () => {
     const cityName = cities.find((item) => +item.id === +info.city).city;
@@ -19,7 +24,7 @@ const Address = ({ handleRemoveAddress, handleUpdateAddress, info }) => {
     const wards = await getWard(info.district);
     const wardName = wards.find((item) => item.idCommune === info.ward).name;
 
-    setAddress(`${cityName},${districtName},${wardName}`);
+    setAddress(`${wardName},${districtName},${cityName}`);
   };
 
   useEffect(() => {
@@ -36,24 +41,28 @@ const Address = ({ handleRemoveAddress, handleUpdateAddress, info }) => {
               <span className="text-[#0000008A] text-[15px]">{info.phone}</span>
             </div>
             <div className="flex gap-5">
-              <button
-                onClick={() => handleUpdateAddress(info._id, "update", info)}
-                className="flex items-center text-[14px] justify-between gap-1 text-[#1d39c4]"
-              >
-                <span className="text-[16px]">
-                  <CiEdit />
-                </span>
-                Edit
-              </button>
-              <button
-                onClick={() => handleRemoveAddress(info._id)}
-                className="flex items-center text-[14px] justify-between gap-1 text-main"
-              >
-                <span className="text-[14px]">
-                  <FiTrash2 />
-                </span>
-                Delete
-              </button>
+              {handleUpdateAddress && (
+                <button
+                  onClick={() => handleUpdateAddress(info._id, "update", info)}
+                  className="flex items-center text-[14px] justify-between gap-1 text-[#1d39c4]"
+                >
+                  <span className="text-[16px]">
+                    <CiEdit />
+                  </span>
+                  Edit
+                </button>
+              )}
+              {handleRemoveAddress && (
+                <button
+                  onClick={() => handleRemoveAddress(info._id)}
+                  className="flex items-center text-[14px] justify-between gap-1 text-main"
+                >
+                  <span className="text-[14px]">
+                    <FiTrash2 />
+                  </span>
+                  Delete
+                </button>
+              )}
             </div>
           </div>
           <div className="text-[#0000008A] mt-1 flex justify-between items-center text-[14px] leading-[18px]">
@@ -62,20 +71,22 @@ const Address = ({ handleRemoveAddress, handleUpdateAddress, info }) => {
               <p>{address}</p>
             </div>
             <div>
-              <button
-                onClick={() =>
-                  !info.defaultAddress &&
-                  handleUpdateAddress(info._id, "default")
-                }
-                className={`${
-                  info.defaultAddress ? "" : "text-[#000]"
-                } px-2 py-1 border text-[12px] border-solid border-[#00000042] leading-4`}
-              >
-                Set As Default
-              </button>
+              {setDefault && (
+                <button
+                  onClick={() =>
+                    !info.defaultAddress &&
+                    handleUpdateAddress(info._id, "default")
+                  }
+                  className={`${
+                    info.defaultAddress ? "" : "text-[#000]"
+                  } px-2 py-1 border text-[12px] border-solid border-[#00000042] leading-4`}
+                >
+                  Set As Default
+                </button>
+              )}
             </div>
           </div>
-          {info.defaultAddress && (
+          {info.defaultAddress && setDefault && (
             <span className="mt-1">
               <Tag
                 status="warning"

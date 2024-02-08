@@ -13,8 +13,8 @@ import { showModal } from "../../redux/app/appSlice";
 import { toast } from "react-toastify";
 import { apiRemoveAddress, apiUpdateAddress } from "../../apis";
 import { getCurrent } from "../../redux/user/userAction";
-
 const { AiOutlinePlus } = icons;
+
 const Addresses = () => {
   const dispatch = useDispatch();
   const { current } = useSelector((state) => state.user);
@@ -30,7 +30,7 @@ const Addresses = () => {
   };
 
   const handleRemoveAddress = async (id) => {
-    const checkDefaultBeforeDelete = current.address.some(
+    const checkDefaultBeforeDelete = current?.address.some(
       (el) => el._id === id && el.defaultAddress
     );
     if (checkDefaultBeforeDelete)
@@ -83,7 +83,7 @@ const Addresses = () => {
 
       <div className="mt-4 mb-8 mx-10 items-center">
         <h2 className=" text-[18px] mb-4 font-normal ">Address</h2>
-        {current.address.map((el, index) => (
+        {current?.address.map((el, index) => (
           <div key={index}>
             <Address
               info={el}

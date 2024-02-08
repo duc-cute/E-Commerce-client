@@ -64,7 +64,7 @@ const Personal = () => {
       lastname: current.lastname,
       phone: current.mobile,
       email: current.email,
-      address: current.address.find((item) => item.defaultAddress === true)
+      address: current?.address.find((item) => item.defaultAddress === true)
         .addressDetail,
     });
     if (current?.avatar)

@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { apiAddresses as apiUrl, cities } from "../../ultils/constains";
 import { Button, InputForm, Tab } from "../../components";
@@ -23,6 +23,8 @@ const UpdateAddress = ({ info }) => {
 
   const [wards, setWards] = useState([]);
   const [selectedWard, setSelectedWard] = useState(null);
+  const updateAddressRef = useRef();
+
   const tabs = [
     {
       label: <span>City</span>,
@@ -165,129 +167,141 @@ const UpdateAddress = ({ info }) => {
       defaultAddress: info.defaultAddress,
     });
   }, [info]);
+  useEffect(() => {
+    updateAddressRef.current.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+    });
+  }, []);
+
   return (
     <div
-      className="min-w-[650px] p-7 bg-[#fff] rounded-md"
-      onClick={(e) => e.stopPropagation()}
+      ref={updateAddressRef}
+      className="min-h-screen flex items-center justify-center"
     >
-      <form
-        onSubmit={handleSubmit(handleSubmitAddress)}
-        action=""
-        className="font-normal text-[14px] text-[#1a162e]"
+      <div
+        className="min-w-[650px] p-7 bg-[#fff] rounded-md"
+        onClick={(e) => e.stopPropagation()}
       >
-        <h2 className="font-medium text-[20px] leading-6 mb-7">
-          Add new shipping address
-        </h2>
-        <div className="modal__body">
-          <div className="flex justify-between gap-4 mb-6">
-            <InputForm
-              id="name"
-              label={"Name"}
-              register={register}
-              errors={errors}
-              validate={{ required: "Need Fill This Field." }}
-              placeholder={"Name"}
-              col={true}
-            />
-            <InputForm
-              id="phone"
-              label={"Phone"}
-              register={register}
-              errors={errors}
-              validate={{
-                required: "Require Fill",
-                pattern: {
-                  value: /^[0-9\-\+]{9,15}$/,
-                  message: "Invalid phone number",
-                },
-              }}
-              placeholder={"Phone"}
-              col={true}
-            />
-          </div>
-          <div className="mb-6 flex flex-col">
-            <label htmlFor="city" className="mb-2">
-              City/District/Town
-            </label>
-            <div
-              onClick={() => setShowTab((prev) => !prev)}
-              className={`${
-                selectedCity?.id ? "text-[#333]" : "text-[#bbb]"
-              }   mb-2 bg-gray-50 border  border-gray-300 border-solid font-normal rounded-lg text-sm px-2 py-2.5 text-center flex justify-between items-center `}
-            >
-              {selectedCity?.id ? selectedCity.name : info.addressDetail}
-              {selectedDistrict?.id && `,${selectedDistrict.name}`}
-              {selectedWard?.id && `,${selectedWard.name}`}
+        <form
+          onSubmit={handleSubmit(handleSubmitAddress)}
+          action=""
+          className="font-normal text-[14px] text-[#1a162e]"
+        >
+          <h2 className="font-medium text-[20px] leading-6 mb-7">
+            Add new shipping address
+          </h2>
+          <div className="modal__body">
+            <div className="flex justify-between gap-4 mb-6">
+              <InputForm
+                id="name"
+                label={"Name"}
+                register={register}
+                errors={errors}
+                validate={{ required: "Need Fill This Field." }}
+                placeholder={"Name"}
+                col={true}
+              />
+              <InputForm
+                id="phone"
+                label={"Phone"}
+                register={register}
+                errors={errors}
+                validate={{
+                  required: "Require Fill",
+                  pattern: {
+                    value: /^[0-9\-\+]{9,15}$/,
+                    message: "Invalid phone number",
+                  },
+                }}
+                placeholder={"Phone"}
+                col={true}
+              />
+            </div>
+            <div className="mb-6 flex flex-col">
+              <label htmlFor="city" className="mb-2">
+                City/District/Town
+              </label>
+              <div
+                onClick={() => setShowTab((prev) => !prev)}
+                className={`${
+                  selectedCity?.id ? "text-[#333]" : "text-[#bbb]"
+                }   mb-2 bg-gray-50 border  border-gray-300 border-solid font-normal rounded-lg text-sm px-2 py-2.5 text-center flex justify-between items-center `}
+              >
+                {selectedCity?.id ? selectedCity.name : info.addressDetail}
+                {selectedDistrict?.id && `,${selectedDistrict.name}`}
+                {selectedWard?.id && `,${selectedWard.name}`}
 
-              <span>
-                <IoIosArrowDown />
-              </span>
+                <span>
+                  <IoIosArrowDown />
+                </span>
+              </div>
+
+              {showTab && (
+                <div className="flex relative  leading-6 ">
+                  <div className="absolute top-0 bg-white border border-solid border-[#00000024] w-full">
+                    <Tab
+                      setActiveTab={setActiveTab}
+                      activeTab={activeTab}
+                      tabs={tabs}
+                      heightContent={"max-h-[240px]"}
+                      handleTabClick={handleTabClick}
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+            <div className="flex justify-between gap-4 mb-6">
+              <InputForm
+                id="addressDetail"
+                label={"Street Name, Building, House No."}
+                register={register}
+                errors={errors}
+                validate={{ required: "Need Fill This Field." }}
+                placeholder={"Street Name, Building, House No."}
+                col={true}
+                area={true}
+              />
             </div>
 
-            {showTab && (
-              <div className="flex relative  leading-6 ">
-                <div className="absolute top-0 bg-white border border-solid border-[#00000024] w-full">
-                  <Tab
-                    setActiveTab={setActiveTab}
-                    activeTab={activeTab}
-                    tabs={tabs}
-                    heightContent={"max-h-[240px]"}
-                    handleTabClick={handleTabClick}
+            <div className="form__group form__group--inline">
+              <label className="flex gap-1 items-center">
+                <div className="w-5">
+                  <InputForm
+                    id="defaultAddress"
+                    register={register}
+                    errors={errors}
+                    type="checkbox"
+                    col={true}
+                    disabled={true}
                   />
                 </div>
-              </div>
-            )}
+                <span className="form__checkbox-label flex-1">
+                  Set as default address
+                </span>
+              </label>
+            </div>
           </div>
-          <div className="flex justify-between gap-4 mb-6">
-            <InputForm
-              id="addressDetail"
-              label={"Street Name, Building, House No."}
-              register={register}
-              errors={errors}
-              validate={{ required: "Need Fill This Field." }}
-              placeholder={"Street Name, Building, House No."}
-              col={true}
-              area={true}
-            />
+          <div className="flex justify-end gap-5 pt-10">
+            <Button
+              style={"bg-none text-black "}
+              handleOnClick={() =>
+                dispatch(
+                  showModal({
+                    isShowModal: false,
+                    modalChildren: null,
+                  })
+                )
+              }
+            >
+              Cancel
+            </Button>
+            <Button type="submit" style={"bg-[#FFB700] text-black"}>
+              Update
+            </Button>
           </div>
-
-          <div className="form__group form__group--inline">
-            <label className="flex gap-1 items-center">
-              <div className="w-5">
-                <InputForm
-                  id="defaultAddress"
-                  register={register}
-                  errors={errors}
-                  type="checkbox"
-                  col={true}
-                  disabled={true}
-                />
-              </div>
-              <span className="form__checkbox-label flex-1">
-                Set as default address
-              </span>
-            </label>
-          </div>
-        </div>
-        <div className="flex justify-end gap-5 pt-10">
-          <Button
-            style={"bg-none text-black "}
-            handleOnClick={() =>
-              dispatch(
-                showModal({
-                  isShowModal: false,
-                  modalChildren: null,
-                })
-              )
-            }
-          >
-            Cancel
-          </Button>
-          <Button type="submit" style={"bg-[#FFB700] text-black"}>
-            Update
-          </Button>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   );
 };
