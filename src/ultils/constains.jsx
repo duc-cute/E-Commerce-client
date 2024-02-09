@@ -534,3 +534,26 @@ export const cities = [
     city: "Tỉnh Cà Mau",
   },
 ];
+
+export const statusOrder = [
+  {
+    id: 1,
+    status: "All Orders",
+    value: "",
+  },
+  {
+    id: 2,
+    status: "Cancelled",
+    value: "Cancelled",
+  },
+  {
+    id: 3,
+    status: "To Ship",
+    value: "Processing",
+  },
+  {
+    id: 4,
+    status: "Completed",
+    value: "Successed",
+  },
+];

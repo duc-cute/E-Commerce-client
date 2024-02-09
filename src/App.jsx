@@ -24,7 +24,7 @@ import {
   ManageProduct,
   ManageUser,
 } from "./pages/admin";
-import { Addresses, MemberLayout, Personal } from "./pages/member";
+import { Addresses, History, MemberLayout, Personal } from "./pages/member";
 import path from "./ultils/path";
 import { getCategories } from "./redux/app/appAction";
 import { useDispatch, useSelector } from "react-redux";
@@ -75,6 +75,7 @@ function App() {
         <Route path={path.MEMBER} element={<MemberLayout />}>
           <Route path={path.PERSONAL} element={<Personal />} />
           <Route path={path.ADDRESSES} element={<Addresses />} />
+          <Route path={path.HISTORY} element={<History />} />
         </Route>
 
         <Route path={path.RESET_PASSWORD} element={<ResetPassword />} />

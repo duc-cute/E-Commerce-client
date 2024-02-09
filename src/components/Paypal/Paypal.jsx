@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import { apiCreateOrder } from "../../apis";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import path from "../../ultils/path";
 
 // This value is from the props in the UI
 const style = { layout: "vertical" };
@@ -84,7 +85,7 @@ const ButtonWrapper = ({
     if (res.success) {
       setIsSuccessed(true);
       Swal.fire("Congrat !", "Order was created.", "success").then(() => {
-        navigate("/");
+        navigate(`/${path.MEMBER}/${path.HISTORY}`);
         setIsSuccessed(false);
       });
     }

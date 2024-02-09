@@ -100,3 +100,10 @@ export const apiCreateOrder = (data) =>
     method: "post",
     data,
   });
+
+export const apiGetOrders = (params) =>
+  axios({
+    url: "/order",
+    method: "get",
+    params,
+  });

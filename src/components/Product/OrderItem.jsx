@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 
 const { FaRegHeart, FiTrash2 } = icons;
-const OrderItem = ({ el }) => {
+const OrderItem = ({ el, select = true }) => {
   const [quantity, setQuantity] = useState(() => el.quantity);
   const dispatch = useDispatch();
 
@@ -59,13 +59,15 @@ const OrderItem = ({ el }) => {
                   <Varriant style={"py-[7px]"} color={el?.color} />
                 </div>
               )}
-              <div className="cart-item__input">
-                <SelectQuantity
-                  handleChangeQuantity={handleChangeQuantity}
-                  handleQuantity={handleQuantity}
-                  quantity={quantity}
-                />
-              </div>
+              {select && (
+                <div className="cart-item__input">
+                  <SelectQuantity
+                    handleChangeQuantity={handleChangeQuantity}
+                    handleQuantity={handleQuantity}
+                    quantity={quantity}
+                  />
+                </div>
+              )}
             </div>
           </div>
           <div className="flex flex-3 flex-col justify-between items-end">

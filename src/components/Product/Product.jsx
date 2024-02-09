@@ -58,16 +58,15 @@ const Product = ({ productData, isActive, sizeImage, showDes, notFlag }) => {
       });
     }
     if (flag === "remove") {
-      console.log("pro", productData);
-      const res = await apiRemoveCart(productData._id);
+      const res = await apiRemoveCart(productData?._id);
       if (res.success) toast.success(res.mes);
     } else {
       const res = await apiUpdateCart({
-        pid: productData._id,
-        color: productData.color,
-        title: productData.title,
-        price: productData.price,
-        thumb: productData.thumb,
+        pid: productData?._id,
+        color: productData?.color,
+        title: productData?.title,
+        price: productData?.price,
+        thumb: productData?.thumb,
         sku: uuidv4(),
       });
       if (res.success) toast.success(res.mes);
@@ -158,7 +157,7 @@ const Product = ({ productData, isActive, sizeImage, showDes, notFlag }) => {
             <SlideOption icon={<AiFillHeart size={16} />} />
           </span>
           {current?.cart.some(
-            (prod) => prod.product._id === productData._id
+            (prod) => prod.product?._id === productData?._id
           ) ? (
             <>
               <span onClick={(e) => handleUpdateCart(e, "remove")}>

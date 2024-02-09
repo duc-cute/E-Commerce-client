@@ -1,13 +1,13 @@
 /** @format */
 
-import React, { memo, useEffect, useRef, useState } from "react";
+import React, { memo, useEffect, useRef } from "react";
 
 const Tabs = ({
   tabs,
   heightContent,
-  setActiveTab,
   activeTab,
   handleTabClick,
+  scrollPosition,
 }) => {
   const tabRef = useRef();
   const lineRef = useRef();
@@ -16,10 +16,10 @@ const Tabs = ({
     lineRef.current.style.left = tabRef.current.offsetLeft + "px";
     lineRef.current.style.width = tabRef.current.offsetWidth + "px";
   }, [activeTab]);
-
+  console.log("ff", scrollPosition);
   return (
     <div className=" flex flex-col w-full">
-      <div className="flex relative">
+      <div className={`${scrollPosition && "sticky__header"} flex relative `}>
         {tabs.map((tab, index) => (
           <div
             ref={activeTab === index ? tabRef : null}

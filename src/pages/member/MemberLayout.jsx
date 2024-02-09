@@ -12,7 +12,7 @@ const MemberLayout = () => {
     <div className="flex relative flex-col ">
       <Header isMember={true} w="w-full" h="80px" />
 
-      <div className="  flex-auto bg-[#f5f5f5] h-screen">
+      <div className="  flex-auto bg-[#f5f5f5] h-full">
         <div className="flex mt-[30px] mx-[60px] gap-[30px]">
           <MemberSideBar />
           <Outlet />

@@ -22,7 +22,6 @@ const Shipping = () => {
     }, 0);
   };
 
-  console.log("current", current);
   useEffect(() => {
     if (isSuccessed) {
       dispatch(getCurrent());
@@ -122,7 +121,7 @@ const Shipping = () => {
                       address: current?.address?.find(
                         (el) => el.defaultAddress === true
                       ).addressDetail,
-                      status: "Successed",
+                      status: "Processing",
                     }}
                     setIsSuccessed={setIsSuccessed}
                     amount={Math.floor(totalPrice() / 23500)}
