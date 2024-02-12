@@ -17,6 +17,7 @@ import {
 } from "react-router-dom";
 import { apiGetProducts } from "../../apis";
 import { sorts } from "../../ultils/constains";
+import emptyProd from "../../assets/images/emptyProd.jpg";
 
 const Products = () => {
   const { category } = useParams();
@@ -109,55 +110,64 @@ const Products = () => {
         </div>
       </div>
 
-      <div className="w-main">
-        <div className="flex justify-between mt-[10px] p-[10px] pb-[20px] border-[1px] border-solid border-[#ebebeb]">
-          <div>
-            <h3 className="mb-[10px] text-[14px] font-semibold text-[#505050]">
-              Filter By
-            </h3>
-            <div className="flex gap-[5px]">
-              <SearchItem
-                activeClick={activeClick}
-                changeActiveClick={handleChangeActive}
-                name="price"
-                type="input"
-              />
-              <SearchItem
-                activeClick={activeClick}
-                changeActiveClick={handleChangeActive}
-                name="color"
-                type="checkbox"
+      {products?.length > 0 ? (
+        <div className="w-main">
+          <div className="flex justify-between mt-[10px] p-[10px] pb-[20px] border-[1px] border-solid border-[#ebebeb]">
+            <div>
+              <h3 className="mb-[10px] text-[14px] font-semibold text-[#505050]">
+                Filter By
+              </h3>
+              <div className="flex gap-[5px]">
+                <SearchItem
+                  activeClick={activeClick}
+                  changeActiveClick={handleChangeActive}
+                  name="price"
+                  type="input"
+                />
+                <SearchItem
+                  activeClick={activeClick}
+                  changeActiveClick={handleChangeActive}
+                  name="color"
+                  type="checkbox"
+                />
+              </div>
+            </div>
+            <div className="w-[250px]">
+              <h3 className="text-[14px] mb-[10px] font-semibold text-[#505050]">
+                Sort By
+              </h3>
+
+              <InputSelect
+                value={sort}
+                onChangeValue={handleChangeValue}
+                options={sorts}
               />
             </div>
           </div>
-          <div className="w-[250px]">
-            <h3 className="text-[14px] mb-[10px] font-semibold text-[#505050]">
-              Sort By
-            </h3>
-
-            <InputSelect
-              value={sort}
-              onChangeValue={handleChangeValue}
-              options={sorts}
-            />
+          <div className="mt-5 mb-5 ">
+            <ul className="flex flex-wrap mx-[-10px] text-[14px] text-[#505050]">
+              {products?.map((prod) => (
+                <li
+                  key={prod?._id}
+                  className="flex w-1/4 px-[10px] mb-[20px] cursor-pointer "
+                >
+                  <Product productData={prod} showDes={true} />
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="w-full">
+            <Pagination totalCount={countProducts} />
           </div>
         </div>
-        <div className="mt-5 mb-5 ">
-          <ul className="flex flex-wrap mx-[-10px] text-[14px] text-[#505050]">
-            {products?.map((prod) => (
-              <li
-                key={prod?._id}
-                className="flex w-1/4 px-[10px] mb-[20px] cursor-pointer "
-              >
-                <Product productData={prod} showDes={true} />
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="w-full">
-          <Pagination totalCount={countProducts} />
-        </div>
-      </div>
+      ) : (
+        <>
+          <div className="flex flex-col text-[#000000cc] text-[20px] items-center justify-center bg-white min-h-[500px] gap-5">
+            <img src={emptyProd} className="w-[40%] h-[40%] " />
+            <span>No products found</span>
+          </div>
+        </>
+      )}
     </div>
   );
 };

@@ -1,11 +1,13 @@
 /** @format */
 
+import { createSearchParams, useNavigate } from "react-router-dom";
 import icons from "../../ultils/icons";
 const { GrFormNext } = icons;
 import { useSelector } from "react-redux";
 
 const HotCollection = () => {
   const { categories } = useSelector((state) => state.app);
+  const navigate = useNavigate();
   const arrCate = categories?.filter((el) => el?.brand.length > 0);
   return (
     <>
@@ -30,6 +32,12 @@ const HotCollection = () => {
                   </h3>
                   {cate?.brand.map((el, index) => (
                     <li
+                      onClick={() =>
+                        navigate({
+                          pathname: `${cate?.title.toLowerCase()}`,
+                          search: createSearchParams({ branch: el }).toString(),
+                        })
+                      }
                       key={index}
                       className="flex  leading-4 gap-1 text-[#808080] pb-[5px] hover:text-main"
                     >

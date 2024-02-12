@@ -1,25 +1,18 @@
 /** @format */
 import { formatMoney, renderStars } from "../../ultils/helper";
-
 import trending from "../../assets/images/trending.png";
 import newImage from "../../assets/images/new.png";
 import { QuickView, SlideOption } from "../../components";
 import icons from "../../ultils/icons";
 import { v4 as uuidv4 } from "uuid";
-
-import {
-  Link,
-  createSearchParams,
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
+import { createSearchParams, useLocation, useNavigate } from "react-router-dom";
 import DOMPurify from "dompurify";
 import { useDispatch, useSelector } from "react-redux";
 import { showModal } from "../../redux/app/appSlice";
 import { useRef } from "react";
 import Swal from "sweetalert2";
 import path from "../../ultils/path";
-import { apiRemoveCart, apiUpdateCart } from "../../apis";
+import { apiRemoveCart, apiUpdateCart, apiUpdateWishList } from "../../apis";
 import { getCurrent } from "../../redux/user/userAction";
 import { toast } from "react-toastify";
 
@@ -30,8 +23,34 @@ const Product = ({ productData, isActive, sizeImage, showDes, notFlag }) => {
   const location = useLocation();
   const { current } = useSelector((state) => state.user);
   const showDetailBtnRef = useRef();
-  const handleWishList = (e) => {
+  const handleWishList = async (e, id) => {
     e.stopPropagation();
+    console.log("id", id);
+    if (!current) {
+      Swal.fire({
+        title: "Almost...",
+        text: "Please Login first",
+        showCloseButton: true,
+        showCancelButton: true,
+        icon: "info",
+        confirmButtonText: "Go Login",
+        cancelButtonText: "Not now!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          <div className="bg-[#D2D1D6] h-[1px] w-full my-5"></div>;
+          navigate({
+            pathname: `/${path.LOGIN}`,
+            search: createSearchParams({
+              redirect: location.pathname,
+            }).toString(),
+          });
+        }
+      });
+    } else {
+      const res = await apiUpdateWishList({ pid: id });
+      if (res.success) toast.success(res.mes);
+      dispatch(getCurrent());
+    }
   };
 
   const handleUpdateCart = async (e, flag, sku) => {
@@ -153,9 +172,22 @@ const Product = ({ productData, isActive, sizeImage, showDes, notFlag }) => {
             showDes ? "justify-start px-5" : "justify-center"
           } flex gap-[12px]   opacity-0 group-hover:opacity-100 group-hover:translate-y-[-20px] duration-500   transition-all ease-in-out  z-1 translate-y-[30px] `}
         >
-          <span onClick={(e) => handleWishList(e)}>
-            <SlideOption icon={<AiFillHeart size={16} />} />
-          </span>
+          {current?.wishlist.some(
+            (prod) => prod._id.toString() === productData?._id
+          ) ? (
+            <>
+              <span onClick={(e) => handleWishList(e, productData?._id)}>
+                <SlideOption choose={true} icon={<AiFillHeart size={18} />} />
+              </span>
+            </>
+          ) : (
+            <>
+              <span onClick={(e) => handleWishList(e, productData?._id)}>
+                <SlideOption icon={<AiFillHeart size={18} />} />
+              </span>
+            </>
+          )}
+
           {current?.cart.some(
             (prod) => prod.product?._id === productData?._id
           ) ? (

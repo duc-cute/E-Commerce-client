@@ -53,7 +53,8 @@ const Shipping = ({ dispatch, navigate }) => {
   };
 
   const handleShipping = () => {
-    if (current?.address)
+    console.log("curr", current);
+    if (current?.address.length > 0)
       navigate(`/${path.CART}/${path.SHIPPING}/${path.PAYMENT}`);
     else {
       Swal.fire({

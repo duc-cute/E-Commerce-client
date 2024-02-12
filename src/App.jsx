@@ -24,25 +24,54 @@ import {
   ManageProduct,
   ManageUser,
 } from "./pages/admin";
-import { Addresses, History, MemberLayout, Personal } from "./pages/member";
+import {
+  Addresses,
+  History,
+  MemberLayout,
+  Personal,
+  WishList,
+} from "./pages/member";
 import path from "./ultils/path";
 import { getCategories } from "./redux/app/appAction";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { Modal } from "./components";
 import AdminLayout from "./pages/admin/AdminLayout";
+import HashLoader from "react-spinners/HashLoader";
 
 function App() {
+  const override = {
+    display: "block",
+    margin: "0 auto",
+    borderColor: "red",
+  };
+
   const dispatch = useDispatch();
   const { isShowModal, modalChildren, modalCenter } = useSelector(
     (state) => state.app
   );
+  const { isLoading } = useSelector((state) => state.user);
+
   useEffect(() => {
     dispatch(getCategories());
   }, []);
+
   return (
     <div className={`$ min-h-screen font-main relative`}>
       {isShowModal && <Modal center={modalCenter}>{modalChildren}</Modal>}
+      {isLoading && (
+        <div
+          className="bg-overlayLoader inset-0 z-50 fixed flex  items-center
+       justify-center"
+        >
+          <HashLoader
+            color={"#36d7b7"}
+            loading={isLoading}
+            // cssOverride={override}
+            size={50}
+          />
+        </div>
+      )}
       <Routes>
         <Route path={path.PUBLIC} element={<Public />}>
           <Route path={path.HOME} element={<Home />} />
@@ -76,6 +105,7 @@ function App() {
           <Route path={path.PERSONAL} element={<Personal />} />
           <Route path={path.ADDRESSES} element={<Addresses />} />
           <Route path={path.HISTORY} element={<History />} />
+          <Route path={path.WISHLIST} element={<WishList />} />
         </Route>
 
         <Route path={path.RESET_PASSWORD} element={<ResetPassword />} />

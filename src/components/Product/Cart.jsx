@@ -27,7 +27,12 @@ const Cart = ({ data }) => {
     <div className="shadow-cart absolute z-50  bg-white rounded-[16px] p-6 pb-3  text-[#1A162E] text-[20px] font-normal right-[-100%] top-[40px] before:content-['']   before:absolute  before:top-[0] before:right-[50px] before:translate-y-[-100%]  before:border-solid before:border-r-[8px] before:border-l-[24px]  before:border-[transparent] before:border-b-[#e6e5e5]  before:border-y-[12px] after:content-[''] after:absolute after:w-full after:pt-5 after:left-0 after:right-0 after:top-[0] after:translate-y-[-100%]">
       <div className="flex justify-between mb-7">
         <h3 className="font-medium ">You have {data?.length} item</h3>
-        <span className="text-[#0071DC] text-[18px] ">See All</span>
+        <span
+          className="text-[#0071DC] text-[18px] "
+          onClick={() => navigate(`/${path.CART}`)}
+        >
+          See All
+        </span>
       </div>
       <div className=" max-w-[410px] min-w-[300px] w-full  select-none">
         <div className="flex gap-5  overflow-x-scroll  w-full scroll-hidden">

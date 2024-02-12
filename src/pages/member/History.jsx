@@ -63,7 +63,7 @@ const History = ({ location, navigate, dispatch }) => {
                               {el.title}
                             </a>
                             <span className="text-main font-normal text-[14px]">
-                              {moment(el?.createdAt).format("DD/MM/YYYY")}
+                              {moment(order?.createdAt).format("DD/MM/YYYY")}
                             </span>
                           </div>
                           <span className="flex items-center justify-between">

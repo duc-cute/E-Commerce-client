@@ -39,7 +39,7 @@ const MemberSideBar = () => {
           Manage Account
         </h2>
       </div>
-      <ul className="mt-4 flex flex-col gap-2 select-none mx-[30px]">
+      <ul className="mt-4 flex flex-col gap-2 select-none mx-[30px] mb-4">
         {memberSideBar.map((el) => (
           <li
             key={el.id}

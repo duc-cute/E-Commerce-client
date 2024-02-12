@@ -9,6 +9,7 @@ export const usersSlice = createSlice({
     current: null,
     token: null,
     currentCart: [],
+    isLoading: false,
   },
   reducers: {
     login: (state, action) => {
@@ -39,9 +40,9 @@ export const usersSlice = createSlice({
     });
 
     builder.addCase(actions.getCurrent.fulfilled, (state, action) => {
-      state.isLoading = false;
       state.current = action.payload;
       state.currentCart = action.payload.cart;
+      state.isLoading = false;
     });
 
     builder.addCase(actions.getCurrent.rejected, (state, action) => {

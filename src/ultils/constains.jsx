@@ -226,15 +226,9 @@ export const memberSideBar = [
     text: "Addresses",
     icon: address,
   },
+
   {
     id: 3,
-    path: `/${path.MEMBER}/${path.MY_CART}`,
-    type: "SINGLE",
-    text: "My Cart",
-    icon: cart,
-  },
-  {
-    id: 4,
     path: `/${path.MEMBER}/${path.HISTORY}`,
     type: "SINGLE",
     text: "History",
@@ -242,7 +236,7 @@ export const memberSideBar = [
   },
 
   {
-    id: 5,
+    id: 4,
     path: `/${path.MEMBER}/${path.WISHLIST}`,
     type: "SINGLE",
     text: "WishList",

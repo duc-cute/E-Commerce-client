@@ -32,6 +32,8 @@ export { default as InputSelect } from "./Input/InputSelect";
 export { default as InputForm } from "./Input/InputForm";
 export { default as RadioForm } from "./Input/RadioForm";
 export { default as SelectForm } from "./Input/SelectForm";
+export { default as SelectCustom } from "./Input/SelectCustom";
+
 export { default as ProductInfo } from "./Product/ProductInfo";
 export { default as Product } from "./Product/Product";
 export { default as SlideOption } from "./Product/SlideOption";

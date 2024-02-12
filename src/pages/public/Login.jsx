@@ -135,16 +135,18 @@ const Login = () => {
                     </div>
                     <div className="flex justify-end gap-2">
                       <Button
-                        name="Submit"
                         style="text-white bg-[#FFB700]"
                         handleOnClick={() => finalRegister()}
-                      />
+                      >
+                        Submit
+                      </Button>
 
                       <Button
                         style="text-white bg-blue-500"
-                        name="Back"
                         handleOnClick={() => setIsVerifyToken(false)}
-                      />
+                      >
+                        Back
+                      </Button>
                     </div>
                   </div>
                 </div>
