@@ -28,10 +28,14 @@ const OrderItem = ({ el, select = true }) => {
 
   const handleDeleteCart = async (pid, sku) => {
     const res = await apiRemoveCart(pid, sku);
+    console.log("pid", pid);
+    console.log("res", res);
+    // console.log()
     if (res.success) toast.success(res.mes);
     dispatch(getCurrent());
   };
   useEffect(() => {
+    console.log("el", el);
     dispatch(updateCart({ pid: el.product._id, quantity, sku: el.sku }));
   }, [quantity]);
   return (

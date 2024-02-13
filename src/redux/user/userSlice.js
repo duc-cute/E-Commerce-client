@@ -24,6 +24,7 @@ export const usersSlice = createSlice({
     updateCart: (state, action) => {
       const { pid, quantity, sku } = action.payload;
       const currentCart = JSON.parse(JSON.stringify(state.currentCart));
+
       const newCart = currentCart.map((prod) => {
         if (prod.sku === sku && prod.quantity !== quantity) {
           console.log("pro", prod);

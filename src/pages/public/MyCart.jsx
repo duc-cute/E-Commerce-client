@@ -13,6 +13,7 @@ import imgItems from "../../assets/images/orderItem.jpg";
 const { GrPrevious } = icons;
 const MyCart = ({ navigate }) => {
   const { currentCart } = useSelector((state) => state.user);
+  console.log("curr", currentCart);
   const totalPrice = () => {
     return currentCart.reduce((acc, curr) => {
       return curr.price * curr.quantity + acc;
