@@ -4,7 +4,7 @@ import path from "./path";
 import icons from "./icons";
 import cart from "../assets/images/Buy.svg";
 import wishlist from "../assets/images/Heart.svg";
-import history from "../assets/images/DownLoad.svg";
+import history from "../assets/images/Download.svg";
 import personal from "../assets/images/Profile.svg";
 import address from "../assets/images/Location.svg";
 const {
