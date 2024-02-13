@@ -19,7 +19,7 @@ const Address = ({
     const districts = await getDistrict(info.city);
     const districtName = districts.find(
       (item) => item.idDistrict === info.district
-    ).name;
+    )?.name;
 
     const wards = await getWard(info.district);
     const wardName = wards.find((item) => item.idCommune === info.ward).name;

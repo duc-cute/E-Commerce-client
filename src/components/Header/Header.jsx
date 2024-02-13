@@ -13,6 +13,7 @@ const Header = ({ isMember, w = "w-main", h = "110px" }) => {
   const { isLoggedIn, current, currentCart } = useSelector(
     (state) => state.user
   );
+  console.log("currentCart: " + currentCart);
   const [showOptions, setShowOptions] = useState(false);
   const [showCart, setShowCart] = useState(false);
   const dispatch = useDispatch();
