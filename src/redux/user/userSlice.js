@@ -27,11 +27,13 @@ export const usersSlice = createSlice({
 
       const newCart = currentCart.map((prod) => {
         if (prod.sku === sku && prod.quantity !== quantity) {
-          console.log("pro", prod);
           return { ...prod, quantity };
         } else return prod;
       });
       state.currentCart = newCart;
+    },
+    setLoading: (state, action) => {
+      state.isLoading = action.payload.isLoading;
     },
   },
 
@@ -54,6 +56,6 @@ export const usersSlice = createSlice({
     });
   },
 });
-export const { login, logout, updateCart } = usersSlice.actions;
+export const { login, logout, updateCart, setLoading } = usersSlice.actions;
 
 export default usersSlice.reducer;

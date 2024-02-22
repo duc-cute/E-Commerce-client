@@ -10,7 +10,9 @@ import { apiRatings } from "../../apis";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import path from "../../ultils/path";
+import { toast } from "react-toastify";
 const ProductInfo = ({ totalRating, ratings, title, pid, reRender }) => {
+  console.log("ra", ratings);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isLoggedIn } = useSelector((state) => state.user);
@@ -19,14 +21,14 @@ const ProductInfo = ({ totalRating, ratings, title, pid, reRender }) => {
   const handleSubmitVote = useCallback(
     async ({ chosenVote, comment }) => {
       if (!chosenVote || !comment || !pid) {
-        alert("Please comment when vote");
+        toast.warning("Please comment when vote");
         return;
       }
+
       await apiRatings({
         star: chosenVote,
         comment,
         pid,
-        updatedAt: Date.now(),
       });
       reRender();
 
@@ -126,9 +128,9 @@ const ProductInfo = ({ totalRating, ratings, title, pid, reRender }) => {
           {ratings?.map((el, index) => (
             <div key={index}>
               <Comment
-                name={`${el.postedBy.lastname} ${el.postedBy.firstname}`}
+                name={`${el?.postedBy?.lastname} ${el?.postedBy?.firstname}`}
                 updatedAt={el?.updatedAt}
-                avatar={el?.avatar}
+                avatar={el?.postedBy?.avatar}
                 comment={el.comment}
                 star={el.star}
               />

@@ -22,7 +22,7 @@ const Address = ({
     )?.name;
 
     const wards = await getWard(info.district);
-    const wardName = wards.find((item) => item.idCommune === info.ward).name;
+    const wardName = wards.find((item) => item.idCommune === info.ward)?.name;
 
     setAddress(`${wardName},${districtName},${cityName}`);
   };

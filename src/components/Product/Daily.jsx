@@ -4,6 +4,9 @@ import { apiGetProducts } from "../../apis";
 import icons from "../../ultils/icons";
 import { formatMoney, renderStars } from "../../ultils/helper";
 import CountDown from "../CountDown/CountDown";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoading } from "../../redux/user/userSlice";
 
 const { AiFillStar, HiMenu } = icons;
 const Daily = () => {
@@ -12,13 +15,15 @@ const Daily = () => {
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
   const [expireTime, setExpireTime] = useState(false);
+  const { isLoading } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   let idInterval;
   const fetchProductDaily = async () => {
-    const response = await apiGetProducts({
-      limit: 1,
-      page: Math.round(Math.random() * 2),
-      totalRating: 5,
-    });
+    dispatch(setLoading({ isLoading: true }));
+    const response = await apiGetProducts({ sort: "-totalRating" });
+
     if (response?.success) {
       setDealDaily(response.products[0]);
       const h = 24 - new Date().getHours();
@@ -28,6 +33,7 @@ const Daily = () => {
       setMinutes(m);
       setSeconds(s);
     }
+    dispatch(setLoading({ isLoading: false }));
   };
 
   useEffect(() => {
@@ -78,11 +84,16 @@ const Daily = () => {
 
         <img
           src={
-            dealDaily?.images ||
+            dealDaily?.thumb ||
             "https://img.freepik.com/free-vector/hand-drawn-no-data-illustration_23-2150544961.jpg?w=740&t=st=1698167331~exp=1698167931~hmac=0c23ae6263688c5c733f7ebf4bdd37883952dcc3ef7cea365dcb57aa9396ff74"
           }
           alt="deal daily"
-          className="mb-[15px]"
+          className="mb-[15px] cursor-pointer"
+          onClick={() =>
+            navigate(
+              `/${dealDaily?.category}/${dealDaily?._id}/${dealDaily?.title}`
+            )
+          }
         />
         <div className="flex flex-col  bg-white z-10 text-center">
           <span className="line-clamp-1 leading-4 mb-[8px] text-[#2b3743]">

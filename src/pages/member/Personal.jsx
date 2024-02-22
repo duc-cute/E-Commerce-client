@@ -64,8 +64,9 @@ const Personal = () => {
       lastname: current.lastname,
       phone: current.mobile,
       email: current.email,
-      address: current?.address.find((item) => item.defaultAddress === true)
-        .addressDetail,
+      address:
+        current?.address.find((item) => item.defaultAddress === true)
+          ?.addressDetail || "Chưa Cập Nhật",
     });
     if (current?.avatar)
       setPreview({

@@ -5,7 +5,7 @@ import icons from "../../ultils/icons";
 import path from "../../ultils/path";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/user/userSlice";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { Cart } from "../../components";
 const { RiPhoneFill, IoMail, BsHandbagFill, FaUserCircle } = icons;
 
@@ -13,7 +13,6 @@ const Header = ({ isMember, w = "w-main", h = "110px" }) => {
   const { isLoggedIn, current, currentCart } = useSelector(
     (state) => state.user
   );
-  console.log("currentCart: " + currentCart);
   const [showOptions, setShowOptions] = useState(false);
   const [showCart, setShowCart] = useState(false);
   const dispatch = useDispatch();
@@ -122,4 +121,4 @@ const Header = ({ isMember, w = "w-main", h = "110px" }) => {
   );
 };
 
-export default Header;
+export default memo(Header);

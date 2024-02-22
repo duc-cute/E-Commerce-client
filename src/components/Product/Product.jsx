@@ -75,22 +75,23 @@ const Product = ({ productData, isActive, sizeImage, showDes, notFlag }) => {
           });
         }
       });
-    }
-    if (flag === "remove") {
-      const res = await apiRemoveCart(productData?._id);
-      if (res.success) toast.success(res.mes);
     } else {
-      const res = await apiUpdateCart({
-        pid: productData?._id,
-        color: productData?.color,
-        title: productData?.title,
-        price: productData?.price,
-        thumb: productData?.thumb,
-        sku: uuidv4(),
-      });
-      if (res.success) toast.success(res.mes);
+      if (flag === "remove") {
+        const res = await apiRemoveCart(productData?._id);
+        if (res.success) toast.success(res.mes);
+      } else {
+        const res = await apiUpdateCart({
+          pid: productData?._id,
+          color: productData?.color,
+          title: productData?.title,
+          price: productData?.price,
+          thumb: productData?.thumb,
+          sku: uuidv4(),
+        });
+        if (res.success) toast.success(res.mes);
+      }
+      dispatch(getCurrent());
     }
-    dispatch(getCurrent());
   };
   const handleQuickView = (e) => {
     showDetailBtnRef.current.scrollIntoView({
