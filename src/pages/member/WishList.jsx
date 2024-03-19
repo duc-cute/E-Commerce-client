@@ -75,7 +75,6 @@ const WishList = ({ location, navigate, dispatch }) => {
       setWishlist([...newWishList]);
     }
   }, [selectedOption, current]);
-  console.log("se", selectedOption);
 
   return (
     <div className="flex-3 bg-white rounded-[20px]">
@@ -130,7 +129,7 @@ const WishList = ({ location, navigate, dispatch }) => {
                             <img src={heart} className="" />
                           </div>
                         </div>
-                        <div className="flex items-center gap-4">
+                        <div className="flex items-center justify-between">
                           {formatMoney(el?.price)} VND
                           <Button
                             handleOnClick={() => handleUpdateCart(el)}

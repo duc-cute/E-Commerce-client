@@ -57,7 +57,7 @@ function App() {
   }, []);
 
   return (
-    <div className={`$ min-h-screen font-main relative`}>
+    <div className={`min-h-screen font-main relative`}>
       {isShowModal && <Modal center={modalCenter}>{modalChildren}</Modal>}
       {isLoading && (
         <div
