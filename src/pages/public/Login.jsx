@@ -210,7 +210,7 @@ const Login = () => {
               : "Welcome back to sign in. As a returning customer, you have access to your previously saved all information."}
           </p>
         </div>
-        <div className="flex flex-col  ">
+        <form className="flex flex-col  ">
           {isRegister && (
             <div className="flex gap-5 w-[480px] mb-[30px]">
               <InputField
@@ -293,7 +293,7 @@ const Login = () => {
           <Button handleOnClick={handleSubmit}>
             {isRegister ? "Sign Up" : "Login"}
           </Button>
-        </div>
+        </form>
       </div>
     </div>
   );

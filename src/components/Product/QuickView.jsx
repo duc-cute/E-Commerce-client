@@ -9,7 +9,6 @@ import {
 } from "react-router-dom";
 import { Button, SelectQuantity, Varriant } from "../../components";
 import Slider from "react-slick";
-import ReactImageMagnify from "react-image-magnify";
 import imgEmpty from "../../assets/images/imgEmpty.jpg";
 import { formatMoney, renderStars } from "../../ultils/helper";
 import DOMPurify from "dompurify";
@@ -128,20 +127,7 @@ const QuickView = ({ data, top }) => {
       <div className="   ">
         <div className="w-[360px] h-[360px] object-cover mb-[30px] border-[#e7e5e5] border-[1px] border-solid">
           <div className="w-full h-full detail-image">
-            <ReactImageMagnify
-              {...{
-                smallImage: {
-                  alt: "Wristwatch by Ted Baker London",
-                  isFluidWidth: true,
-                  src: varriantSelect?.thumb || imageShow || imgEmpty,
-                },
-                largeImage: {
-                  src: varriantSelect?.thumb || imageShow || imgEmpty,
-                  width: 1000,
-                  height: 1200,
-                },
-              }}
-            />
+            <img src={varriantSelect?.thumb || imageShow || imgEmpty} />
           </div>
         </div>
         <div className="w-[360px]">
