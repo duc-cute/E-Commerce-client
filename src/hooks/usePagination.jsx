@@ -12,6 +12,9 @@ const usePagination = ({
   const paginationArr = useMemo(() => {
     const pageSize = limit || +import.meta.env.VITE_PROD_LIMIT || 10;
     const paginationCount = Math.ceil(totalProduct / pageSize);
+    console.log("pa", paginationCount);
+    console.log("pa", totalProduct);
+    console.log("pa", pageSize);
     const totalPaginationItem = siblingCount + 5;
 
     if (paginationCount <= totalPaginationItem)

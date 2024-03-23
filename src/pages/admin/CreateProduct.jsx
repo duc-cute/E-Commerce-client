@@ -10,8 +10,10 @@ import {
   MarkDown,
   SelectForm,
 } from "../../components";
+import { setLoading } from "../../redux/user/userSlice";
+
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getBase64, validate } from "../../ultils/helper";
 import { toast } from "react-toastify";
 import { FiTrash2 } from "react-icons/fi";
@@ -19,6 +21,7 @@ import { apiCreateProduct } from "../../apis";
 
 const CreateProduct = () => {
   const { categories } = useSelector((state) => state.app);
+  const dispatch = useDispatch();
   const [preview, setPreview] = useState({
     thumb: null,
     images: [],
@@ -39,12 +42,13 @@ const CreateProduct = () => {
   const handleCreate = async (data) => {
     const invalid = validate(payload, setInvalidField);
     if (invalid === 0) {
+      dispatch(setLoading({ isLoading: true }));
+
       data.thumb = preview.thumb.file;
       data.images = preview.images.map((el) => ({
         file: el.file,
       }));
       const finalData = { ...data, ...payload };
-      console.log("finalData", finalData);
 
       const formData = new FormData();
       for (let i of Object.entries(finalData)) {
@@ -57,9 +61,10 @@ const CreateProduct = () => {
         console.log("finalData.images", finalData.images[0].file);
         finalData.images.map((image) => formData.append("images", image.file));
       }
-      console.log();
       const res = await apiCreateProduct(formData);
-      console.log("res", res);
+      if (res?.success) toast.success("Creates product is successfully!");
+      else toast.info("Something went wrong!");
+      dispatch(setLoading({ isLoading: false }));
     }
   };
 

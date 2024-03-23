@@ -14,13 +14,14 @@ import {
 import swal from "sweetalert2";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import path from "../../ultils/path";
-import { login } from "../../redux/user/userSlice";
+import { login, setLoading } from "../../redux/user/userSlice";
 import { useDispatch } from "react-redux";
 import { validate } from "../../ultils/helper";
 const { HiOutlineMail, BiLock, FiUser, RiPhoneFill } = icons;
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const [searchParams] = useSearchParams();
   const [isRegister, setIsRegister] = useState(false);
   const [isVerifyToken, setIsVerifyToken] = useState(false);
@@ -52,6 +53,7 @@ const Login = () => {
       ? validate(payload, setInvalidFields)
       : validate(data, setInvalidFields);
     if (invalids === 0) {
+      dispatch(setLoading({ isLoading: true }));
       if (isRegister) {
         const rs = await apiRegister(payload);
         if (rs.success) {
@@ -78,12 +80,12 @@ const Login = () => {
             : navigate(`/${path.HOME}`);
         } else swal.fire("Oops!", rs?.mes, "error");
       }
+      dispatch(setLoading({ isLoading: false }));
     }
   }, [payload, isRegister]);
 
   const handleForgot = async () => {
     const response = await apiForgotPassword({ email });
-    console.log("response", response);
     if (response?.success) toast.success(response.mes);
     else toast.info(response.mes);
   };

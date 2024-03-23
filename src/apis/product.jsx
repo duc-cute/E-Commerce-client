@@ -38,3 +38,8 @@ export const apiUpdateVarriant = (data, pid) =>
     method: "put",
     data,
   });
+export const apiDeleteProduct = (pid) =>
+  axios({
+    url: "/product/" + pid,
+    method: "delete",
+  });

@@ -14,6 +14,7 @@ const Pagination = ({ totalCount, limit }) => {
     currentPage: page,
     limit: limits,
   });
+
   return (
     <>
       <nav className="flex justify-between items-center">

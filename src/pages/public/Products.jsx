@@ -157,7 +157,7 @@ const Products = () => {
             </ul>
           </div>
           <div className="w-full">
-            <Pagination totalCount={countProducts} />
+            <Pagination totalCount={countProducts} limit={10} />
           </div>
         </div>
       ) : (

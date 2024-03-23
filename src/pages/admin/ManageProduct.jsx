@@ -1,7 +1,7 @@
 /** @format */
 
 import React, { useEffect, useState } from "react";
-import { apiGetProducts } from "../../apis";
+import { apiDeleteProduct, apiGetProducts } from "../../apis";
 import { Button, InputForm, Table } from "../../components";
 import { formatMoney } from "../../ultils/helper";
 import icons from "../../ultils/icons";
@@ -17,6 +17,7 @@ import path from "../../ultils/path";
 import useDebounce from "../../hooks/useDebounce";
 import UpdateProduct from "./UpdateProduct";
 import { AddVarriant } from ".";
+import swal from "sweetalert2";
 
 const { FiTrash2, LuPencilLine, TiPlus, MdOutlineDashboardCustomize } = icons;
 
@@ -102,7 +103,7 @@ const ManageProduct = () => {
       render: (info) => (
         <div className="flex items-center gap-3 cursor-pointer">
           <span>
-            <FiTrash2 color="red" />
+            <FiTrash2 color="red" onClick={() => handleDelete(info?._id)} />
           </span>
           <span>
             <LuPencilLine
@@ -208,6 +209,44 @@ const ManageProduct = () => {
     }
   }, [queryDebounce]);
 
+  const handleDelete = (pid) => {
+    swal
+      .fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      })
+      .then(async (result) => {
+        if (result.isConfirmed) {
+          const res = await apiDeleteProduct(pid);
+          if (res.success) {
+            const queries = Object.fromEntries(params);
+            queries.page = 1;
+            navigate({
+              pathname: location.pathname,
+              search: createSearchParams(queries).toString(),
+            });
+            fetchData({ ...queries, limit: import.meta.env.VITE_PROD_LIMIT });
+
+            swal.fire({
+              title: "Deleted!",
+              text: res?.mes,
+              icon: "success",
+            });
+          } else {
+            swal.fire({
+              title: "Deleted!",
+              text: res?.mes,
+              icon: "error",
+            });
+          }
+        }
+      });
+  };
   return (
     <div>
       {showUpdate && (
